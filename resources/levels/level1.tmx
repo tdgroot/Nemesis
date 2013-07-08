@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="100" height="100" tilewidth="64" tileheight="64">
+ <tileset firstgid="1" name="spritesheet_terrain" tilewidth="64" tileheight="64">
+  <image source="../spritesheets/spritesheet_terrain.png" trans="ff00ff" width="1600" height="900"/>
+ </tileset>
+ <layer name="Tilelaag 1" width="100" height="100">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3ZW27CMBCFYQOhi4AGFhEu3f/KiiWPOBzGfSt58P9JIyfE8ODp+JIupZRNi8WuDxIbi/r8/ohTi2OLS2u3Fhfrs5V+RwvvP5IY9420S4vvR+xaRF4W6bsvz5zU8bu2vvV7MaYROv6eC22zXI3Ea0KvY2xreC5qW/Nxam0du6v01zrRmvCa0bxltTFiPrQ+ojbqffy97+x5bSMPMV9pPq7lfR7yGtC66d1HHkfiOYhxj8/P8lzXkn155kP/5s/lfU7S3OjYH+3a7+O7I/E1eymva8hPea2LyEWsG/Vax/GrvM5RvXVB5y8d+2ytGYnXhq4Pfh/9Ig+Ri96eKasL/3xb3uvB8zOS2yPm1t7sfk6eTXYfn01yPUs7W5/J+kzJ73iMxMclG/9s7LLczElMyX2WU/09/42R6Ny02L3ucXVNqfPVvUXvvJedPXT/lK0xx+R3Rtvv9sb8YNfZuby2vjb0xlrzlu2xfB+m68hIfNyztVxD68P3un/VRLa37Z3Lvc9ItCZ8P5WdE08WvbOG58XH3/e8fibX743E56nsfZbPVTXiHUk233gOfC7qvTf074xYH75+Z+9N9Dn+l5/3dA3Rllx8Rm/NoCbW4XtbX0PwWb6/Ihfrys7l5GI9/n6d9WJd+r8NcrE+5igAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADCaX6fNS5tAnAAA
+  </data>
+ </layer>
+</map>

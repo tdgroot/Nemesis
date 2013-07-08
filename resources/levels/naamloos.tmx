@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="160" height="45" tilewidth="16" tileheight="16">
+ <layer name="Tilelaag 1" width="160" height="45">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3BMQEAAADCoPVPbQ0PoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIB3A6CFcYOAcAAA
+  </data>
+ </layer>
+</map>
