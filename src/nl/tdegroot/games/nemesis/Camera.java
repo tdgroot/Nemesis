@@ -18,19 +18,25 @@ public class Camera {
 
 	public float getX() {
 		float x = player.getX() - size.getX() / 2;
+		float maxWidth = (bounds.getWidth() + (size.getX() / 2)) / 2;
+
 		if (x < bounds.getX())
 			x = bounds.getX();
-		if (x > bounds.getWidth() / 2)
-			x = bounds.getWidth() / 2;
+		if (x > maxWidth)
+			x = maxWidth;
+
 		return x;
 	}
 
 	public float getY() {
 		float y = player.getY() - size.getY() / 2;
+		float maxHeight = (bounds.getHeight() + (size.getY() / 2)) / 2;
+
 		if (y < bounds.getY())
 			y = bounds.getY();
-		if (y > bounds.getHeight() / 2)
-			y = bounds.getHeight() / 2;
+		if (y > maxHeight)
+			y = maxHeight;
+
 		return y;
 	}
 
