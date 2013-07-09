@@ -18,8 +18,7 @@ public class Nemesis extends BasicGame {
 	private Camera camera;
 
 	public Nemesis() {
-		super("");
-
+		super("Nemesis");
 	}
 
 	public void init(GameContainer gameContainer) throws SlickException {
@@ -31,7 +30,7 @@ public class Nemesis extends BasicGame {
 	}
 
 	public void update(GameContainer gameContainer, int delta) throws SlickException {
-		System.out.println("Player X: " + player.getX() + ", Player Y: " + player.getY() + ", Camera X: " + camera.getX());
+//		System.out.println("Player X: " + player.getX() + ", Player Y: " + player.getY() + ", Camera X: " + camera.getX());
 		level.update();
 		if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) stop();
 	}

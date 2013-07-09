@@ -5,6 +5,8 @@ import nl.tdegroot.games.nemesis.level.Level;
 
 public class Mob extends Entity {
 
+	protected boolean isMoving = false;
+
 	protected float movementSpeed = 0.0f;
 	protected Level level;
 
@@ -28,6 +30,7 @@ public class Mob extends Entity {
 			x = level.getPixelWidth();
 		if (y > level.getPixelHeight())
 			y = level.getPixelHeight();
+
 	}
 
 	public void render(Camera camera) {

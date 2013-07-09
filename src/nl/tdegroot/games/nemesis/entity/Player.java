@@ -23,8 +23,14 @@ public class Player extends Mob{
 		if (Keyboard.isKeyDown(Keyboard.KEY_S)) ya += movementSpeed;
 
 		if (xa != 0 || ya != 0) {
+			isMoving = true;
 			move(xa, ya);
+		} else {
+			isMoving = false;
 		}
+
+		if (isMoving)
+			System.out.println("Moving!");
 	}
 
 	public void render(Graphics g, Camera camera) {
