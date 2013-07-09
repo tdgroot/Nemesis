@@ -26,10 +26,14 @@ public class Mob extends Entity {
 			x = 0;
 		if (y < 0)
 			y = 0;
-		if (x > level.getPixelWidth())
-			x = level.getPixelWidth();
-		if (y > level.getPixelHeight())
-			y = level.getPixelHeight();
+		if (x > level.getPixelWidth() - 50) {
+			x = level.getPixelWidth() - 50;
+			System.out.println("Out of bounds!");
+		}
+		if (y > level.getPixelHeight() - 50) {
+			y = level.getPixelHeight() - 50;
+			System.out.println("Out of bounds!");
+		}
 
 	}
 
