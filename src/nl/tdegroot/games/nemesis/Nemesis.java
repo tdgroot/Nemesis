@@ -40,7 +40,7 @@ public class Nemesis extends BasicGame {
 	}
 
 	public void render(GameContainer gameContainer, Graphics g) throws SlickException {
-		level.render(camera);
+		level.render(g, camera);
 	}
 
 	private synchronized void stop() {

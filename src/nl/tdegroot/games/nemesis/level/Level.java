@@ -2,6 +2,7 @@ package nl.tdegroot.games.nemesis.level;
 
 import nl.tdegroot.games.nemesis.Camera;
 import nl.tdegroot.games.nemesis.entity.Entity;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
@@ -24,8 +25,11 @@ public class Level {
 		}
 	}
 
-	public void render(Camera camera) {
-		map.render((int) (0 - camera.getX()), (int) (0 - camera.getY()));
+	public void render(Graphics g, Camera camera) {
+		map.render((int) - camera.getX(), (int) - camera.getY());
+		for (int i = 0; i < entities.size(); i++) {
+			entities.get(i).render(g, camera);
+		}
 	}
 
 	public void addEntity(Entity e) {

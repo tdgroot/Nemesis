@@ -1,13 +1,16 @@
 package nl.tdegroot.games.nemesis.entity;
 
+import nl.tdegroot.games.nemesis.Camera;
 import nl.tdegroot.games.nemesis.level.Level;
 import org.lwjgl.input.Keyboard;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 
 public class Player extends Mob{
 
 	public Player(float x, float y, Level level) {
 		super(x, y, level);
-		movementSpeed = 4.5f;
+		movementSpeed = 3.5f;
 	}
 
 	public void update() {
@@ -23,5 +26,10 @@ public class Player extends Mob{
 			move(xa, ya);
 		}
 	}
+
+	public void render(Graphics g, Camera camera) {
+		g.fillRect(x - camera.getX(), y - camera.getY(), 50, 50);
+	}
+
 
 }

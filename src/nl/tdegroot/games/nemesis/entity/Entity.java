@@ -1,5 +1,7 @@
 package nl.tdegroot.games.nemesis.entity;
 
+import nl.tdegroot.games.nemesis.Camera;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
 public class Entity {
@@ -15,8 +17,8 @@ public class Entity {
 	public void update() {
 	}
 
-	public void render() {
-		sprite.draw(x, y);
+	public void render(Graphics g, Camera camera) {
+//		sprite.draw(x, y);
 	}
 
 	public float getX() {
