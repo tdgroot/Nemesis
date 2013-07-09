@@ -3,6 +3,7 @@ package nl.tdegroot.games.nemesis;
 import nl.tdegroot.games.nemesis.entity.Player;
 import nl.tdegroot.games.nemesis.level.Level;
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.opengl.Display;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -24,13 +25,12 @@ public class Nemesis extends BasicGame {
 	public void init(GameContainer gameContainer) throws SlickException {
 		level = new Level("resources/levels/level1.tmx");
 		player = new Player(5, 5, level);
-		camera = new Camera(player, new Vector2f(1280, 720), new Rectangle(0, 0, level.getPixelWidth(), level.getPixelHeight()));
+		camera = new Camera(player, new Vector2f(Display.getWidth(), Display.getHeight()), new Rectangle(0, 0, level.getPixelWidth(), level.getPixelHeight()));
 		level.addEntity(player);
-		System.out.println("Map Width: " + level.getMap().getWidth() * level.getMap().getTileWidth());
 	}
 
 	public void update(GameContainer gameContainer, int delta) throws SlickException {
-//		System.out.println("Player X: " + player.getX() + ", Player Y: " + player.getY() + ", Camera X: " + camera.getX());
+		System.out.println("Player X: " + player.getX() + ", Player Y: " + player.getY() + ", Camera X: " + camera.getX() + ", Camera Y: " + camera.getY());
 		level.update();
 		if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) stop();
 	}
