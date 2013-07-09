@@ -34,10 +34,10 @@ public class Level {
 	public void render(Graphics g, Camera camera) {
 		int x = (int) - (camera.getX() % tileSize) - tileSize;
 		int y = (int) - (camera.getY() % tileSize) - tileSize;
-		int sx = (int) camera.getX() / tileSize;
-		int sy = (int) camera.getY() / tileSize;
+		int sx = (int) (camera.getX() / tileSize) -1;
+		int sy = (int) (camera.getY() / tileSize) -1;
 		int sectionWidth = (Display.getWidth() / tileSize) + 3;
-		int sectionHeight = (Display.getHeight() / tileSize) + 3;
+		int sectionHeight = (Display.getHeight() / tileSize) + 4;
 
 		map.render(x, y, sx, sy, sectionWidth, sectionHeight);
 
