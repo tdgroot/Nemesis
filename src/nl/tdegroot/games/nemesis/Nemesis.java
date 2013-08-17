@@ -1,6 +1,7 @@
 package nl.tdegroot.games.nemesis;
 
 import nl.tdegroot.games.nemesis.entity.Player;
+import nl.tdegroot.games.nemesis.gfx.Screen;
 import nl.tdegroot.games.nemesis.level.Level;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
@@ -17,20 +18,26 @@ public class Nemesis extends BasicGame {
 	private Player player;
 
 	private Camera camera;
+	private Screen screen;
 
 	public Nemesis() {
 		super("Nemesis");
 	}
 
 	public void init(GameContainer gameContainer) throws SlickException {
-		level = new Level("resources/levels/level1.tmx");
-		player = new Player(5, 5, level);
+		level = new Level("resources/levels/level1test.tmx");
+		try {
+			player = new Player(45, 45, level);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		camera = new Camera(player, new Vector2f(Display.getWidth(), Display.getHeight()), new Rectangle(0, 0, level.getPixelWidth(), level.getPixelHeight()));
-		level.addEntity(player);
+		screen = new Screen(camera);
 	}
 
 	public void update(GameContainer gameContainer, int delta) throws SlickException {
-		System.out.println("Player X: " + player.getX() + ", Player Y: " + player.getY() + ", Camera X: " + camera.getX() + ", Camera Y: " + camera.getY());
+//		System.out.println("Player X: " + player.getX() + ", Player Y: " + player.getY() + ", Camera X: " + camera.getX() + ", Camera Y: " + camera.getY());
+		player.update();
 		level.update();
 		if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) stop();
 	}
@@ -39,7 +46,10 @@ public class Nemesis extends BasicGame {
 	}
 
 	public void render(GameContainer gameContainer, Graphics g) throws SlickException {
-		level.render(g, camera);
+		float xOffset = player.getX() - Display.getWidth() / 2;
+		float yOffset = player.getY() - Display.getHeight() / 2;
+		level.render(g, xOffset, yOffset, screen, player);
+		player.render(g, screen);
 	}
 
 	private synchronized void stop() {

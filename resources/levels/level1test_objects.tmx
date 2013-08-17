@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="50" height="50" tilewidth="64" tileheight="64">
  <tileset firstgid="1" name="spritesheet_terrain" tilewidth="64" tileheight="64">
-  <image source="../textures/spritesheets/spritesheet_terrain.png" trans="ff00ff" width="1600" height="900"/>
+  <image source="../spritesheets/spritesheet_terrain.png" trans="ff00ff" width="1600" height="900"/>
   <tile id="2">
    <properties>
     <property name="solid" value="true"/>
@@ -48,9 +48,17 @@
    </properties>
   </tile>
  </tileset>
+ <tileset firstgid="351" name="spritesheet_objects" tilewidth="64" tileheight="64">
+  <image source="../spritesheets/spritesheet_objects.png" trans="ff00ff" width="640" height="640"/>
+ </tileset>
  <layer name="Tilelaag 1" width="50" height="50">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAC82Z/XLiMAzEDfTadwA613eAMvRt71EPZrJzy4+V4/Tz/tCYhNjWSlpJcVattQNke5HVNPJ6NYmefbjI8zTyuS3W2GKfXwPCORLXz3Va4R73TTi2k/4nw+G2SLr7/BEctCd/+7XvwWf4nGMRDvnjZOOzjbrn11d5mxFfR1Lp2/NFwuDPH6CfC7G4/pKnGUm2oF8YO734JCfcL9rD9az8QpwvM5LsQO7N6T8Sr+Q0+eb7eQyM8iPZInF9+w4cSzEzhpfkK/e5hHZZkvt+SoTd4yrlov8dh/T1nFXVqJ/WdcQfzpGqlqX564vsLnK08SdwSF9heGj3eUY+c13X0+j3dvZbz3xnXKn36cXVAXo7Dum8brd41nh+94U4PK5Um1LfcYAvktA/HnPuQ+H8bH8wrq7Xm0lep3Fl+1+v9/YM/SRxnyTf9Hx07PzXiytheJ50fp103U+/V7b3xu7vYeNk/3W7jbU1nk94NY5ynDwnDvnkYPvJR+4P17/Cw5yQ5i3F4NxwfyjvXnV9vMh5+r21fa66/55kE2zMGOJ/xOD8WorBuaF67jzfThjO7Zbn0kM45uzL6xRXxLAEB/tN7/WVo35POOQz10X/MV8xR5EH4pU45v5w/yyJKfKDfaJ0FV7X92z+6OUm/u+54xVrOqYl8ZT4oXqeavoSPjPH6trz4KblGFvCC48p+UN5N73XOc97OajivP7ft3+82xf+WMINvlMz7/K99NBu46XK984Rf95HxWuq8+/tR2R79VbeJ/JsJtU7H30N2YQ1YT1heMTcj/bKPMvwPpE+oR88jo7t/szm1O7jSzjO7TZOP6vn97OJ9J7vfSL11+i9jfA4V45BfJ2PYrjKS2t/ni7ydpHqzJMxQN7z/Oih3fOe/dZ78tQojhR3FQ6PL+8J5JOqdqcc/pU4XKh74qnjSL1uynefxY0lOKp3I43uE/pt7vd3+4M+cQ74+RF1Jb99bk832uujOFKOYi/lfVrCyjicw5HmsI75/FEcVQ+ie86PXu872otU8xnjWm8EB/3A9ZizUt+eepg5u6V3L8YC7XjqrMva4PnVax+/1/D7DOtl77sMcznX9dGf8V7Cc8ix3ernc12/nv7Ep3vVdxl+I+E3Ee5DnKwLzmHOpaTeJInb8iUIv/lU3+MYE75v9Q5E3qY6l7jNOJ7LUVVOI98TR9J7QrW//654nPp6xmoPR+ol0/rJnpyTsKZckeZXeX+k/0j9TpW7ks1YY6uejpJqHedq7REMVb1NMdCLn6ofreYSd9VHjvqBOiWb6trPoDftVifW28Rx9lnJLr7eSI9HG+xato3rqHMwnSUlHjMHpVpOLlf5Yw5DL+9Ve+/a/Xl6imnaJHGnyh0cl/SzKQdWef7qD50J7sO8FCOJb6leMg/McSJxO9mP/tdzOmtOOjGuaHv6IflshN+uX8qv3DP9r/OwXbv3F+enmjYXg3MYqrrE9SrO6t7jhCXpVtXCuZpDG47wooqj5O9eXejVNLfPX+ph2Y4QJwAA
+  </data>
+ </layer>
+ <layer name="Tilelaag 2" width="50" height="50">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3QyQ0AIRADQU+kwHPzT4AACIBjq6T+W04AAAAA4H29klG7V/xHq7s//2oNAAAAgPNN5Bz/fhAnAAA=
   </data>
  </layer>
 </map>

@@ -29,7 +29,7 @@ public class Camera {
 	}
 
 	public float getY() {
-		float y = player.getY() - size.getY() / 2;
+		float y = player.getY() - (size.getY() * 2) / 2;
 		float maxHeight = (bounds.getHeight() + (size.getY() / 2)) / 2;
 
 		if (y < bounds.getY())
@@ -38,6 +38,14 @@ public class Camera {
 			y = maxHeight;
 
 		return y;
+	}
+
+	public float getXOffset() {
+		return (size.getX() / 2) - (player.getWidth() / 2);
+	}
+
+	public float getYOffset() {
+		return (size.getY() / 2) - (player.getHeight() / 2);
 	}
 
 }

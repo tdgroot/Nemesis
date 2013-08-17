@@ -1,8 +1,9 @@
 package nl.tdegroot.games.nemesis.level;
 
-import nl.tdegroot.games.nemesis.Camera;
 import nl.tdegroot.games.nemesis.entity.Entity;
-import org.lwjgl.opengl.Display;
+import nl.tdegroot.games.nemesis.entity.Mob;
+import nl.tdegroot.games.nemesis.entity.Player;
+import nl.tdegroot.games.nemesis.gfx.Screen;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
@@ -13,9 +14,10 @@ import java.util.List;
 public class Level {
 
 	private TiledMap map;
-	private final int tileSize;
+	public final int tileSize;
 
 	private List<Entity> entities = new ArrayList<Entity>();
+	private List<Mob> mobs = new ArrayList<Mob>();
 
 	public Level(String path) throws SlickException {
 		map = new TiledMap(path);
@@ -31,34 +33,36 @@ public class Level {
 		}
 	}
 
-	public void render(Graphics g, Camera camera) {
-		int x = (int) - (camera.getX() % tileSize) - tileSize;
-		int y = (int) - (camera.getY() % tileSize) - tileSize;
-		int sx = (int) (camera.getX() / tileSize) -1;
-		int sy = (int) (camera.getY() / tileSize) -1;
-		int sectionWidth = (Display.getWidth() / tileSize) + 3;
-		int sectionHeight = (Display.getHeight() / tileSize) + 4;
-
-		map.render(x, y, sx, sy, sectionWidth, sectionHeight);
+	public void render(Graphics g, float xOffset, float yOffset, Screen screen, Player player) {
+		screen.setOffset(xOffset, yOffset);
+		screen.renderMap(map, tileSize);
 
 		for (int i = 0; i < entities.size(); i++) {
-			entities.get(i).render(g, camera);
+			entities.get(i).render(g, screen);
+		}
+
+		for (int i = 0; i < mobs.size(); i++) {
+			mobs.get(i).render(g, screen);
 		}
 	}
 
-	public void addEntity(Entity e) {
-		entities.add(e);
+	public void addEntity(Entity entity) {
+		entities.add(entity);
+	}
+
+	public void addMob(Mob mob) {
+		mobs.add(mob);
 	}
 
 	public TiledMap getMap() {
 		return map;
 	}
 
-	public float getPixelWidth() {
+	public int getPixelWidth() {
 		return map.getWidth() * map.getTileWidth();
 	}
 
-	public float getPixelHeight() {
+	public int getPixelHeight() {
 		return map.getHeight() * map.getTileHeight();
 	}
 
