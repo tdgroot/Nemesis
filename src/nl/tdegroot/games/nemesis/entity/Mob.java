@@ -3,24 +3,34 @@ package nl.tdegroot.games.nemesis.entity;
 import nl.tdegroot.games.nemesis.gfx.Screen;
 import nl.tdegroot.games.nemesis.level.Level;
 
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SpriteSheet;
+
 public class Mob extends Entity {
 
+
+	protected SpriteSheet sheet;
+	
 	protected boolean isMoving = false;
 
-	private boolean checkCollision = false;
-	protected boolean doCollision = true;
+	public int dir = 0;
+	public int animIndex = 0;
+	public int animCount = 0;
+	public int animType = 0;
+	public int frame = 0;
 
 	protected float movementSpeed = 0;
-	protected Level level;
-	protected int dir = 0;
 
-	public Mob(float x, float y, Level level) {
-		super(x, y);
-		this.level = level;
+	public Mob(Image image, Level level, float x, float y, int width, int height) {
+		super(image, level, x, y, width, height);
+		animCount = (int) (image.getWidth() / width);
+		sheet = new SpriteSheet(image, width, height);
 	}
 
-	public void update() {
-
+	public void update(int delta) {
+		if (frame % (102 / delta) == 0) {
+			animIndex = ((animIndex + 1) % animCount);
+		}
 	}
 
 	public void move(float xa, float ya) {
@@ -39,17 +49,15 @@ public class Mob extends Entity {
 		if (xa < 0)
 			dir = 3;
 
-		float dx = x + xa;
-		float dy = y + ya;
-
 		if (x < 0) {
 			x = 0;
 		}
+
 		if (y < 0) {
 			y = 0;
 		}
 
-		if (! collision(xa, ya)) {
+		if (!collision(xa, ya)) {
 			x += xa;
 			y += ya;
 		}
@@ -82,6 +90,50 @@ public class Mob extends Entity {
 
 	public void render(Screen screen) {
 		screen.renderMob(this);
+	}
+	
+	public SpriteSheet getSheet() {
+		return sheet;
+	}
+
+	
+	public Level getLevel() {
+		return level;
+	}
+
+	
+	public void setLevel(Level level) {
+		this.level = level;
+	}
+
+	
+	public float getMovementSpeed() {
+		return movementSpeed;
+	}
+
+	
+	public void setMovementSpeed(float movementSpeed) {
+		this.movementSpeed = movementSpeed;
+	}
+
+	
+	public boolean isMoving() {
+		return isMoving;
+	}
+
+	
+	public int getDir() {
+		return dir;
+	}
+
+	
+	public int getAnimIndex() {
+		return animIndex;
+	}
+
+	
+	public int getAnimType() {
+		return animType;
 	}
 
 }

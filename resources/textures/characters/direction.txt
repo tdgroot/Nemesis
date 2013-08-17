@@ -1,0 +1,6 @@
+SUKKEL - 
+
+0 = facen to north
+1 = facen to east
+2 = facen to south
+3 = facen to west

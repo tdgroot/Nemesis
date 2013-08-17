@@ -1,18 +1,34 @@
 package nl.tdegroot.games.nemesis.entity;
 
-import nl.tdegroot.games.nemesis.Camera;
 import nl.tdegroot.games.nemesis.gfx.Screen;
+import nl.tdegroot.games.nemesis.level.Level;
+
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
 public class Entity {
 
-	protected float x, y;
 	Image sprite;
+	protected Level level;
 
-	public Entity(float x, float y) {
+	protected float x, y;
+	
+	protected int width = 0;
+	protected int height = 0;
+	
+
+	public Entity(Image image, Level level, float x, float y, int width, int height) {
+		this.level = level;
 		this.x = x;
 		this.y = y;
+		this.width = width;
+		this.height = height;
+		positionate();
+	}
+	
+	public void positionate() {
+		x *= level.tileSize;
+		y *= level.tileSize;
 	}
 
 	public void update() {
@@ -35,10 +51,10 @@ public class Entity {
 	}
 
 	public int getWidth() {
-		return sprite.getWidth();
+		return width;
 	}
 
 	public int getHeight() {
-		return sprite.getHeight();
+		return height;
 	}
 }

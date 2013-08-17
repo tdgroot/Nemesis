@@ -47,5 +47,5 @@ public class Camera {
 	public float getYOffset() {
 		return (size.getY() / 2) - (player.getHeight() / 2);
 	}
-
+	
 }

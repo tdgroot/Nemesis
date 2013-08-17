@@ -27,7 +27,7 @@ public class Level {
 		}
 	}
 
-	public void update() {
+	public void update(int delta) {
 		for (int i = 0; i < entities.size(); i++) {
 			entities.get(i).update();
 		}
@@ -41,9 +41,6 @@ public class Level {
 			entities.get(i).render(g, screen);
 		}
 
-		for (int i = 0; i < mobs.size(); i++) {
-			mobs.get(i).render(g, screen);
-		}
 	}
 
 	public void addEntity(Entity entity) {

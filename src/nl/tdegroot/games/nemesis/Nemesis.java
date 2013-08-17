@@ -8,6 +8,7 @@ import org.lwjgl.opengl.Display;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
@@ -27,7 +28,7 @@ public class Nemesis extends BasicGame {
 	public void init(GameContainer gameContainer) throws SlickException {
 		level = new Level("resources/levels/level1test.tmx");
 		try {
-			player = new Player(45, 45, level);
+			player = new Player(new Image("resources/spritesheets/birk_anim.png"), level, 45, 45, 53, 64);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -36,9 +37,8 @@ public class Nemesis extends BasicGame {
 	}
 
 	public void update(GameContainer gameContainer, int delta) throws SlickException {
-//		System.out.println("Player X: " + player.getX() + ", Player Y: " + player.getY() + ", Camera X: " + camera.getX() + ", Camera Y: " + camera.getY());
-		player.update();
-		level.update();
+		player.update(delta);
+		level.update(delta);
 		if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) stop();
 	}
 

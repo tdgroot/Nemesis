@@ -1,6 +1,5 @@
 package nl.tdegroot.games.nemesis.entity;
 
-import nl.tdegroot.games.nemesis.Camera;
 import nl.tdegroot.games.nemesis.gfx.Screen;
 import nl.tdegroot.games.nemesis.level.Level;
 import org.lwjgl.input.Keyboard;
@@ -14,18 +13,13 @@ public class Player extends Mob {
 	SpriteSheet spriteSheet;
 	Animation animation;
 
-	public Player(int x, int y, Level level) throws Exception {
-		super(x, y, level);
-		this.x = x * level.tileSize;
-		this.y = y * level.tileSize;
+	public Player(Image image, Level level, float x, float y, int width, int height) throws Exception {
+		super(image, level, x, y, width, height);
 		movementSpeed = 2.5f;
-		sprite = new Image("resources/textures/characters/birk_front.png");
-		spriteSheet = new SpriteSheet(new Image("resources/spritesheets/spritesheet_birk_anim.png"), 53, 64);
-//		animation = new Animation(spriteSheet, 0, 0, 477, 0, true, 50, true);
 		System.out.println("Player initialized. Player Width: " + getWidth() + ", Player Height: " + getHeight());
 	}
 
-	public void update() {
+	public void update(int delta) {
 
 		float xa = 0;
 		float ya = 0;
@@ -41,7 +35,12 @@ public class Player extends Mob {
 		} else {
 			isMoving = false;
 		}
-
+		
+		frame++;
+		
+		if (frame % (102 / delta) == 0) {
+			animIndex = ((animIndex + 1) % animCount);
+		}
 	}
 
 	public void render(Graphics g, Screen screen) {
