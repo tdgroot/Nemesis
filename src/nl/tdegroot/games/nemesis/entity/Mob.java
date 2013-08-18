@@ -1,8 +1,7 @@
 package nl.tdegroot.games.nemesis.entity;
 
+import nl.tdegroot.games.nemesis.gfx.Resources;
 import nl.tdegroot.games.nemesis.gfx.Screen;
-import nl.tdegroot.games.nemesis.level.Level;
-
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
 
@@ -10,7 +9,9 @@ public class Mob extends Entity {
 
 
 	protected SpriteSheet sheet;
-	
+
+	public static final Mob roach = new Roach(Resources.roach, 0, 0, 5, 5);
+
 	protected boolean isMoving = false;
 
 	public int dir = 0;
@@ -21,8 +22,12 @@ public class Mob extends Entity {
 
 	protected float movementSpeed = 0;
 
-	public Mob(Image image, Level level, float x, float y, int width, int height) {
-		super(image, level, x, y, width, height);
+	public Mob() {
+
+	}
+
+	public Mob(Image image, float x, float y, int width, int height) {
+		super(image, x, y, width, height);
 		animCount = (int) (image.getWidth() / width);
 		sheet = new SpriteSheet(image, width, height);
 	}
@@ -57,7 +62,7 @@ public class Mob extends Entity {
 			y = 0;
 		}
 
-		if (!collision(xa, ya)) {
+		if (! collision(xa, ya)) {
 			x += xa;
 			y += ya;
 		}
@@ -91,47 +96,36 @@ public class Mob extends Entity {
 	public void render(Screen screen) {
 		screen.renderMob(this);
 	}
-	
+
 	public SpriteSheet getSheet() {
 		return sheet;
 	}
 
-	
-	public Level getLevel() {
-		return level;
-	}
-
-	
-	public void setLevel(Level level) {
-		this.level = level;
-	}
-
-	
 	public float getMovementSpeed() {
 		return movementSpeed;
 	}
 
-	
+
 	public void setMovementSpeed(float movementSpeed) {
 		this.movementSpeed = movementSpeed;
 	}
 
-	
+
 	public boolean isMoving() {
 		return isMoving;
 	}
 
-	
+
 	public int getDir() {
 		return dir;
 	}
 
-	
+
 	public int getAnimIndex() {
 		return animIndex;
 	}
 
-	
+
 	public int getAnimType() {
 		return animType;
 	}

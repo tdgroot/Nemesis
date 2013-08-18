@@ -1,6 +1,7 @@
 package nl.tdegroot.games.nemesis;
 
 import nl.tdegroot.games.nemesis.entity.Player;
+import nl.tdegroot.games.nemesis.gfx.Resources;
 import nl.tdegroot.games.nemesis.gfx.Screen;
 import nl.tdegroot.games.nemesis.level.Level;
 import org.lwjgl.input.Keyboard;
@@ -8,7 +9,6 @@ import org.lwjgl.opengl.Display;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
@@ -19,6 +19,7 @@ public class Nemesis extends BasicGame {
 	private Player player;
 
 	private Camera camera;
+	private Resources resources;
 	private Screen screen;
 
 	public Nemesis() {
@@ -26,14 +27,12 @@ public class Nemesis extends BasicGame {
 	}
 
 	public void init(GameContainer gameContainer) throws SlickException {
+		resources = new Resources();
 		level = new Level("resources/levels/level1test.tmx");
-		try {
-			player = new Player(new Image("resources/spritesheets/birk_anim.png"), level, 45, 45, 53, 64);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		player = new Player(Resources.player, 45, 45, 53, 64);
 		camera = new Camera(player, new Vector2f(Display.getWidth(), Display.getHeight()), new Rectangle(0, 0, level.getPixelWidth(), level.getPixelHeight()));
 		screen = new Screen(camera);
+		player.init(level);
 	}
 
 	public void update(GameContainer gameContainer, int delta) throws SlickException {

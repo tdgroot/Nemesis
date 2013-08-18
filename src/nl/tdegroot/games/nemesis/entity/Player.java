@@ -1,7 +1,6 @@
 package nl.tdegroot.games.nemesis.entity;
 
 import nl.tdegroot.games.nemesis.gfx.Screen;
-import nl.tdegroot.games.nemesis.level.Level;
 import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
@@ -13,8 +12,8 @@ public class Player extends Mob {
 	SpriteSheet spriteSheet;
 	Animation animation;
 
-	public Player(Image image, Level level, float x, float y, int width, int height) throws Exception {
-		super(image, level, x, y, width, height);
+	public Player(Image image, float x, float y, int width, int height)  {
+		super(image, x, y, width, height);
 		movementSpeed = 2.5f;
 		System.out.println("Player initialized. Player Width: " + getWidth() + ", Player Height: " + getHeight());
 	}
@@ -35,9 +34,9 @@ public class Player extends Mob {
 		} else {
 			isMoving = false;
 		}
-		
+
 		frame++;
-		
+
 		if (frame % (102 / delta) == 0) {
 			animIndex = ((animIndex + 1) % animCount);
 		}
