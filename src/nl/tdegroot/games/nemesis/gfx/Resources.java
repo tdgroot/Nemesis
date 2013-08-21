@@ -1,5 +1,6 @@
 package nl.tdegroot.games.nemesis.gfx;
 
+import nl.tdegroot.games.nemesis.Log;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
@@ -11,9 +12,9 @@ public class Resources {
 	public Resources() {
 		try {
 			player = new Image("resources/spritesheets/birk_anim.png");
-			roach = new Image("resources/textures/mobs/roachy_north.png");
+			roach = new Image("resources/spritesheets/roach_anim.png");
 		} catch (SlickException e) {
-			e.printStackTrace();
+			Log.exception(e.getMessage());
 		}
 	}
 

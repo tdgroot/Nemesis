@@ -28,8 +28,8 @@ public class Nemesis extends BasicGame {
 
 	public void init(GameContainer gameContainer) throws SlickException {
 		resources = new Resources();
-		level = new Level("resources/levels/level1test.tmx");
-		player = new Player(Resources.player, 45, 45, 53, 64);
+		level = new Level("resources/levels/spawnerstest.tmx");
+		player = new Player(Resources.player, 37, 45, 53, 64);
 		camera = new Camera(player, new Vector2f(Display.getWidth(), Display.getHeight()), new Rectangle(0, 0, level.getPixelWidth(), level.getPixelHeight()));
 		screen = new Screen(camera);
 		player.init(level);

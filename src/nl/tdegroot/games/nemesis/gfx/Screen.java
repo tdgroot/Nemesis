@@ -1,6 +1,7 @@
 package nl.tdegroot.games.nemesis.gfx;
 
 import nl.tdegroot.games.nemesis.Camera;
+import nl.tdegroot.games.nemesis.Log;
 import nl.tdegroot.games.nemesis.entity.Entity;
 import nl.tdegroot.games.nemesis.entity.Mob;
 import nl.tdegroot.games.nemesis.entity.Player;
@@ -27,7 +28,11 @@ public class Screen {
 		int sectionWidth = (Display.getWidth() / tileSize) + 3;
 		int sectionHeight = (Display.getHeight() / tileSize) + 4;
 
-		map.render(x, y, sx, sy, sectionWidth, sectionHeight);
+		int tileLayer = map.getLayerIndex("tileLayer");
+		int objectLayer = map.getLayerIndex("objectLayer");
+
+		map.render(x, y, sx, sy, sectionWidth, sectionHeight, tileLayer, false);
+		map.render(x, y, sx, sy, sectionWidth, sectionHeight, objectLayer, false);
 	}
 
 	public void renderPlayer(Player player) {
@@ -40,7 +45,7 @@ public class Screen {
 	public void renderMob(Mob mob) {
 		SpriteSheet sheet = mob.getSheet();
 		sheet.startUse();
-		sheet.renderInUse((int) (mob.getX() - xOffset), (int) (camera.getYOffset() - yOffset), mob.getAnimIndex(), mob.getDir());
+		sheet.renderInUse((int) (mob.getX() - xOffset), (int) (mob.getY() - yOffset), mob.getAnimIndex(), mob.getDir());
 		sheet.endUse();
 	}
 

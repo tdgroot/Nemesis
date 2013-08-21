@@ -40,7 +40,7 @@ public class Entity {
 			y *= level.tileSize;
 	}
 
-	public void update() {
+	public void update(int delta) {
 	}
 
 	public void render(Graphics g, Screen screen) {

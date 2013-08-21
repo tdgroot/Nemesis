@@ -12,6 +12,7 @@ public class MobSpawner {
 	final protected List<Mob> mobs = new ArrayList<Mob>();
 
 	protected Level level;
+	final Random random = new Random();
 
 	protected final int x, y;
 
@@ -39,14 +40,12 @@ public class MobSpawner {
 
 	public int generateX() {
 		int randomX = 0;
-		Random random = new Random();
-		randomX = (x - maxRange) + random.nextInt(maxRange - minRange + 1) + minRange;
+		randomX = (x - maxRange) + random.nextInt(maxRange);
 		return randomX;
 	}
 
 	public int generateY() {
 		int randomY = 0;
-		Random random = new Random();
 		randomY = (y - maxRange) + random.nextInt(maxRange - minRange + 1) + minRange;
 		return randomY;
 	}

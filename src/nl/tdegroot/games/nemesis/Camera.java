@@ -1,5 +1,6 @@
 package nl.tdegroot.games.nemesis;
 
+import nl.tdegroot.games.nemesis.entity.Entity;
 import nl.tdegroot.games.nemesis.entity.Player;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
@@ -46,6 +47,12 @@ public class Camera {
 
 	public float getYOffset() {
 		return (size.getY() / 2) - (player.getHeight() / 2);
+	}
+
+	public boolean outOfRange(Entity entity) {
+		boolean oof = false;
+
+		return oof;
 	}
 	
 }

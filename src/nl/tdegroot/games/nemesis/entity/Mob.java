@@ -4,13 +4,15 @@ import nl.tdegroot.games.nemesis.gfx.Resources;
 import nl.tdegroot.games.nemesis.gfx.Screen;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.util.pathfinding.AStarPathFinder;
+import org.newdawn.slick.util.pathfinding.Mover;
+import org.newdawn.slick.util.pathfinding.Path;
+import org.newdawn.slick.util.pathfinding.PathFinder;
 
 public class Mob extends Entity {
 
 
 	protected SpriteSheet sheet;
-
-	public static final Mob roach = new Roach(Resources.roach, 0, 0, 5, 5);
 
 	protected boolean isMoving = false;
 
@@ -33,8 +35,12 @@ public class Mob extends Entity {
 	}
 
 	public void update(int delta) {
-		if (frame % (102 / delta) == 0) {
-			animIndex = ((animIndex + 1) % animCount);
+		AStarPathFinder pathFinder = new AStarPathFinder(level, 100, true);
+
+		if (isMoving) {
+			if (frame % (102 / delta) == 0) {
+				animIndex = ((animIndex + 1) % animCount);
+			}
 		}
 	}
 
@@ -74,23 +80,14 @@ public class Mob extends Entity {
 		for (int c = 0; c < 4; c++) {
 			int xt = (int) ((x + xa) + c % 2 * 38 - 17) / level.tileSize;
 			int yt = (int) ((y + ya) + c / 2 * 20 + 10) / level.tileSize;
-			if (isSolid(xt, yt))
+			if (level.isSolid(xt, yt))
 				solid = true;
 		}
 		return solid;
 	}
 
 	private boolean isSolid(int x, int y) {
-		boolean solid = false;
-		try {
-			int tileID = level.getMap().getTileId(x, y, 0);
-			String solidTile = level.getMap().getTileProperty(tileID, "solid", "false");
-			solid = Boolean.parseBoolean(solidTile);
-		} catch (Exception e) {
-			solid = true;
-			System.out.println("Trying to access: " + x + ", " + y + " on map: " + level.getMap().getWidth() + ", " + level.getMap().getHeight());
-		}
-		return solid;
+		return level.isSolid(x, y);
 	}
 
 	public void render(Screen screen) {
