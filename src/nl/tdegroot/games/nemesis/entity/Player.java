@@ -14,7 +14,7 @@ public class Player extends Mob {
 	Animation animation;
 
 	public Player(Image image, float x, float y, int width, int height) {
-		super(image, x, y, width, height);
+		super(image, x, y, width, height, 0);
 		movementSpeed = 2.5f;
 		Log.log("Player initialized. Player Width: " + getWidth() + ", Player Height: " + getHeight());
 	}
@@ -39,7 +39,7 @@ public class Player extends Mob {
 		frame++;
 
 		if (isMoving) {
-			if (frame % (102 / delta) == 0) {
+			if (frame % (50 / delta) == 0) {
 				animIndex = ((animIndex + 1) % animCount);
 			}
 		}

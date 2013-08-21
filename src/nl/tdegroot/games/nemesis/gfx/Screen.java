@@ -1,13 +1,11 @@
 package nl.tdegroot.games.nemesis.gfx;
 
 import nl.tdegroot.games.nemesis.Camera;
-import nl.tdegroot.games.nemesis.Log;
 import nl.tdegroot.games.nemesis.entity.Entity;
 import nl.tdegroot.games.nemesis.entity.Mob;
 import nl.tdegroot.games.nemesis.entity.Player;
 
 import org.lwjgl.opengl.Display;
-import org.newdawn.slick.Animation;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.tiled.TiledMap;
 

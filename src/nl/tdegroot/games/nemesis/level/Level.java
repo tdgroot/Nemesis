@@ -49,7 +49,8 @@ public class Level implements TileBasedMap {
 					String spawner = map.getObjectProperty(MapLayer.MAP_LAYER_SPAWNERS, i, "spawner", "");
 
 					if (spawner != "") {
-						spawners.add(getSpawner(spawner, xx, yy));
+						spawners.add(getSpawner(spawner, xx, yy, i));
+						Log.log("Spawner created with ID: " + i);
 					}
 
 				}
@@ -86,11 +87,11 @@ public class Level implements TileBasedMap {
 
 	}
 
-	public MobSpawner getSpawner(String type, int x, int y) {
+	public MobSpawner getSpawner(String type, int x, int y, int i) {
 		MobSpawner spawner = null;
 		switch (type) {
 			case "roach":
-				spawner = new RoachSpawner(this, x, y);
+				spawner = new RoachSpawner(this, x, y, i);
 				break;
 		}
 		return spawner;
@@ -119,6 +120,10 @@ public class Level implements TileBasedMap {
 	public int getPixelHeight() {
 		return map.getHeight() * map.getTileHeight();
 	}
+	
+	public int getTileSize() {
+		return tileSize;
+	}
 
 	@Override
 	public int getWidthInTiles() {
@@ -135,12 +140,13 @@ public class Level implements TileBasedMap {
 	}
 
 	@Override
-	public boolean blocked(PathFindingContext pathFindingContext, int i, int i2) {
+	public boolean blocked(PathFindingContext pathFindingContext, int x, int y) {
+//		return collisionMap.isSolid(x, y);
 		return false;
 	}
 
 	@Override
 	public float getCost(PathFindingContext pathFindingContext, int i, int i2) {
-		return 0;
+		return 1.0F;
 	}
 }

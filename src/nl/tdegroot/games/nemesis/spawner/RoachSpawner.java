@@ -6,21 +6,19 @@ import nl.tdegroot.games.nemesis.entity.Roach;
 import nl.tdegroot.games.nemesis.gfx.Resources;
 import nl.tdegroot.games.nemesis.level.Level;
 
-import java.util.Random;
-
 public class RoachSpawner extends MobSpawner {
 
-	public RoachSpawner(Level level, int x, int y) {
-		super(level, x, y);
+	public RoachSpawner(Level level, int x, int y, int spawnerID) {
+		super(level, x, y, spawnerID);
 		spawnTime = 5000 / 59;
-		maxMobs = 5;
+		maxMobs = 1;
 		minRange = 1;
 		maxRange = 15;
 	}
 
 	public void update() {
 		timer++;
-		if (timer == spawnTime && mobs.size() < maxMobs) {
+		if (timer == spawnTime && mobsAlive < maxMobs) {
 			spawnMob();
 			timer = 0;
 		}
@@ -28,12 +26,11 @@ public class RoachSpawner extends MobSpawner {
 	}
 
 	public void spawnMob() {
-		Mob mob = new Roach(Resources.roach, 0, 0, 64, 59);
-		mob.setX(generateX());
-		mob.setY(generateY());
+		mobsSpawned++;
+		Mob mob = new Roach(Resources.roach, generateX(), generateY(), 64, 59, mobsSpawned);
 		mob.init(level);
 		addMob(mob);
-		Log.log("Spawned a new mob at: " + mob.getX() + ", " + mob.getY());
+		Log.log("Spawned a new mob at: " + mob.getX() / level.getTileSize() + ", " + mob.getY() / level.getTileSize());
 	}
 
 }

@@ -30,7 +30,7 @@
  </tileset>
  <layer name="tileLayer" width="50" height="50">
   <data encoding="base64" compression="gzip">
-   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
+   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
   </data>
  </layer>
  <layer name="objectLayer" width="50" height="50">
@@ -38,18 +38,7 @@
    H4sIAAAAAAAAC+3YMQ0AMAwDwXQuf77l0MFRlDsEL3lzFQBk3O4AIOZ0B/DNdgAAAMBmvhEAgPkeB5jdkBAnAAA=
   </data>
  </layer>
- <objectgroup name="Spawners" width="50" height="50">
-  <object name="Roach Spawner" type="Spawner" x="640" y="1792" width="64" height="64">
-   <properties>
-    <property name="spawner" value="roach"/>
-   </properties>
-  </object>
-  <object name="Roach Spawner" type="Spawner" x="896" y="512" width="64" height="64">
-   <properties>
-    <property name="spawner" value="roach"/>
-   </properties>
-  </object>
- </objectgroup>
+ <objectgroup name="Spawners" width="50" height="50"/>
  <objectgroup name="Collision" width="50" height="50">
   <object x="1728" y="1216" width="640" height="192"/>
   <object x="2240" y="1280" width="192" height="192"/>
@@ -80,5 +69,6 @@
   <object x="1792" y="896" width="512" height="64"/>
   <object x="1728" y="960" width="576" height="64"/>
   <object x="0" y="1216" width="1536" height="192"/>
+  <object x="2496" y="640" width="128" height="320"/>
  </objectgroup>
 </map>
