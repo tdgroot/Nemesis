@@ -1,6 +1,5 @@
 package nl.tdegroot.games.nemesis;
 
-import org.lwjgl.opengl.Display;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
 
