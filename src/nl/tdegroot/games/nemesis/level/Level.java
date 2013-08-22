@@ -4,6 +4,7 @@ import nl.tdegroot.games.nemesis.Log;
 import nl.tdegroot.games.nemesis.entity.Entity;
 import nl.tdegroot.games.nemesis.entity.Mob;
 import nl.tdegroot.games.nemesis.entity.Player;
+import nl.tdegroot.games.nemesis.entity.projectile.Projectile;
 import nl.tdegroot.games.nemesis.gfx.Screen;
 import nl.tdegroot.games.nemesis.spawner.MobSpawner;
 import nl.tdegroot.games.nemesis.spawner.RoachSpawner;
@@ -25,6 +26,7 @@ public class Level implements TileBasedMap {
 	private List<MobSpawner> spawners = new ArrayList<MobSpawner>();
 	private List<Entity> entities = new ArrayList<Entity>();
 	private List<Mob> mobs = new ArrayList<Mob>();
+	private List<Projectile> projectiles = new ArrayList<Projectile>();
 
 	public Level(String path) throws SlickException {
 		map = new TiledMap(path);
@@ -71,6 +73,10 @@ public class Level implements TileBasedMap {
 		for (int i = 0; i < mobs.size(); i++) {
 			mobs.get(i).update(delta);
 		}
+
+		for (int i = 0; i < projectiles.size(); i++) {
+			projectiles.get(i).update(delta);
+		}
 	}
 
 	public void render(Graphics g, float xOffset, float yOffset, Screen screen, Player player) {
@@ -85,6 +91,12 @@ public class Level implements TileBasedMap {
 			mobs.get(i).render(screen);
 		}
 
+		for (int i = 0; i < projectiles.size(); i++) {
+			projectiles.get(i).render(screen);
+		}
+
+		Log.log(projectiles.size() + " Projectiles");
+
 	}
 
 	public MobSpawner getSpawner(String type, int x, int y, int i) {
@@ -97,7 +109,7 @@ public class Level implements TileBasedMap {
 		return spawner;
 	}
 
-	public boolean isSolid(int x, int y) {
+	public boolean isSolid(int x, int y) throws ArrayIndexOutOfBoundsException {
 		return collisionMap.isSolid(x, y);
 	}
 
@@ -107,6 +119,14 @@ public class Level implements TileBasedMap {
 
 	public void addMob(Mob mob) {
 		mobs.add(mob);
+	}
+
+	public void addProjectile(Projectile projectile) {
+		projectiles.add(projectile);
+	}
+
+	public void removeProjectile(Projectile projectile) {
+
 	}
 
 	public TiledMap getMap() {
@@ -120,7 +140,7 @@ public class Level implements TileBasedMap {
 	public int getPixelHeight() {
 		return map.getHeight() * map.getTileHeight();
 	}
-	
+
 	public int getTileSize() {
 		return tileSize;
 	}
@@ -141,12 +161,15 @@ public class Level implements TileBasedMap {
 
 	@Override
 	public boolean blocked(PathFindingContext pathFindingContext, int x, int y) {
-//		return collisionMap.isSolid(x, y);
-		return false;
+		return collisionMap.isSolid(x, y);
 	}
 
 	@Override
 	public float getCost(PathFindingContext pathFindingContext, int i, int i2) {
 		return 1.0F;
+	}
+
+	public List<Projectile> getProjectiles() {
+		return projectiles;
 	}
 }

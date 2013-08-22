@@ -23,14 +23,14 @@
   <image source="../spritesheets/ambient.png" trans="ff00ff" width="800" height="600"/>
  </tileset>
  <tileset firstgid="667" name="birk_anim" tilewidth="64" tileheight="64">
-  <image source="../spritesheets/birk_anim.png" trans="ff00ff" width="530" height="640"/>
+  <image source="../spritesheets/birk_anim.png" trans="ff00ff" width="1060" height="640"/>
  </tileset>
- <tileset firstgid="747" name="homeboy" tilewidth="64" tileheight="64">
+ <tileset firstgid="827" name="homeboy" tilewidth="64" tileheight="64">
   <image source="../spritesheets/homeboy.png" trans="ff00ff" width="64" height="128"/>
  </tileset>
  <layer name="tileLayer" width="50" height="50">
   <data encoding="base64" compression="gzip">
-   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
+   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
   </data>
  </layer>
  <layer name="objectLayer" width="50" height="50">
@@ -38,8 +38,17 @@
    H4sIAAAAAAAAC+3YMQ0AMAwDwXQuf77l0MFRlDsEL3lzFQBk3O4AIOZ0B/DNdgAAAMBmvhEAgPkeB5jdkBAnAAA=
   </data>
  </layer>
- <objectgroup name="Spawners" width="50" height="50"/>
- <objectgroup name="Collision" width="50" height="50">
+ <objectgroup name="Player" width="50" height="50">
+  <object name="Player Spawn" type="Player Spawn" x="832" y="704" width="64" height="64"/>
+ </objectgroup>
+ <objectgroup name="Spawners" width="50" height="50">
+  <object name="Roach Spawner" type="Spawner" x="1600" y="1088" width="64" height="64">
+   <properties>
+    <property name="spawner" value="roach"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup color="#575759" name="Collision" width="50" height="50">
   <object x="1728" y="1216" width="640" height="192"/>
   <object x="2240" y="1280" width="192" height="192"/>
   <object x="2304" y="1344" width="256" height="192"/>
@@ -54,8 +63,6 @@
   <object x="2624" y="2112" width="576" height="192"/>
   <object x="2560" y="2304" width="640" height="256"/>
   <object x="2496" y="2560" width="704" height="320"/>
-  <object x="2432" y="2880" width="768" height="256"/>
-  <object x="2368" y="3136" width="832" height="64"/>
   <object x="2176" y="64" width="320" height="64"/>
   <object x="2048" y="128" width="512" height="64"/>
   <object x="2048" y="192" width="576" height="64"/>
@@ -70,5 +77,12 @@
   <object x="1728" y="960" width="576" height="64"/>
   <object x="0" y="1216" width="1536" height="192"/>
   <object x="2496" y="640" width="128" height="320"/>
+  <object type="Collision" x="2432" y="2880" width="768" height="64"/>
+  <object type="Collision" x="2432" y="2944" width="576" height="192"/>
+  <object type="Collision" x="2368" y="3136" width="640" height="128"/>
+  <object x="960" y="832" width="64" height="64"/>
+  <object x="1664" y="960" width="64" height="64"/>
+  <object x="1344" y="2368" width="64" height="64"/>
+  <object x="832" y="512" width="64" height="64"/>
  </objectgroup>
 </map>

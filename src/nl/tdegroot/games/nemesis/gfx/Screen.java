@@ -1,11 +1,11 @@
 package nl.tdegroot.games.nemesis.gfx;
 
-import nl.tdegroot.games.nemesis.Camera;
 import nl.tdegroot.games.nemesis.entity.Entity;
 import nl.tdegroot.games.nemesis.entity.Mob;
 import nl.tdegroot.games.nemesis.entity.Player;
-
+import nl.tdegroot.games.nemesis.entity.projectile.Projectile;
 import org.lwjgl.opengl.Display;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.tiled.TiledMap;
 
@@ -13,9 +13,11 @@ public class Screen {
 
 	private float xOffset, yOffset;
 	private Camera camera;
+	private Graphics graphics;
 
-	public Screen(Camera camera) {
+	public Screen(Camera camera, Graphics g) {
 		this.camera = camera;
+		this.graphics = g;
 	}
 
 	public void renderMap(TiledMap map, int tileSize) {
@@ -45,6 +47,10 @@ public class Screen {
 		sheet.startUse();
 		sheet.renderInUse((int) (mob.getX() - xOffset), (int) (mob.getY() - yOffset), mob.getAnimIndex(), mob.getDir());
 		sheet.endUse();
+	}
+
+	public void renderProjectile(Projectile projectile) {
+		graphics.fillRect(projectile.getX() - xOffset, projectile.getY() - yOffset, 5, 10);
 	}
 
 	public void renderEntity(Entity entity) {

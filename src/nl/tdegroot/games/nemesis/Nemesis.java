@@ -1,6 +1,7 @@
 package nl.tdegroot.games.nemesis;
 
 import nl.tdegroot.games.nemesis.entity.Player;
+import nl.tdegroot.games.nemesis.gfx.Camera;
 import nl.tdegroot.games.nemesis.gfx.Resources;
 import nl.tdegroot.games.nemesis.gfx.Screen;
 import nl.tdegroot.games.nemesis.level.Level;
@@ -21,6 +22,7 @@ public class Nemesis extends BasicGame {
 	private Camera camera;
 	@SuppressWarnings("unused")
 	private Resources resources;
+	InputHandler input;
 	private Screen screen;
 
 	public Nemesis() {
@@ -30,10 +32,12 @@ public class Nemesis extends BasicGame {
 	public void init(GameContainer gameContainer) throws SlickException {
 		resources = new Resources();
 		level = new Level("resources/levels/spawnerstest.tmx");
-		player = new Player(Resources.player, 29, 17, 53, 64);
+		player = new Player(Resources.player, 48, 47, 53, 64);
 		camera = new Camera(player, new Vector2f(Display.getWidth(), Display.getHeight()), new Rectangle(0, 0, level.getPixelWidth(), level.getPixelHeight()));
-		screen = new Screen(camera);
-		player.init(level);
+		screen = new Screen(camera, gameContainer.getGraphics());
+		input = new InputHandler();
+		gameContainer.getInput().addMouseListener(input);
+		player.initPlayer(level);
 	}
 
 	public void update(GameContainer gameContainer, int delta) throws SlickException {

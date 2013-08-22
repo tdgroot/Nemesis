@@ -1,4 +1,4 @@
-package nl.tdegroot.games.nemesis;
+package nl.tdegroot.games.nemesis.gfx;
 
 import nl.tdegroot.games.nemesis.entity.Entity;
 import nl.tdegroot.games.nemesis.entity.Player;
@@ -54,5 +54,5 @@ public class Camera {
 
 		return oof;
 	}
-	
+
 }

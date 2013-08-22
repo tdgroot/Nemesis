@@ -1,17 +1,16 @@
 package nl.tdegroot.games.nemesis.spawner;
 
-import java.util.Random;
-
-import nl.tdegroot.games.nemesis.Log;
 import nl.tdegroot.games.nemesis.entity.Mob;
 import nl.tdegroot.games.nemesis.level.Level;
+
+import java.util.Random;
 
 public class MobSpawner {
 
 	protected Level level;
-	final Random random = new Random();
+	Random random = new Random();
 
-	protected final int x, y;
+	private final int x, y;
 
 	protected int spawnerID = 0;
 
@@ -38,18 +37,24 @@ public class MobSpawner {
 	public void addMob(Mob mob) {
 		mobsAlive++;
 		level.addMob(mob);
-		Log.log("Spawned a mob with ID: " + spawnerID + "||" + mob.getID());
+//		Log.log("Spawned a mob with ID: " + spawnerID + "||" + mob.getID());
 	}
 
 	public int generateX() {
 		int randomX = 0;
-		randomX = (x - maxRange) + random.nextInt(maxRange);
+		randomX = random.nextInt(30);
+		while (randomX < 0 || randomX > level.getWidthInTiles()) {
+			randomX = random.nextInt(30);
+		}
 		return randomX;
 	}
 
 	public int generateY() {
 		int randomY = 0;
-		randomY = (y - maxRange) + random.nextInt(maxRange - minRange + 1) + minRange;
+		randomY = random.nextInt(30);
+		while (randomY < 0 || randomY > level.getHeightInTiles()) {
+			randomY = random.nextInt(30);
+		}
 		return randomY;
 	}
 

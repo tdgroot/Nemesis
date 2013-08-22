@@ -2,6 +2,7 @@ package nl.tdegroot.games.nemesis.entity;
 
 import nl.tdegroot.games.nemesis.gfx.Screen;
 import nl.tdegroot.games.nemesis.level.Level;
+import nl.tdegroot.games.nemesis.level.MapLayer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
@@ -14,6 +15,7 @@ public class Entity {
 
 	protected int width = 0;
 	protected int height = 0;
+	protected boolean removed = false;
 
 	public Entity() {
 
@@ -31,13 +33,31 @@ public class Entity {
 		positionate();
 	}
 
+	public void initPlayer(Level level) {
+		setLevel(level);
+		positionatePlayer();
+	}
 
 
-	public void positionate() {
-		if (! (x <= 0))
-			x *= level.tileSize;
-		if (! (y <= 0))
-			y *= level.tileSize;
+	private void positionate() {
+		x *= level.tileSize;
+		y *= level.tileSize;
+	}
+
+	private void positionatePlayer() {
+		float x = (float) level.getMap().getObjectX(MapLayer.MAP_LAYER_PLAYER, 0) + level.getMap().getObjectWidth(MapLayer.MAP_LAYER_PLAYER, 0);
+		float y = (float) level.getMap().getObjectY(MapLayer.MAP_LAYER_PLAYER, 0) + level.getMap().getObjectHeight(MapLayer.MAP_LAYER_PLAYER, 0);
+
+		this.x = x;
+		this.y = y;
+	}
+
+	public void remove() {
+		removed = true;
+	}
+
+	public boolean isRemoved() {
+		return removed;
 	}
 
 	public void update(int delta) {
@@ -50,7 +70,6 @@ public class Entity {
 	public Level getLevel() {
 		return level;
 	}
-
 
 	public void setLevel(Level level) {
 		this.level = level;

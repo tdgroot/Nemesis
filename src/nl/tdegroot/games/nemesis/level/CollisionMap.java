@@ -7,7 +7,7 @@ public class CollisionMap {
 	private boolean[][] solid;
 
 	public CollisionMap(TiledMap map, int tileSize) {
-		solid = new boolean[map.getWidth()][map.getHeight()];
+		solid = new boolean[map.getWidth() + 1][map.getHeight() + 1];
 
 		for (int i = 0; i <= map.getObjectCount(MapLayer.MAP_LAYER_COLLISION); i++) {
 
@@ -24,7 +24,7 @@ public class CollisionMap {
 		}
 	}
 
-	public boolean isSolid(int x, int y) {
+	public boolean isSolid(int x, int y) throws ArrayIndexOutOfBoundsException {
 		return solid[x][y];
 	}
 

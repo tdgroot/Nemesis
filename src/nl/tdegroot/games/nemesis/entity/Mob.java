@@ -1,13 +1,16 @@
 package nl.tdegroot.games.nemesis.entity;
 
 import nl.tdegroot.games.nemesis.Log;
+import nl.tdegroot.games.nemesis.entity.projectile.Arrow;
+import nl.tdegroot.games.nemesis.entity.projectile.Projectile;
 import nl.tdegroot.games.nemesis.gfx.Screen;
 import nl.tdegroot.games.nemesis.level.Level;
-
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.util.pathfinding.AStarPathFinder;
 import org.newdawn.slick.util.pathfinding.Path;
+
+import java.util.Random;
 
 public class Mob extends Entity {
 
@@ -15,7 +18,8 @@ public class Mob extends Entity {
 	private AStarPathFinder pathFinder;
 	private Path destination;
 
-	protected boolean isMoving = false;
+	protected boolean isWalking = false;
+	protected boolean wasWalking = false;
 	protected boolean hasDestination = false;
 
 	protected int mobID = 0;
@@ -26,9 +30,20 @@ public class Mob extends Entity {
 	public int animType = 0;
 	public int frame = 0;
 
+	protected int collisionMulX = 0;
+	protected int collisionMulY = 0;
+	protected int collisionAddX = 0;
+	protected int collisionAddY = 0;
+
 	protected float movementSpeed = 0;
 
-	public Mob(Image image, float x, float y, int width, int height, int mobID) {
+	public Mob(Image image, float x, float y, int width, int height) {
+		super(image, x, y, width, height);
+		animCount = (int) (image.getWidth() / width);
+		sheet = new SpriteSheet(image, width, height);
+	}
+
+	public Mob(Image image, float x, float y, int width, int height, int mobID, int spawnerID) {
 		super(image, x, y, width, height);
 		animCount = (int) (image.getWidth() / width);
 		sheet = new SpriteSheet(image, width, height);
@@ -37,20 +52,20 @@ public class Mob extends Entity {
 
 	public void init(Level level) {
 		super.init(level);
-		pathFinder = new AStarPathFinder(level, 100, true);
+		pathFinder = new AStarPathFinder(level, 50, true);
 	}
 
 	public void update(int delta) {
-		destination = getDestination(7, 7);
+		Random random = new Random();
+		if (! hasDestination)
+			destination = getDestination(random.nextInt(10), random.nextInt(10));
 
-		Log.log("Move to: " + destination.getX(1) + "," + destination.getY(1) + ".");
+		float xa = (x / level.getTileSize() - destination.getX(1)) * (movementSpeed / 50);
+		float ya = (y / level.getTileSize() - destination.getY(1)) * (movementSpeed / 50);
 
-		float xa = x / 64 - destination.getX(1);
-		float ya = y / 64 - destination.getY(1);
+//		move(xa * level.getTileSize(), ya * level.getTileSize());
 
-		move(xa, ya);
-
-		if (isMoving) {
+		if (isWalking) {
 			if (frame % (102 / delta) == 0) {
 				animIndex = ((animIndex + 1) % animCount);
 			}
@@ -73,6 +88,8 @@ public class Mob extends Entity {
 		if (xa < 0)
 			dir = 3;
 
+		Log.log("Direction = " + getDir());
+
 		if (x < 0) {
 			x = 0;
 		}
@@ -81,19 +98,37 @@ public class Mob extends Entity {
 			y = 0;
 		}
 
-		if (!collision(xa, ya)) {
+		if (! collision(xa, ya)) {
 			x += xa;
 			y += ya;
 		}
 
 	}
 
+	protected void shoot(float x, float y, double dir) {
+		Projectile projectile = new Arrow(x, y, dir);
+		level.addProjectile(projectile);
+	}
+
 	protected boolean collision(float xa, float ya) {
 		boolean solid = false;
+		if (x + getWidth() / 2 - 2 > level.getPixelWidth()) {
+			x = level.getPixelWidth() - getWidth() / 2;
+			solid = true;
+		}
+		if (y + getHeight() / 2 - 2 > level.getPixelHeight()) {
+			y = level.getPixelHeight() - getHeight() / 2;
+			solid = true;
+		}
 		for (int c = 0; c < 4; c++) {
-			int xt = (int) ((x + xa) + c % 2 * 38 - 30) / level.tileSize;
-			int yt = (int) ((y + ya) + c / 2 * 20 + 9) / level.tileSize;
-			solid = level.isSolid(xt, yt);
+			int xt = (int) ((x + xa) + c % 2 * collisionMulX - collisionAddX) / level.tileSize;
+			int yt = (int) ((y + ya) + c / 2 * collisionMulY + collisionAddY) / level.tileSize;
+			try {
+				if (level.isSolid(xt, yt))
+					solid = true;
+			} catch (ArrayIndexOutOfBoundsException e) {
+				Log.exception(e.getMessage());
+			}
 		}
 		return solid;
 	}
@@ -127,7 +162,7 @@ public class Mob extends Entity {
 	}
 
 	public boolean isMoving() {
-		return isMoving;
+		return isWalking;
 	}
 
 	public int getDir() {
