@@ -15,6 +15,7 @@ import org.newdawn.slick.util.pathfinding.PathFindingContext;
 import org.newdawn.slick.util.pathfinding.TileBasedMap;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Level implements TileBasedMap {
@@ -62,6 +63,8 @@ public class Level implements TileBasedMap {
 	}
 
 	public void update(int delta) {
+		clear();
+
 		for (int i = 0; i < spawners.size(); i++) {
 			spawners.get(i).update();
 		}
@@ -76,6 +79,51 @@ public class Level implements TileBasedMap {
 
 		for (int i = 0; i < projectiles.size(); i++) {
 			projectiles.get(i).update(delta);
+		}
+
+		checkProjectiles();
+	}
+
+	public void clear() {
+		for (int i = 0; i < mobs.size(); i++) {
+			Mob mob = mobs.get(i);
+			boolean removeSpawner = false;
+			if (mob.isRemoved()) {
+				int spawnerID = mob.getSpawnerID();
+				int mobID = mob.getID();
+				mobs.remove(i);
+				for (int j = 0; j < spawners.size(); j++) {
+					MobSpawner spawner = spawners.get(j);
+					if (spawner.getID() == spawnerID) {
+						spawner.removeMob();
+					}
+				}
+			}
+		}
+
+		for (int i = 0; i < projectiles.size(); i++) {
+			Projectile p = projectiles.get(i);
+			if (p.isRemoved()) {
+				projectiles.remove(i);
+			}
+		}
+	}
+
+	public void checkProjectiles() {
+		Iterator<Projectile> pIterator = projectiles.iterator();
+		while (pIterator.hasNext()) {
+			Projectile p = pIterator.next();
+			Iterator<Mob> mobIterator = mobs.iterator();
+			while (mobIterator.hasNext()) {
+				Mob mob = mobIterator.next();
+				if (p.getAreaOfEffect().intersects(mob.getVulnerability()) && ! p.isRemoved()) {
+					if (mob.hit(p)) {
+						p.getPlayer().mobKilled();
+					}
+					p.remove();
+					Log.log("Hit: Mob ID: " + mob.getID() + ", Damage: " + p.getDamage() + ", Mob's Health: " + mob.getHealth());
+				}
+			}
 		}
 	}
 
@@ -94,8 +142,6 @@ public class Level implements TileBasedMap {
 		for (int i = 0; i < projectiles.size(); i++) {
 			projectiles.get(i).render(screen);
 		}
-
-		Log.log(projectiles.size() + " Projectiles");
 
 	}
 
@@ -145,26 +191,21 @@ public class Level implements TileBasedMap {
 		return tileSize;
 	}
 
-	@Override
 	public int getWidthInTiles() {
 		return map.getWidth();
 	}
 
-	@Override
 	public int getHeightInTiles() {
 		return map.getHeight();
 	}
 
-	@Override
 	public void pathFinderVisited(int i, int i2) {
 	}
 
-	@Override
 	public boolean blocked(PathFindingContext pathFindingContext, int x, int y) {
 		return collisionMap.isSolid(x, y);
 	}
 
-	@Override
 	public float getCost(PathFindingContext pathFindingContext, int i, int i2) {
 		return 1.0F;
 	}

@@ -9,7 +9,7 @@ public class RoachSpawner extends MobSpawner {
 
 	public RoachSpawner(Level level, int x, int y, int spawnerID) {
 		super(level, x, y, spawnerID);
-		spawnTime = 5000 / 59;
+		spawnTime = 10000 / 59;
 		maxMobs = 25;
 		minRange = 1;
 		maxRange = 15;
@@ -21,7 +21,6 @@ public class RoachSpawner extends MobSpawner {
 			spawnMob();
 			timer = 0;
 		}
-		// Log.log("Amount of roaches: " + mobs.size());
 	}
 
 	public void spawnMob() {

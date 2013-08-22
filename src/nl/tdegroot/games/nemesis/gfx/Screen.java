@@ -28,11 +28,7 @@ public class Screen {
 		int sectionWidth = (Display.getWidth() / tileSize) + 3;
 		int sectionHeight = (Display.getHeight() / tileSize) + 4;
 
-		int tileLayer = map.getLayerIndex("tileLayer");
-		int objectLayer = map.getLayerIndex("objectLayer");
-
-		map.render(x, y, sx, sy, sectionWidth, sectionHeight, tileLayer, false);
-		map.render(x, y, sx, sy, sectionWidth, sectionHeight, objectLayer, false);
+		map.render(x, y, sx, sy, sectionWidth, sectionHeight);
 	}
 
 	public void renderPlayer(Player player) {
@@ -50,7 +46,8 @@ public class Screen {
 	}
 
 	public void renderProjectile(Projectile projectile) {
-		graphics.fillRect(projectile.getX() - xOffset, projectile.getY() - yOffset, 5, 10);
+		projectile.getSprite().setRotation((float) Math.toDegrees(- projectile.getAngle()) - 180.0f);
+		projectile.getSprite().drawCentered(projectile.getX() - xOffset, projectile.getY() - yOffset);
 	}
 
 	public void renderEntity(Entity entity) {
@@ -60,6 +57,5 @@ public class Screen {
 		this.xOffset = xOffset;
 		this.yOffset = yOffset;
 	}
-
 
 }

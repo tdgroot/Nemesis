@@ -54,6 +54,7 @@ public class Nemesis extends BasicGame {
 		float yOffset = player.getY() - Display.getHeight() / 2;
 		level.render(g, xOffset, yOffset, screen, player);
 		player.render(g, screen);
+		g.drawString("Mobs Killed: " + player.getKills(), 100, 10);
 	}
 
 	private synchronized void stop() {

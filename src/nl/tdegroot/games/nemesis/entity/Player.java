@@ -2,6 +2,7 @@ package nl.tdegroot.games.nemesis.entity;
 
 import nl.tdegroot.games.nemesis.InputHandler;
 import nl.tdegroot.games.nemesis.Log;
+import nl.tdegroot.games.nemesis.entity.projectile.Arrow;
 import nl.tdegroot.games.nemesis.entity.projectile.Projectile;
 import nl.tdegroot.games.nemesis.gfx.Screen;
 import org.lwjgl.input.Keyboard;
@@ -16,6 +17,9 @@ public class Player extends Mob {
 	SpriteSheet spriteSheet;
 	Animation animation;
 
+	private int fireRate = 0;
+	private int mobsKilled = 0;
+
 	public Player(Image image, float x, float y, int width, int height) {
 		super(image, x, y, width, height);
 		movementSpeed = 2.5f;
@@ -23,6 +27,8 @@ public class Player extends Mob {
 	}
 
 	public void update(int delta) {
+		if (fireRate > 0)
+			fireRate--;
 
 		float xa = 0;
 		float ya = 0;
@@ -67,11 +73,12 @@ public class Player extends Mob {
 	}
 
 	private void pollShoot() {
-		if (InputHandler.getMouseB() == 0) {
+		if (InputHandler.getMouseB() == 0 && fireRate <= 0) {
 			double dx = (InputHandler.getMouseX() - Display.getWidth() / 2);
 			double dy = (InputHandler.getMouseY() - Display.getHeight() / 2);
 			double dir = Math.atan2(dx, dy);
-			shoot(x, y, dir);
+			shoot(x, y, dir, this);
+			fireRate = Arrow.FIRE_RATE;
 			Log.log("Shot!");
 		}
 	}
@@ -95,7 +102,15 @@ public class Player extends Mob {
 		return solid;
 	}
 
+	public void mobKilled() {
+		mobsKilled++;
+	}
+
 	public void render(Graphics g, Screen screen) {
 		screen.renderPlayer(this);
+	}
+
+	public int getKills() {
+		return mobsKilled;
 	}
 }

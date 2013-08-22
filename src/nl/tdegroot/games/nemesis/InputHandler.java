@@ -36,7 +36,7 @@ public class InputHandler implements MouseListener {
 	}
 
 	public void mouseReleased(int button, int y, int x) {
-		mouseB = -1;
+		mouseB = - 1;
 	}
 
 	public void mouseMoved(int oldX, int oldY, int newX, int newY) {

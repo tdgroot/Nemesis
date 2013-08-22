@@ -1,14 +1,20 @@
 package nl.tdegroot.games.nemesis.entity.projectile;
 
+import nl.tdegroot.games.nemesis.entity.Player;
+import nl.tdegroot.games.nemesis.gfx.Resources;
 import nl.tdegroot.games.nemesis.gfx.Screen;
 
 public class Arrow extends Projectile {
 
-	public Arrow(float x, float y, double dir) {
-		super(x, y, dir);
+	public static final int FIRE_RATE = 15;
+
+	public Arrow(float x, float y, double dir, Player player) {
+		super(x, y, dir, player);
 		range = 650;
-		speed = 4.0f;
-		damage = 20.0d;
+		speed = 10.0f;
+		damage = 100.0d;
+
+		setSprite(Resources.arrow);
 
 		nx = speed * Math.sin(angle);
 		ny = speed * Math.cos(angle);
@@ -16,6 +22,7 @@ public class Arrow extends Projectile {
 
 	public void update(int delta) {
 		move();
+		aoe.setLocation(x, y);
 	}
 
 	public void move() {

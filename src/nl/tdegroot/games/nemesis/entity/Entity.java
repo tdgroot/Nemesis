@@ -95,6 +95,10 @@ public class Entity {
 		return sprite;
 	}
 
+	public void setSprite(Image sprite) {
+		this.sprite = sprite;
+	}
+
 	public int getWidth() {
 		return width;
 	}

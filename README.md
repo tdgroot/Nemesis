@@ -5,8 +5,12 @@ TODO
 
 Technical:
 
+Mob-projectile collision
+Mob-damage
+Mob-AI
+
 Design:
-- Map met een tilelaag voor spawners, genaamd "mobSpawners".
-- Mobspawner tile heeft property "spawner" nodig met value bijv. "roach".
-- Animations voor Birk.
-- Animation sheet voor Roach (hoeft nog niet geanimeerd te worden).
+
+Roach Animation SpriteSheet
+Textures for the map
+

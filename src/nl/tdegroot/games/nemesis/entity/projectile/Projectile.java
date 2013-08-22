@@ -1,7 +1,9 @@
 package nl.tdegroot.games.nemesis.entity.projectile;
 
 import nl.tdegroot.games.nemesis.entity.Entity;
+import nl.tdegroot.games.nemesis.entity.Player;
 import nl.tdegroot.games.nemesis.gfx.Screen;
+import org.newdawn.slick.geom.Rectangle;
 
 public class Projectile extends Entity {
 
@@ -14,10 +16,15 @@ public class Projectile extends Entity {
 	protected float speed, range;
 	protected double damage;
 
-	public Projectile(float x, float y, double dir) {
+	protected Rectangle aoe;
+	protected Player player;
+
+	public Projectile(float x, float y, double dir, Player player) {
+		aoe = new Rectangle(x, y, 15, 30);
 		xOrigin = x;
 		yOrigin = y;
 		angle = dir;
+		this.player = player;
 		this.x = x;
 		this.y = y;
 	}
@@ -37,5 +44,21 @@ public class Projectile extends Entity {
 
 	public float getY() {
 		return y;
+	}
+
+	public Rectangle getAreaOfEffect() {
+		return aoe;
+	}
+
+	public double getAngle() {
+		return angle;
+	}
+
+	public double getDamage() {
+		return damage;
+	}
+
+	public Player getPlayer() {
+		return player;
 	}
 }

@@ -58,4 +58,11 @@ public class MobSpawner {
 		return randomY;
 	}
 
+	public int getID() {
+		return spawnerID;
+	}
+
+	public void removeMob() {
+		mobsAlive--;
+	}
 }
