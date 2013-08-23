@@ -2,6 +2,7 @@ package nl.tdegroot.games.nemesis.entity;
 
 import nl.tdegroot.games.nemesis.InputHandler;
 import nl.tdegroot.games.nemesis.Log;
+import nl.tdegroot.games.nemesis.action.Action;
 import nl.tdegroot.games.nemesis.entity.projectile.Arrow;
 import nl.tdegroot.games.nemesis.entity.projectile.Projectile;
 import nl.tdegroot.games.nemesis.gfx.Screen;
@@ -60,7 +61,7 @@ public class Player extends Mob {
 		}
 
 		clear();
-		pollShoot();
+		pollInput();
 	}
 
 	private void clear() {
@@ -72,14 +73,18 @@ public class Player extends Mob {
 		}
 	}
 
-	private void pollShoot() {
+	private void pollInput() {
 		if (InputHandler.getMouseB() == 0 && fireRate <= 0) {
 			double dx = (InputHandler.getMouseX() - Display.getWidth() / 2);
 			double dy = (InputHandler.getMouseY() - Display.getHeight() / 2);
 			double dir = Math.atan2(dx, dy);
 			shoot(x, y, dir, this);
 			fireRate = Arrow.FIRE_RATE;
-			Log.log("Shot!");
+		} else if (Keyboard.isKeyDown(Keyboard.KEY_X)) {
+			Action action = getAction();
+			if (action != null) {
+				action.log();
+			}
 		}
 	}
 
@@ -100,6 +105,33 @@ public class Player extends Mob {
 				solid = true;
 		}
 		return solid;
+	}
+
+	public Action getAction() {
+		Action action = null;
+		for (int c = 0; c < 4; c++) {
+			int xt = 0;
+			int yt = 0;
+			if (dir == 0) {
+				xt = (int) ((x) + c % 2 * collisionMulX - collisionAddX) / level.tileSize;
+				yt = (int) ((y - level.tileSize / 2) + c / 2 * collisionMulY + collisionAddY) / level.tileSize;
+			}
+			if (dir == 1) {
+				xt = (int) ((x + level.tileSize / 2) + c % 2 * collisionMulX - collisionAddX) / level.tileSize;
+				yt = (int) ((y) + c / 2 * collisionMulY + collisionAddY) / level.tileSize;
+			}
+			if (dir == 2) {
+				xt = (int) ((x) + c % 2 * collisionMulX - collisionAddX) / level.tileSize;
+				yt = (int) ((y + level.tileSize / 2) + c / 2 * collisionMulY + collisionAddY) / level.tileSize;
+			}
+			if (dir == 3) {
+				xt = (int) ((x - level.tileSize / 2) + c % 2 * collisionMulX - collisionAddX) / level.tileSize;
+				yt = (int) ((y) + c / 2 * collisionMulY + collisionAddY) / level.tileSize;
+			}
+
+			action = level.getAction(xt, yt);
+		}
+		return action;
 	}
 
 	public void mobKilled() {

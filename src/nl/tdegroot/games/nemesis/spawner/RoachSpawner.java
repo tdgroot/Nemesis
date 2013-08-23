@@ -22,7 +22,6 @@ public class RoachSpawner extends MobSpawner {
 			spawnMob();
 			timer = 0;
 		}
-		Log.log("Mobs alive: " + mobsAlive);
 	}
 
 	public void spawnMob() {
@@ -36,7 +35,6 @@ public class RoachSpawner extends MobSpawner {
 		Mob mob = new Roach(Resources.roach, newX, newY, 64, 59, mobsSpawned, spawnerID);
 		mob.init(level);
 		addMob(mob);
-//		Log.log("Spawned a new mob at: " + mob.getX() / level.getTileSize() + ", " + mob.getY() / level.getTileSize());
 	}
 
 }

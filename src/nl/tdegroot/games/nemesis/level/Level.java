@@ -1,6 +1,7 @@
 package nl.tdegroot.games.nemesis.level;
 
 import nl.tdegroot.games.nemesis.Log;
+import nl.tdegroot.games.nemesis.action.Action;
 import nl.tdegroot.games.nemesis.entity.Entity;
 import nl.tdegroot.games.nemesis.entity.Mob;
 import nl.tdegroot.games.nemesis.entity.Player;
@@ -20,10 +21,10 @@ import java.util.List;
 
 public class Level implements TileBasedMap {
 
-	private CollisionMap collisionMap;
 	private TiledMap map;
-	private MapLayer mapLayer;
 	public final int tileSize;
+	private CollisionMap collisionMap;
+	private ActionMap actionMap;
 
 	private List<MobSpawner> spawners = new ArrayList<MobSpawner>();
 	private List<Entity> entities = new ArrayList<Entity>();
@@ -32,12 +33,12 @@ public class Level implements TileBasedMap {
 
 	public Level(String path) throws SlickException {
 		map = new TiledMap(path);
-		mapLayer = new MapLayer(map);
 		tileSize = map.getTileWidth() & map.getTileHeight();
 		if (tileSize == 0) {
 			throw new SlickException("Tilewidth and Tileheight are not equal!");
 		}
 		collisionMap = new CollisionMap(map, tileSize);
+		actionMap = new ActionMap(map, tileSize);
 		initMobSpawners();
 	}
 
@@ -158,6 +159,10 @@ public class Level implements TileBasedMap {
 
 	public boolean isSolid(int x, int y) throws ArrayIndexOutOfBoundsException {
 		return collisionMap.isSolid(x, y);
+	}
+
+	public Action getAction(int x, int y) {
+		return actionMap.getAction(x, y);
 	}
 
 	public void addEntity(Entity entity) {
