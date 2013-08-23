@@ -2,7 +2,9 @@ package nl.tdegroot.games.nemesis.calc;
 
 import nl.tdegroot.games.nemesis.level.Level;
 
-public class Math {
+import java.util.Random;
+
+public class GameMath {
 
 	private static boolean checkCollision(int x, int y, Level level) {
 		boolean solid = false;
@@ -17,6 +19,11 @@ public class Math {
 
 	public static boolean checkCollision(float x, float y, Level level) {
 		return checkCollision((int) java.lang.Math.floor(x), (int) java.lang.Math.floor(y), level);
+	}
+
+	public static int random(int a, int b) {
+		int dif = Math.abs(a-b);
+		return Math.min(a, b) + (dif <= 0 ? 0 : new Random().nextInt(dif));
 	}
 
 }

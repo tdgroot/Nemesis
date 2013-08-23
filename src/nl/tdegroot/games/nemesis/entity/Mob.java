@@ -52,7 +52,7 @@ public class Mob extends Entity {
 		super(image, x, y, width, height);
 		animCount = (int) (image.getWidth() / width);
 		sheet = new SpriteSheet(image, width, height);
-		vulnerability = new Rectangle(x, y, width, height);
+		vulnerability = new Rectangle(x + 10, y + 10, width - 20, height - 20);
 		this.mobID = mobID;
 		this.spawnerID = spawnerID;
 	}
@@ -77,7 +77,7 @@ public class Mob extends Entity {
 				animIndex = ((animIndex + 1) % animCount);
 			}
 		}
-		vulnerability.setLocation(x, y);
+		vulnerability.setLocation(x + 10, y + 10);
 	}
 
 	public void move(float xa, float ya) {

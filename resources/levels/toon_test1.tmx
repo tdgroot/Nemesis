@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="20" height="20" tilewidth="64" tileheight="64">
+ <tileset firstgid="1" name="textures_toon" tilewidth="64" tileheight="64">
+  <image source="C:/Users/Maarten/Pictures/textures_toon/textures_toon.png" trans="ff00ff" width="640" height="640"/>
+ </tileset>
+ <layer name="Tilelaag 1" width="20" height="20">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC3WUyw6EIAwAQY7CEfj/P901odnZEUyaVmonfWFNKbUl9Sv3kir9+K8lRZrPLp7cBjuDk5cuB57j68Z3gUObTwPjVHP4sjgnnlknO2otsnf5MZ41s6+sk+L+NbE8W9bsHD3f3TzjzP2M9+jdjsfamrS5j4wlc+kO3dP/LFn3vfwT35LFczK9d9zfvomdiA/fwHmRcO+7mFO8IXuk38yjt9zZkd45sVe7PmZxODvmZNYUK3jcoyJeP7DcV2rfH9bOOsn23ClkUGfNjnq3g2H7brN+M7xrzrmn9/+M/13uFe1TnkN98974Xrhvzv15/wCBBeVdQAYAAA==
+  </data>
+ </layer>
+</map>

@@ -1,5 +1,6 @@
 package nl.tdegroot.games.nemesis.spawner;
 
+import nl.tdegroot.games.nemesis.Log;
 import nl.tdegroot.games.nemesis.entity.Mob;
 import nl.tdegroot.games.nemesis.entity.Roach;
 import nl.tdegroot.games.nemesis.gfx.Resources;
@@ -12,15 +13,16 @@ public class RoachSpawner extends MobSpawner {
 		spawnTime = 10000 / 59;
 		maxMobs = 25;
 		minRange = 1;
-		maxRange = 15;
+		maxRange = 5;
 	}
 
 	public void update() {
 		timer++;
-		if (timer == spawnTime && mobsAlive < maxMobs) {
+		if (timer >= spawnTime && mobsAlive < maxMobs) {
 			spawnMob();
 			timer = 0;
 		}
+		Log.log("Mobs alive: " + mobsAlive);
 	}
 
 	public void spawnMob() {

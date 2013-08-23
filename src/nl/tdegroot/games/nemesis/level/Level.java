@@ -22,6 +22,7 @@ public class Level implements TileBasedMap {
 
 	private CollisionMap collisionMap;
 	private TiledMap map;
+	private MapLayer mapLayer;
 	public final int tileSize;
 
 	private List<MobSpawner> spawners = new ArrayList<MobSpawner>();
@@ -31,6 +32,7 @@ public class Level implements TileBasedMap {
 
 	public Level(String path) throws SlickException {
 		map = new TiledMap(path);
+		mapLayer = new MapLayer(map);
 		tileSize = map.getTileWidth() & map.getTileHeight();
 		if (tileSize == 0) {
 			throw new SlickException("Tilewidth and Tileheight are not equal!");
@@ -40,7 +42,6 @@ public class Level implements TileBasedMap {
 	}
 
 	public void initMobSpawners() {
-
 		for (int i = 0; i <= map.getObjectCount(MapLayer.MAP_LAYER_SPAWNERS); i++) {
 
 			int x = (map.getObjectX(MapLayer.MAP_LAYER_SPAWNERS, i) + map.getObjectWidth(MapLayer.MAP_LAYER_SPAWNERS, i)) / tileSize;

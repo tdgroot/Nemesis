@@ -12,7 +12,7 @@ public class Arrow extends Projectile {
 		super(x, y, dir, player);
 		range = 650;
 		speed = 10.0f;
-		damage = 100.0d;
+		damage = 25.0d;
 
 		setSprite(Resources.arrow);
 

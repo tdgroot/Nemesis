@@ -1,9 +1,22 @@
 package nl.tdegroot.games.nemesis.level;
 
-public abstract class MapLayer {
+import org.newdawn.slick.tiled.TiledMap;
 
-	public static final int MAP_LAYER_PLAYER = 0;
-	public static final int MAP_LAYER_SPAWNERS = 1;
-	public static final int MAP_LAYER_COLLISION = 2;
+public class MapLayer {
+
+	private final TiledMap map;
+
+	public static int MAP_LAYER_ACTIONS;
+	public static int MAP_LAYER_PLAYER;
+	public static int MAP_LAYER_SPAWNERS;
+	public static int MAP_LAYER_COLLISION;
+
+	public MapLayer(TiledMap map) {
+		this.map = map;
+		MAP_LAYER_COLLISION = map.getLayerCount() - 3;
+		MAP_LAYER_PLAYER = map.getLayerCount() - 2;
+		MAP_LAYER_SPAWNERS = map.getLayerCount() - 1;
+		MAP_LAYER_COLLISION = map.getLayerCount();
+	}
 
 }

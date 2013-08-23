@@ -55,6 +55,10 @@ public class Nemesis extends BasicGame {
 		level.render(g, xOffset, yOffset, screen, player);
 		player.render(g, screen);
 		g.drawString("Mobs Killed: " + player.getKills(), 100, 10);
+		float dialogOffset = (1280 - 900) / 2;
+		g.setAntiAlias(true);
+//		g.fillRect(dialogOffset, 720 - 170, 1280 - dialogOffset * 2, 170);
+//		Log.log("Width: " + (1280 - dialogOffset * 2) + ", Height: " + (720 - 170));
 	}
 
 	private synchronized void stop() {

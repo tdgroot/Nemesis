@@ -1,5 +1,6 @@
 package nl.tdegroot.games.nemesis.spawner;
 
+import nl.tdegroot.games.nemesis.calc.GameMath;
 import nl.tdegroot.games.nemesis.entity.Mob;
 import nl.tdegroot.games.nemesis.level.Level;
 
@@ -42,7 +43,7 @@ public class MobSpawner {
 
 	public int generateX() {
 		int randomX = 0;
-		randomX = random.nextInt(30);
+		randomX = GameMath.random(x - maxRange, x + (maxRange * 2));
 		while (randomX < 0 || randomX > level.getWidthInTiles()) {
 			randomX = random.nextInt(30);
 		}
@@ -51,7 +52,7 @@ public class MobSpawner {
 
 	public int generateY() {
 		int randomY = 0;
-		randomY = random.nextInt(30);
+		randomY = GameMath.random(x - maxRange, x + (maxRange * 2));
 		while (randomY < 0 || randomY > level.getHeightInTiles()) {
 			randomY = random.nextInt(30);
 		}
