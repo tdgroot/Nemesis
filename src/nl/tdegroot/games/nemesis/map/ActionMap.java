@@ -1,8 +1,8 @@
-package nl.tdegroot.games.nemesis.level;
+package nl.tdegroot.games.nemesis.map;
 
 import nl.tdegroot.games.nemesis.Log;
-import nl.tdegroot.games.nemesis.action.Action;
-import nl.tdegroot.games.nemesis.action.OpenAction;
+import nl.tdegroot.games.nemesis.map.action.Action;
+import nl.tdegroot.games.nemesis.map.action.OpenAction;
 import org.newdawn.slick.tiled.TiledMap;
 
 public class ActionMap {
@@ -19,15 +19,15 @@ public class ActionMap {
 
 		int size = 0;
 
-		for (int i = 0; i <= map.getObjectCount(MapLayer.MAP_LAYER_ACTIONS); i++) {
+		for (int i = 0; i <= map.getObjectCount(MapLayer.MAP_LAYER_MAP_OBJECTS); i++) {
 
-			int x = (map.getObjectX(MapLayer.MAP_LAYER_ACTIONS, i) + map.getObjectWidth(MapLayer.MAP_LAYER_ACTIONS, i)) / tileSize;
-			int y = (map.getObjectY(MapLayer.MAP_LAYER_ACTIONS, i) + map.getObjectHeight(MapLayer.MAP_LAYER_ACTIONS, i)) / tileSize;
+			int x = (map.getObjectX(MapLayer.MAP_LAYER_MAP_OBJECTS, i) + map.getObjectWidth(MapLayer.MAP_LAYER_MAP_OBJECTS, i)) / tileSize;
+			int y = (map.getObjectY(MapLayer.MAP_LAYER_MAP_OBJECTS, i) + map.getObjectHeight(MapLayer.MAP_LAYER_MAP_OBJECTS, i)) / tileSize;
 
-			for (int xx = (map.getObjectX(MapLayer.MAP_LAYER_ACTIONS, i) / tileSize); xx < x; xx++) {
-				for (int yy = (map.getObjectY(MapLayer.MAP_LAYER_ACTIONS, i) / tileSize); yy < y; yy++) {
+			for (int xx = (map.getObjectX(MapLayer.MAP_LAYER_MAP_OBJECTS, i) / tileSize); xx < x; xx++) {
+				for (int yy = (map.getObjectY(MapLayer.MAP_LAYER_MAP_OBJECTS, i) / tileSize); yy < y; yy++) {
 
-					String action = map.getObjectProperty(MapLayer.MAP_LAYER_ACTIONS, i, "action", "");
+					String action = map.getObjectProperty(MapLayer.MAP_LAYER_MAP_OBJECTS, i, "action", "");
 
 					if (action != "") {
 						actions[xx + yy * width] = getAction(action);

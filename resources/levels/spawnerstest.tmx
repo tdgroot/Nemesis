@@ -38,9 +38,8 @@
    H4sIAAAAAAAAC+3YMQ0AMAwDwXQuf77l0MFRlDsEL3lzFQBk3O4AIOZ0B/DNdgAAAMBmvhEAgPkeB5jdkBAnAAA=
   </data>
  </layer>
- <objectgroup name="Actions" width="50" height="50">
-  <object x="832" y="512" width="64" height="64"/>
-  <object name="Open Action" type="Action" x="832" y="512" width="64" height="64">
+ <objectgroup name="MapObjects" width="50" height="50">
+  <object name="Chest" type="MapObject" x="832" y="512" width="64" height="64">
    <properties>
     <property name="action" value="open"/>
    </properties>
@@ -91,6 +90,6 @@
   <object x="960" y="832" width="64" height="64"/>
   <object x="1664" y="960" width="64" height="64"/>
   <object x="1344" y="2368" width="64" height="64"/>
-  <object x="832" y="512" width="64" height="64"/>
+  <object type="Collision" x="832" y="512" width="64" height="64"/>
  </objectgroup>
 </map>

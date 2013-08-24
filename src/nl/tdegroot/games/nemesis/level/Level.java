@@ -1,12 +1,15 @@
 package nl.tdegroot.games.nemesis.level;
 
 import nl.tdegroot.games.nemesis.Log;
-import nl.tdegroot.games.nemesis.action.Action;
+import nl.tdegroot.games.nemesis.map.ObjectMap;
 import nl.tdegroot.games.nemesis.entity.Entity;
 import nl.tdegroot.games.nemesis.entity.Mob;
 import nl.tdegroot.games.nemesis.entity.Player;
 import nl.tdegroot.games.nemesis.entity.projectile.Projectile;
 import nl.tdegroot.games.nemesis.gfx.Screen;
+import nl.tdegroot.games.nemesis.map.CollisionMap;
+import nl.tdegroot.games.nemesis.map.MapLayer;
+import nl.tdegroot.games.nemesis.map.object.MapObject;
 import nl.tdegroot.games.nemesis.spawner.MobSpawner;
 import nl.tdegroot.games.nemesis.spawner.RoachSpawner;
 import org.newdawn.slick.Graphics;
@@ -24,7 +27,7 @@ public class Level implements TileBasedMap {
 	private TiledMap map;
 	public final int tileSize;
 	private CollisionMap collisionMap;
-	private ActionMap actionMap;
+	private ObjectMap objectMap;
 
 	private List<MobSpawner> spawners = new ArrayList<MobSpawner>();
 	private List<Entity> entities = new ArrayList<Entity>();
@@ -38,7 +41,7 @@ public class Level implements TileBasedMap {
 			throw new SlickException("Tilewidth and Tileheight are not equal!");
 		}
 		collisionMap = new CollisionMap(map, tileSize);
-		actionMap = new ActionMap(map, tileSize);
+		objectMap = new ObjectMap(map, tileSize);
 		initMobSpawners();
 	}
 
@@ -161,8 +164,8 @@ public class Level implements TileBasedMap {
 		return collisionMap.isSolid(x, y);
 	}
 
-	public Action getAction(int x, int y) {
-		return actionMap.getAction(x, y);
+	public MapObject getMapObject(int x, int y) {
+		return objectMap.getMapObject(x, y);
 	}
 
 	public void addEntity(Entity entity) {

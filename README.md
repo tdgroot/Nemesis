@@ -5,9 +5,7 @@ TODO
 
 Technical:
 
-Object Mapping(e.g. Improved Action Mapping)
-MapObject structure
-ContainerObject
+MapObject structure (Work in progress)
 UI
 Dialog
 Mob-AI

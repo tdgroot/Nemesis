@@ -2,10 +2,11 @@ package nl.tdegroot.games.nemesis.entity;
 
 import nl.tdegroot.games.nemesis.InputHandler;
 import nl.tdegroot.games.nemesis.Log;
-import nl.tdegroot.games.nemesis.action.Action;
+import nl.tdegroot.games.nemesis.map.action.Action;
 import nl.tdegroot.games.nemesis.entity.projectile.Arrow;
 import nl.tdegroot.games.nemesis.entity.projectile.Projectile;
 import nl.tdegroot.games.nemesis.gfx.Screen;
+import nl.tdegroot.games.nemesis.map.object.MapObject;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Animation;
@@ -23,7 +24,14 @@ public class Player extends Mob {
 
 	public Player(Image image, float x, float y, int width, int height) {
 		super(image, x, y, width, height);
+
 		movementSpeed = 2.5f;
+
+		collisionMulX = 38;
+		collisionAddX = 17;
+		collisionMulY = 20;
+		collisionAddY = 10;
+
 		Log.log("Player initialized. Player Width: " + getWidth() + ", Player Height: " + getHeight());
 	}
 
@@ -56,7 +64,7 @@ public class Player extends Mob {
 			}
 		}
 
-		if (! wasWalking) {
+		if (!wasWalking) {
 			animIndex = 0;
 		}
 
@@ -81,10 +89,7 @@ public class Player extends Mob {
 			shoot(x, y, dir, this);
 			fireRate = Arrow.FIRE_RATE;
 		} else if (Keyboard.isKeyDown(Keyboard.KEY_X)) {
-			Action action = getAction();
-			if (action != null) {
-				action.log();
-			}
+			interact();
 		}
 	}
 
@@ -105,6 +110,35 @@ public class Player extends Mob {
 				solid = true;
 		}
 		return solid;
+	}
+
+	public void interact() {
+		MapObject object = null;
+		for (int c = 0; c < 4; c++) {
+			int xt = 0;
+			int yt = 0;
+			if (dir == 0) {
+				xt = (int) ((x) + c % 2 * collisionMulX - collisionAddX) / level.tileSize;
+				yt = (int) ((y - level.tileSize / 2) + c / 2 * collisionMulY + collisionAddY) / level.tileSize;
+			}
+			if (dir == 1) {
+				xt = (int) ((x + level.tileSize / 2) + c % 2 * collisionMulX - collisionAddX) / level.tileSize;
+				yt = (int) ((y) + c / 2 * collisionMulY + collisionAddY) / level.tileSize;
+			}
+			if (dir == 2) {
+				xt = (int) ((x) + c % 2 * collisionMulX - collisionAddX) / level.tileSize;
+				yt = (int) ((y + level.tileSize / 2) + c / 2 * collisionMulY + collisionAddY) / level.tileSize;
+			}
+			if (dir == 3) {
+				xt = (int) ((x - level.tileSize / 2) + c % 2 * collisionMulX - collisionAddX) / level.tileSize;
+				yt = (int) ((y) + c / 2 * collisionMulY + collisionAddY) / level.tileSize;
+			}
+			if (level.getMapObject(xt, yt) != null)
+				object = level.getMapObject(xt, yt);
+		}
+
+		if (object != null)
+			object.getAction().log();
 	}
 
 	public Action getAction() {
@@ -129,7 +163,7 @@ public class Player extends Mob {
 				yt = (int) ((y) + c / 2 * collisionMulY + collisionAddY) / level.tileSize;
 			}
 
-			action = level.getAction(xt, yt);
+//			action = level.getMapObject(xt, yt);
 		}
 		return action;
 	}

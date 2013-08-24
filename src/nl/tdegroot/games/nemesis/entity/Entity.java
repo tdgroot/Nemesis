@@ -2,7 +2,7 @@ package nl.tdegroot.games.nemesis.entity;
 
 import nl.tdegroot.games.nemesis.gfx.Screen;
 import nl.tdegroot.games.nemesis.level.Level;
-import nl.tdegroot.games.nemesis.level.MapLayer;
+import nl.tdegroot.games.nemesis.map.MapLayer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 

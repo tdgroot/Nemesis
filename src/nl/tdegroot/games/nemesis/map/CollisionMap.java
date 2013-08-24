@@ -1,4 +1,4 @@
-package nl.tdegroot.games.nemesis.level;
+package nl.tdegroot.games.nemesis.map;
 
 import org.newdawn.slick.tiled.TiledMap;
 
