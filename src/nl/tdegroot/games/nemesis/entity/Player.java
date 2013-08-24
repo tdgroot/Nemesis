@@ -2,7 +2,6 @@ package nl.tdegroot.games.nemesis.entity;
 
 import nl.tdegroot.games.nemesis.InputHandler;
 import nl.tdegroot.games.nemesis.Log;
-import nl.tdegroot.games.nemesis.map.action.Action;
 import nl.tdegroot.games.nemesis.entity.projectile.Arrow;
 import nl.tdegroot.games.nemesis.entity.projectile.Projectile;
 import nl.tdegroot.games.nemesis.gfx.Screen;
@@ -95,14 +94,6 @@ public class Player extends Mob {
 
 	protected boolean collision(float xa, float ya) {
 		boolean solid = false;
-		if (x + getWidth() / 2 - 2 > level.getPixelWidth()) {
-			x = level.getPixelWidth() - getWidth() / 2;
-			solid = true;
-		}
-		if (y + getHeight() / 2 - 2 > level.getPixelHeight()) {
-			y = level.getPixelHeight() - getHeight() / 2;
-			solid = true;
-		}
 		for (int c = 0; c < 4; c++) {
 			int xt = (int) ((x + xa) + c % 2 * 38 - 17) / level.tileSize;
 			int yt = (int) ((y + ya) + c / 2 * 20 + 10) / level.tileSize;
@@ -139,33 +130,6 @@ public class Player extends Mob {
 
 		if (object != null)
 			object.getAction().log();
-	}
-
-	public Action getAction() {
-		Action action = null;
-		for (int c = 0; c < 4; c++) {
-			int xt = 0;
-			int yt = 0;
-			if (dir == 0) {
-				xt = (int) ((x) + c % 2 * collisionMulX - collisionAddX) / level.tileSize;
-				yt = (int) ((y - level.tileSize / 2) + c / 2 * collisionMulY + collisionAddY) / level.tileSize;
-			}
-			if (dir == 1) {
-				xt = (int) ((x + level.tileSize / 2) + c % 2 * collisionMulX - collisionAddX) / level.tileSize;
-				yt = (int) ((y) + c / 2 * collisionMulY + collisionAddY) / level.tileSize;
-			}
-			if (dir == 2) {
-				xt = (int) ((x) + c % 2 * collisionMulX - collisionAddX) / level.tileSize;
-				yt = (int) ((y + level.tileSize / 2) + c / 2 * collisionMulY + collisionAddY) / level.tileSize;
-			}
-			if (dir == 3) {
-				xt = (int) ((x - level.tileSize / 2) + c % 2 * collisionMulX - collisionAddX) / level.tileSize;
-				yt = (int) ((y) + c / 2 * collisionMulY + collisionAddY) / level.tileSize;
-			}
-
-//			action = level.getMapObject(xt, yt);
-		}
-		return action;
 	}
 
 	public void mobKilled() {

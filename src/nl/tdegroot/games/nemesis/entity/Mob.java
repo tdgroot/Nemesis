@@ -112,16 +112,6 @@ public class Mob extends Entity {
 	protected boolean collision(float xa, float ya) {
 		boolean solid = false;
 
-		if (x + getWidth() / 2 - 2 > level.getPixelWidth()) {
-			x = level.getPixelWidth() - getWidth() / 2;
-			solid = true;
-		}
-
-		if (y + getHeight() / 2 - 2 > level.getPixelHeight()) {
-			y = level.getPixelHeight() - getHeight() / 2;
-			solid = true;
-		}
-
 		for (int c = 0; c < 4; c++) {
 			int xt = (int) ((x + xa) + c % 2 * collisionMulX - collisionAddX) / level.tileSize;
 			int yt = (int) ((y + ya) + c / 2 * collisionMulY + collisionAddY) / level.tileSize;

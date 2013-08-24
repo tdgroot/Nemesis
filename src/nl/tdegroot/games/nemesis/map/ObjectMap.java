@@ -1,8 +1,8 @@
 package nl.tdegroot.games.nemesis.map;
 
 import nl.tdegroot.games.nemesis.Log;
-import nl.tdegroot.games.nemesis.map.action.Action;
-import nl.tdegroot.games.nemesis.map.action.OpenAction;
+import nl.tdegroot.games.nemesis.action.Action;
+import nl.tdegroot.games.nemesis.action.OpenAction;
 import nl.tdegroot.games.nemesis.map.object.ContainerObject;
 import nl.tdegroot.games.nemesis.map.object.MapObject;
 import org.newdawn.slick.tiled.TiledMap;

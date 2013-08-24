@@ -1,6 +1,6 @@
 package nl.tdegroot.games.nemesis.map.object;
 
-import nl.tdegroot.games.nemesis.map.action.Action;
+import nl.tdegroot.games.nemesis.action.Action;
 
 public class ContainerObject extends MapObject {
 

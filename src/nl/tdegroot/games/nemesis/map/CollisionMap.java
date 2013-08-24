@@ -9,8 +9,8 @@ public class CollisionMap {
 
 	public CollisionMap(TiledMap map, int tileSize) {
 
-		width = map.getWidth() * tileSize;
-		height = map.getHeight() * tileSize;
+		width = map.getWidth();
+		height = map.getHeight();
 
 		solid = new boolean[width * height];
 
@@ -30,6 +30,8 @@ public class CollisionMap {
 	}
 
 	public boolean isSolid(int x, int y) throws ArrayIndexOutOfBoundsException {
+		if (x >= width || y >= height)
+			return true;
 		return solid[x + y * width];
 	}
 

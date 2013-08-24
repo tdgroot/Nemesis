@@ -1,4 +1,4 @@
-package nl.tdegroot.games.nemesis.map.action;
+package nl.tdegroot.games.nemesis.action;
 
 import nl.tdegroot.games.nemesis.Log;
 

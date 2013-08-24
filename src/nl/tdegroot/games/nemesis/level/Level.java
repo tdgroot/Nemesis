@@ -160,7 +160,7 @@ public class Level implements TileBasedMap {
 		return spawner;
 	}
 
-	public boolean isSolid(int x, int y) throws ArrayIndexOutOfBoundsException {
+	public boolean isSolid(int x, int y) {
 		return collisionMap.isSolid(x, y);
 	}
 
