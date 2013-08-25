@@ -5,6 +5,7 @@ import nl.tdegroot.games.nemesis.gfx.Camera;
 import nl.tdegroot.games.nemesis.gfx.Resources;
 import nl.tdegroot.games.nemesis.gfx.Screen;
 import nl.tdegroot.games.nemesis.level.Level;
+import nl.tdegroot.games.nemesis.ui.Dialog;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.BasicGame;
@@ -43,6 +44,7 @@ public class Nemesis extends BasicGame {
 	public void update(GameContainer gameContainer, int delta) throws SlickException {
 		player.update(delta);
 		level.update(delta);
+		Dialog.update(delta);
 		if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) stop();
 	}
 
@@ -58,7 +60,10 @@ public class Nemesis extends BasicGame {
 		g.drawString("Score: " + player.getScore(), 250, 10);
 		float dialogOffset = (1280 - 900) / 2;
 		g.setAntiAlias(true);
-		Resources.dialogWindow.draw(dialogOffset, 720 - 170, 1280 - dialogOffset * 2, 170);
+//		Resources.dialogWindow.draw(dialogOffset, 720 - 170, 1280 - dialogOffset * 2, 170);
+		if (Dialog.isActive()) {
+			Dialog.render(screen);
+		}
 //		g.fillRect(dialogOffset, 720 - 170, 1280 - dialogOffset * 2, 170);
 //		Log.log("Width: " + (1280 - dialogOffset * 2) + ", Height: " + (720 - 170));
 	}

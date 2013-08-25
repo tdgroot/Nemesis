@@ -47,7 +47,7 @@
   </object>
  </objectgroup>
  <objectgroup name="Player" width="50" height="50">
-  <object name="Player Spawn" type="Player Spawn" x="1856" y="2624" width="64" height="64"/>
+  <object name="Player Spawn" type="Player Spawn" x="832" y="704" width="64" height="64"/>
  </objectgroup>
  <objectgroup name="Spawners" width="50" height="50" opacity="0.9">
   <object name="Roach Spawner" type="Spawner" x="1600" y="1088" width="64" height="64">

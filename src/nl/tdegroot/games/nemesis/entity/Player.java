@@ -7,6 +7,7 @@ import nl.tdegroot.games.nemesis.entity.projectile.Projectile;
 import nl.tdegroot.games.nemesis.gfx.Screen;
 import nl.tdegroot.games.nemesis.map.MapLayer;
 import nl.tdegroot.games.nemesis.map.object.MapObject;
+import nl.tdegroot.games.nemesis.ui.Dialog;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Animation;
@@ -51,10 +52,12 @@ public class Player extends Mob {
 		float xa = 0;
 		float ya = 0;
 
-		if (Keyboard.isKeyDown(Keyboard.KEY_A) || Keyboard.isKeyDown(Keyboard.KEY_LEFT)) xa -= movementSpeed;
-		if (Keyboard.isKeyDown(Keyboard.KEY_D) || Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) xa += movementSpeed;
-		if (Keyboard.isKeyDown(Keyboard.KEY_W) || Keyboard.isKeyDown(Keyboard.KEY_UP)) ya -= movementSpeed;
-		if (Keyboard.isKeyDown(Keyboard.KEY_S) || Keyboard.isKeyDown(Keyboard.KEY_DOWN)) ya += movementSpeed;
+		if (! Dialog.isActive()) {
+			if (Keyboard.isKeyDown(Keyboard.KEY_A) || Keyboard.isKeyDown(Keyboard.KEY_LEFT)) xa -= movementSpeed;
+			if (Keyboard.isKeyDown(Keyboard.KEY_D) || Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) xa += movementSpeed;
+			if (Keyboard.isKeyDown(Keyboard.KEY_W) || Keyboard.isKeyDown(Keyboard.KEY_UP)) ya -= movementSpeed;
+			if (Keyboard.isKeyDown(Keyboard.KEY_S) || Keyboard.isKeyDown(Keyboard.KEY_DOWN)) ya += movementSpeed;
+		}
 
 		wasWalking = isWalking;
 
@@ -73,7 +76,7 @@ public class Player extends Mob {
 			}
 		}
 
-		if (!wasWalking) {
+		if (! wasWalking) {
 			animIndex = 0;
 		}
 
@@ -91,14 +94,21 @@ public class Player extends Mob {
 	}
 
 	private void pollInput() {
-		if (InputHandler.getMouseB() == 0 && fireRate <= 0) {
-			double dx = (InputHandler.getMouseX() - Display.getWidth() / 2);
-			double dy = (InputHandler.getMouseY() - Display.getHeight() / 2);
-			double dir = Math.atan2(dx, dy);
-			shoot(x, y, dir, this);
-			fireRate = Arrow.FIRE_RATE;
-		} else if (Keyboard.isKeyDown(Keyboard.KEY_X)) {
-			interact();
+		if (Keyboard.isKeyDown(Keyboard.KEY_RETURN)) {
+			if (Dialog.isActive()) {
+				Dialog.deactivate();
+			}
+		}
+		if (! Dialog.isActive()) {
+			if (InputHandler.getMouseB() == 0 && fireRate <= 0) {
+				double dx = (InputHandler.getMouseX() - Display.getWidth() / 2);
+				double dy = (InputHandler.getMouseY() - Display.getHeight() / 2);
+				double dir = Math.atan2(dx, dy);
+				shoot(x, y, dir, this);
+				fireRate = Arrow.FIRE_RATE;
+			} else if (Keyboard.isKeyDown(Keyboard.KEY_X)) {
+				interact();
+			}
 		}
 	}
 
@@ -139,7 +149,7 @@ public class Player extends Mob {
 		}
 
 		if (object != null)
-			object.getAction().log();
+			object.interact();
 	}
 
 	public void mobKilled(int s) {

@@ -14,4 +14,10 @@ public class MapObject {
 		return action;
 	}
 
+	public void interact() {
+		if (action != null) {
+			action.activate();
+		}
+	}
+
 }

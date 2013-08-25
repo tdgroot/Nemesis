@@ -5,7 +5,7 @@ public class Action {
 	public Action() {
 	}
 
-	public void log() {
+	public void activate() {
 	}
 
 }

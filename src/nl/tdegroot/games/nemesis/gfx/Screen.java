@@ -4,10 +4,19 @@ import nl.tdegroot.games.nemesis.entity.Entity;
 import nl.tdegroot.games.nemesis.entity.Mob;
 import nl.tdegroot.games.nemesis.entity.Player;
 import nl.tdegroot.games.nemesis.entity.projectile.Projectile;
+import nl.tdegroot.games.nemesis.ui.Dialog;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.tiled.TiledMap;
+import org.newdawn.slick.util.ResourceLoader;
+
+import java.awt.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
 
 public class Screen {
 
@@ -50,6 +59,19 @@ public class Screen {
 		projectile.getSprite().drawCentered(projectile.getX() - xOffset, projectile.getY() - yOffset);
 	}
 
+	public void renderDialog() {
+		List<String> history = Dialog.history;
+		Image img = Dialog.getImage();
+
+		float dialogOffset = (Display.getWidth() - img.getWidth()) / 2;
+		img.draw(dialogOffset, Display.getHeight() - img.getHeight(), Display.getWidth() - dialogOffset * 2, img.getHeight());
+
+		graphics.setFont(Resources.agency_fb);
+		for (int i = 0; i < history.size(); i++) {
+			graphics.drawString(history.get(i), dialogOffset + 70, (Display.getHeight() - img.getHeight() + 19) + i * 22);
+		}
+	}
+
 	public void renderEntity(Entity entity) {
 	}
 
@@ -57,5 +79,4 @@ public class Screen {
 		this.xOffset = xOffset;
 		this.yOffset = yOffset;
 	}
-
 }

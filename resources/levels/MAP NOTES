@@ -1,0 +1,25 @@
+Volgorde van layers:
+- Collision
+- Spawners
+- Player
+- MapObjects
+
+Properties:
+
+- Collision
+    - Helemaal geen, gewoon objects aanmaken
+
+- Spawners property::value (exampleProperty::exampleValue)
+    - spawner::type (spawner::roach)
+    - maxMobs::amount (maxMobs::99)
+    - spawnTime::milliseconds (maxMobs::10000) (10 seconden)
+    - score::amount (score::99)
+    - health::amount.amount (health::95.55)
+    - speed::amount.amount (speed::14.55)
+
+- Player
+    - Helemaal geen, gewoon objects aanmaken
+
+- MapObjects
+    - action::type (action::open)
+    - items::itemID.amount (items::{ 4:9, 43:21 })
