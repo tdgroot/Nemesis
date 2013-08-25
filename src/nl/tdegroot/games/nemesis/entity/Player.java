@@ -5,6 +5,7 @@ import nl.tdegroot.games.nemesis.Log;
 import nl.tdegroot.games.nemesis.entity.projectile.Arrow;
 import nl.tdegroot.games.nemesis.entity.projectile.Projectile;
 import nl.tdegroot.games.nemesis.gfx.Screen;
+import nl.tdegroot.games.nemesis.map.MapLayer;
 import nl.tdegroot.games.nemesis.map.object.MapObject;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
@@ -20,6 +21,7 @@ public class Player extends Mob {
 
 	private int fireRate = 0;
 	private int mobsKilled = 0;
+	private int score = 0;
 
 	public Player(Image image, float x, float y, int width, int height) {
 		super(image, x, y, width, height);
@@ -34,6 +36,14 @@ public class Player extends Mob {
 		Log.log("Player initialized. Player Width: " + getWidth() + ", Player Height: " + getHeight());
 	}
 
+	protected void positionate() {
+		float x = (float) level.getMap().getObjectX(MapLayer.MAP_LAYER_PLAYER, 0) + level.getMap().getObjectWidth(MapLayer.MAP_LAYER_PLAYER, 0);
+		float y = (float) level.getMap().getObjectY(MapLayer.MAP_LAYER_PLAYER, 0) + level.getMap().getObjectHeight(MapLayer.MAP_LAYER_PLAYER, 0);
+
+		this.x = x;
+		this.y = y;
+	}
+
 	public void update(int delta) {
 		if (fireRate > 0)
 			fireRate--;
@@ -41,10 +51,10 @@ public class Player extends Mob {
 		float xa = 0;
 		float ya = 0;
 
-		if (Keyboard.isKeyDown(Keyboard.KEY_A)) xa -= movementSpeed;
-		if (Keyboard.isKeyDown(Keyboard.KEY_D)) xa += movementSpeed;
-		if (Keyboard.isKeyDown(Keyboard.KEY_W)) ya -= movementSpeed;
-		if (Keyboard.isKeyDown(Keyboard.KEY_S)) ya += movementSpeed;
+		if (Keyboard.isKeyDown(Keyboard.KEY_A) || Keyboard.isKeyDown(Keyboard.KEY_LEFT)) xa -= movementSpeed;
+		if (Keyboard.isKeyDown(Keyboard.KEY_D) || Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) xa += movementSpeed;
+		if (Keyboard.isKeyDown(Keyboard.KEY_W) || Keyboard.isKeyDown(Keyboard.KEY_UP)) ya -= movementSpeed;
+		if (Keyboard.isKeyDown(Keyboard.KEY_S) || Keyboard.isKeyDown(Keyboard.KEY_DOWN)) ya += movementSpeed;
 
 		wasWalking = isWalking;
 
@@ -132,8 +142,9 @@ public class Player extends Mob {
 			object.getAction().log();
 	}
 
-	public void mobKilled() {
+	public void mobKilled(int s) {
 		mobsKilled++;
+		score += s;
 	}
 
 	public void render(Graphics g, Screen screen) {
@@ -142,5 +153,9 @@ public class Player extends Mob {
 
 	public int getKills() {
 		return mobsKilled;
+	}
+
+	public int getScore() {
+		return score;
 	}
 }

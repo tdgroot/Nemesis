@@ -54,11 +54,20 @@ public class Level implements TileBasedMap {
 			for (int xx = (map.getObjectX(MapLayer.MAP_LAYER_SPAWNERS, i) / tileSize); xx < x; xx++) {
 				for (int yy = (map.getObjectY(MapLayer.MAP_LAYER_SPAWNERS, i) / tileSize); yy < y; yy++) {
 
-					String spawner = map.getObjectProperty(MapLayer.MAP_LAYER_SPAWNERS, i, "spawner", "");
+					// Spawner properties
+					String spawnerType = map.getObjectProperty(MapLayer.MAP_LAYER_SPAWNERS, i, "spawner", "");
+					String spawnTime = map.getObjectProperty(MapLayer.MAP_LAYER_SPAWNERS, i, "spawnTime", "");
+					String maxMobs = map.getObjectProperty(MapLayer.MAP_LAYER_SPAWNERS, i, "maxMobs", "");
 
-					if (spawner != "") {
-						spawners.add(getSpawner(spawner, xx, yy, i));
-						Log.log("Spawner created with ID: " + i);
+					// Mob properties
+					String mobScore = map.getObjectProperty(MapLayer.MAP_LAYER_SPAWNERS, i, "score", "");
+					String mobHealth = map.getObjectProperty(MapLayer.MAP_LAYER_SPAWNERS, i, "health", "");
+					String mobSpeed = map.getObjectProperty(MapLayer.MAP_LAYER_SPAWNERS, i, "speed", "");
+
+
+					if (spawnerType != "") {
+						spawners.add(getSpawner(spawnerType, spawnTime, maxMobs, mobScore, mobHealth, mobSpeed, xx, yy, i));
+						Log.log("Spawner created with ID: " + i + ", mobHealth: " + mobHealth + ", mobSpeed: " + mobSpeed + ", mobScore: " + mobScore);
 					}
 
 				}
@@ -121,9 +130,9 @@ public class Level implements TileBasedMap {
 			Iterator<Mob> mobIterator = mobs.iterator();
 			while (mobIterator.hasNext()) {
 				Mob mob = mobIterator.next();
-				if (p.getAreaOfEffect().intersects(mob.getVulnerability()) && ! p.isRemoved()) {
+				if (p.getAreaOfEffect().intersects(mob.getVulnerability()) && !p.isRemoved()) {
 					if (mob.hit(p)) {
-						p.getPlayer().mobKilled();
+						p.getPlayer().mobKilled(mob.getScore());
 					}
 					p.remove();
 					Log.log("Hit: Mob ID: " + mob.getID() + ", Damage: " + p.getDamage() + ", Mob's Health: " + mob.getHealth());
@@ -137,7 +146,7 @@ public class Level implements TileBasedMap {
 		screen.renderMap(map, tileSize);
 
 		for (int i = 0; i < entities.size(); i++) {
-			entities.get(i).render(g, screen);
+			entities.get(i).render(screen);
 		}
 
 		for (int i = 0; i < mobs.size(); i++) {
@@ -150,13 +159,39 @@ public class Level implements TileBasedMap {
 
 	}
 
-	public MobSpawner getSpawner(String type, int x, int y, int i) {
+	public MobSpawner getSpawner(String type, String spawnTime, String maxMobs, String mobScore, String mobHealth, String mobSpeed, int x, int y, int i) {
 		MobSpawner spawner = null;
+
 		switch (type) {
 			case "roach":
 				spawner = new RoachSpawner(this, x, y, i);
 				break;
 		}
+
+		if (spawner != null) {
+
+			if (spawnTime != "") {
+				spawner.setSpawnTime(Integer.parseInt(spawnTime));
+			}
+
+			if (maxMobs != "") {
+				spawner.setMaxMobs(Integer.parseInt(maxMobs));
+			}
+
+			if (mobScore != "") {
+				spawner.setMobScore(Integer.parseInt(mobScore));
+			}
+
+			if (mobHealth != "") {
+				spawner.setMobHealth(Double.parseDouble(mobHealth));
+			}
+
+			if (mobSpeed != "") {
+				spawner.setMovementSpeed(Float.parseFloat(mobSpeed));
+			}
+
+		}
+
 		return spawner;
 	}
 

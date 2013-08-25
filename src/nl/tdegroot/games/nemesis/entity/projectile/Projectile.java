@@ -20,7 +20,6 @@ public class Projectile extends Entity {
 	protected Player player;
 
 	public Projectile(float x, float y, double dir, Player player) {
-		aoe = new Rectangle(x, y, 15, 30);
 		xOrigin = x;
 		yOrigin = y;
 		angle = dir;

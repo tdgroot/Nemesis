@@ -3,6 +3,7 @@ package nl.tdegroot.games.nemesis.entity.projectile;
 import nl.tdegroot.games.nemesis.entity.Player;
 import nl.tdegroot.games.nemesis.gfx.Resources;
 import nl.tdegroot.games.nemesis.gfx.Screen;
+import org.newdawn.slick.geom.Rectangle;
 
 public class Arrow extends Projectile {
 
@@ -10,8 +11,9 @@ public class Arrow extends Projectile {
 
 	public Arrow(float x, float y, double dir, Player player) {
 		super(x, y, dir, player);
+		aoe = new Rectangle(x, y, 15, 30);
 		range = 650;
-		speed = 10.0f;
+		speed = 8.5f;
 		damage = 25.0d;
 
 		setSprite(Resources.arrow);

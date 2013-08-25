@@ -34,6 +34,16 @@ public class RoachSpawner extends MobSpawner {
 		}
 		Mob mob = new Roach(Resources.roach, newX, newY, 64, 59, mobsSpawned, spawnerID);
 		mob.init(level);
+
+		if (mobHealth > 0.0)
+			mob.setHealth(mobHealth);
+
+		if (movementSpeed > 0.0f)
+			mob.setMovementSpeed(movementSpeed);
+
+		if (mobScore > 0)
+			mob.setScore(mobScore);
+
 		addMob(mob);
 	}
 

@@ -25,6 +25,10 @@ public class MobSpawner {
 
 	protected long timer = 0;
 
+	protected double mobHealth = 0.0;
+	protected float movementSpeed = 0.0f;
+	protected int mobScore = 0;
+
 	public MobSpawner(Level level, int x, int y, int spawnerID) {
 		this.level = level;
 		this.x = x;
@@ -33,6 +37,42 @@ public class MobSpawner {
 	}
 
 	public void update() {
+	}
+
+	public int getMaxRange() {
+		return maxRange;
+	}
+
+	public void setMaxRange(int maxRange) {
+		this.maxRange = maxRange;
+	}
+
+	public int getSpawnTime() {
+		return spawnTime;
+	}
+
+	public void setSpawnTime(int spawnTime) {
+		this.spawnTime = spawnTime;
+	}
+
+	public int getMaxMobs() {
+		return maxMobs;
+	}
+
+	public void setMobScore(int mobScore) {
+		this.mobScore = mobScore;
+	}
+
+	public void setMovementSpeed(float movementSpeed) {
+		this.movementSpeed = movementSpeed;
+	}
+
+	public void setMobHealth(double mobHealth) {
+		this.mobHealth = mobHealth;
+	}
+
+	public void setMaxMobs(int maxMobs) {
+		this.maxMobs = maxMobs;
 	}
 
 	public void addMob(Mob mob) {

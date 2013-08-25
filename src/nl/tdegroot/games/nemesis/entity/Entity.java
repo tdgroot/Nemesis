@@ -35,22 +35,16 @@ public class Entity {
 
 	public void initPlayer(Level level) {
 		setLevel(level);
-		positionatePlayer();
+		positionate();
 	}
 
 
-	private void positionate() {
+	protected void positionate() {
 		x *= level.tileSize;
 		y *= level.tileSize;
 	}
 
-	private void positionatePlayer() {
-		float x = (float) level.getMap().getObjectX(MapLayer.MAP_LAYER_PLAYER, 0) + level.getMap().getObjectWidth(MapLayer.MAP_LAYER_PLAYER, 0);
-		float y = (float) level.getMap().getObjectY(MapLayer.MAP_LAYER_PLAYER, 0) + level.getMap().getObjectHeight(MapLayer.MAP_LAYER_PLAYER, 0);
 
-		this.x = x;
-		this.y = y;
-	}
 
 	public void remove() {
 		removed = true;
@@ -63,7 +57,7 @@ public class Entity {
 	public void update(int delta) {
 	}
 
-	public void render(Graphics g, Screen screen) {
+	public void render(Screen screen) {
 		screen.renderEntity(this);
 	}
 

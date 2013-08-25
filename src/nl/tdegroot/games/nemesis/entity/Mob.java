@@ -28,6 +28,7 @@ public class Mob extends Entity {
 
 	protected int mobID = 0;
 	protected int spawnerID = 0;
+	protected int score = 0;
 
 	public int dir = 0;
 	public int animIndex = 0;
@@ -199,6 +200,18 @@ public class Mob extends Entity {
 
 	public int getID() {
 		return mobID;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+
+	public int getScore() {
+		return score;
+	}
+
+	public void setHealth(double health) {
+		this.health = health;
 	}
 
 	public float getMovementSpeed() {

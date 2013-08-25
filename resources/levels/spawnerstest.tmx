@@ -52,7 +52,10 @@
  <objectgroup name="Spawners" width="50" height="50" opacity="0.9">
   <object name="Roach Spawner" type="Spawner" x="1600" y="1088" width="64" height="64">
    <properties>
+    <property name="health" value="50.0D"/>
+    <property name="score" value="3"/>
     <property name="spawner" value="roach"/>
+    <property name="speed" value="3.0"/>
    </properties>
   </object>
  </objectgroup>

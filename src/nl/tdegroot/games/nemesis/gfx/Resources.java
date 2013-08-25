@@ -14,6 +14,9 @@ public class Resources {
 	// Entities
 	public static Image arrow;
 
+	// UI
+	public static Image dialogWindow;
+
 	public Resources() {
 		try {
 			player = new Image("resources/spritesheets/birk_anim.png");
@@ -21,6 +24,8 @@ public class Resources {
 			roach = new Image("resources/spritesheets/roach_anim.png");
 
 			arrow = new Image("resources/textures/entities/arrow.png");
+
+			dialogWindow = new Image("resources/textures/hud/bar_text.png");
 		} catch (SlickException e) {
 			Log.exception(e.getMessage());
 		}

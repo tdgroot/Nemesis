@@ -37,7 +37,7 @@ public class Nemesis extends BasicGame {
 		screen = new Screen(camera, gameContainer.getGraphics());
 		input = new InputHandler();
 		gameContainer.getInput().addMouseListener(input);
-		player.initPlayer(level);
+		player.init(level);
 	}
 
 	public void update(GameContainer gameContainer, int delta) throws SlickException {
@@ -55,8 +55,10 @@ public class Nemesis extends BasicGame {
 		level.render(g, xOffset, yOffset, screen, player);
 		player.render(g, screen);
 		g.drawString("Mobs Killed: " + player.getKills(), 100, 10);
+		g.drawString("Score: " + player.getScore(), 250, 10);
 		float dialogOffset = (1280 - 900) / 2;
 		g.setAntiAlias(true);
+		Resources.dialogWindow.draw(dialogOffset, 720 - 170, 1280 - dialogOffset * 2, 170);
 //		g.fillRect(dialogOffset, 720 - 170, 1280 - dialogOffset * 2, 170);
 //		Log.log("Width: " + (1280 - dialogOffset * 2) + ", Height: " + (720 - 170));
 	}
