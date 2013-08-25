@@ -1,23 +1,27 @@
 package nl.tdegroot.games.nemesis.map.object;
 
-import nl.tdegroot.games.nemesis.action.Action;
+import nl.tdegroot.games.nemesis.entity.Player;
+import nl.tdegroot.games.nemesis.item.Item;
 
 public class MapObject {
 
-	protected Action action;
 
-	public MapObject(Action action) {
-		this.action = action;
+	protected String message;
+
+	public MapObject() {
 	}
 
-	public Action getAction() {
-		return action;
+	public void interact(Player player) {
 	}
 
-	public void interact() {
-		if (action != null) {
-			action.activate();
-		}
+	public void addItem(Item item, int count) {
 	}
 
+	public void addArrows(int amount) {
+
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
 }

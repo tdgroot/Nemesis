@@ -15,8 +15,7 @@ public class Arrow extends Projectile {
 		range = 650;
 		speed = 8.5f;
 		damage = 25.0d;
-
-		setSprite(Resources.arrow);
+		setSprite(Resources.entityArrow);
 
 		nx = speed * Math.sin(angle);
 		ny = speed * Math.cos(angle);

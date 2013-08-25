@@ -5,27 +5,32 @@ import nl.tdegroot.games.nemesis.Log;
 import nl.tdegroot.games.nemesis.entity.projectile.Arrow;
 import nl.tdegroot.games.nemesis.entity.projectile.Projectile;
 import nl.tdegroot.games.nemesis.gfx.Screen;
+import nl.tdegroot.games.nemesis.item.Bow;
+import nl.tdegroot.games.nemesis.item.Item;
 import nl.tdegroot.games.nemesis.map.MapLayer;
 import nl.tdegroot.games.nemesis.map.object.MapObject;
 import nl.tdegroot.games.nemesis.ui.Dialog;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
-import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.SpriteSheet;
 
 public class Player extends Mob {
 
-	SpriteSheet spriteSheet;
-	Animation animation;
+	private Bow bow;
+	private Inventory inventory;
+
+	private int arrows = 0;
 
 	private int fireRate = 0;
 	private int mobsKilled = 0;
 	private int score = 0;
+	private int it = 0;
 
 	public Player(Image image, float x, float y, int width, int height) {
 		super(image, x, y, width, height);
+
+		inventory = new Inventory();
 
 		movementSpeed = 2.5f;
 
@@ -48,6 +53,8 @@ public class Player extends Mob {
 	public void update(int delta) {
 		if (fireRate > 0)
 			fireRate--;
+		if (it > 0)
+			it -= delta;
 
 		float xa = 0;
 		float ya = 0;
@@ -94,21 +101,20 @@ public class Player extends Mob {
 	}
 
 	private void pollInput() {
-		if (Keyboard.isKeyDown(Keyboard.KEY_RETURN)) {
+		if (Keyboard.isKeyDown(Keyboard.KEY_C)) {
 			if (Dialog.isActive()) {
 				Dialog.deactivate();
 			}
 		}
-		if (! Dialog.isActive()) {
-			if (InputHandler.getMouseB() == 0 && fireRate <= 0) {
-				double dx = (InputHandler.getMouseX() - Display.getWidth() / 2);
-				double dy = (InputHandler.getMouseY() - Display.getHeight() / 2);
-				double dir = Math.atan2(dx, dy);
-				shoot(x, y, dir, this);
-				fireRate = Arrow.FIRE_RATE;
-			} else if (Keyboard.isKeyDown(Keyboard.KEY_X)) {
-				interact();
-			}
+		if (InputHandler.getMouseB() == 0 && fireRate <= 0 && bow != null && arrows > 0) {
+			double dx = (InputHandler.getMouseX() - Display.getWidth() / 2);
+			double dy = (InputHandler.getMouseY() - Display.getHeight() / 2);
+			double dir = Math.atan2(dx, dy);
+			shoot(x, y, dir, this);
+			arrows--;
+			fireRate = Arrow.FIRE_RATE;
+		} else if (Keyboard.isKeyDown(Keyboard.KEY_X) && it <= 0) {
+			interact();
 		}
 	}
 
@@ -148,8 +154,27 @@ public class Player extends Mob {
 				object = level.getMapObject(xt, yt);
 		}
 
-		if (object != null)
-			object.interact();
+		if (object != null) {
+			object.interact(this);
+			it = 250;
+		}
+	}
+
+	public void giveItem(Item item) {
+		Log.log("I retrieved item: " + item.getName());
+		inventory.add(0, item);
+		if (item instanceof Bow) {
+			Bow bow = (Bow) item;
+			equip(bow);
+		}
+	}
+
+	public void equip(Bow bow) {
+		this.bow = bow;
+	}
+
+	public void addArrows(int amount) {
+		arrows += amount;
 	}
 
 	public void mobKilled(int s) {
@@ -167,5 +192,9 @@ public class Player extends Mob {
 
 	public int getScore() {
 		return score;
+	}
+
+	public int getArrows() {
+		return arrows;
 	}
 }

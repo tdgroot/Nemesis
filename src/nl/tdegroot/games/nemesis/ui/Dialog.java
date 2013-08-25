@@ -14,6 +14,9 @@ public class Dialog {
 
 	private static boolean active = false;
 
+	private static int time = 0;
+	private int timer = 0;
+
 	public static void update(int delta) {
 	}
 

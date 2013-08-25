@@ -1,9 +1,8 @@
 package nl.tdegroot.games.nemesis.map;
 
 import nl.tdegroot.games.nemesis.Log;
-import nl.tdegroot.games.nemesis.action.Action;
-import nl.tdegroot.games.nemesis.action.OpenAction;
-import nl.tdegroot.games.nemesis.map.object.ContainerObject;
+import nl.tdegroot.games.nemesis.item.Item;
+import nl.tdegroot.games.nemesis.map.object.Chest;
 import nl.tdegroot.games.nemesis.map.object.MapObject;
 import org.newdawn.slick.tiled.TiledMap;
 
@@ -30,26 +29,26 @@ public class ObjectMap {
 			for (int xx = (map.getObjectX(objectLayer, i) / tileSize); xx < x; xx++) {
 				for (int yy = (map.getObjectY(objectLayer, i) / tileSize); yy < y; yy++) {
 
-					String actionType = map.getObjectProperty(objectLayer, i, "action", "");
+					String arrows = map.getObjectProperty(objectLayer, i, "arrows", "");
+					String message = map.getObjectProperty(objectLayer, i, "message", "");
 					String itemList = map.getObjectProperty(objectLayer, i, "items", "");
 
-					Log.log("Action: " + actionType + ", Items: " + itemList);
+					Log.log("Items: " + itemList);
 
-					if (actionType != "" && itemList != "") {
-						MapObject object;
-						Action action = getAction(actionType);
+					MapObject mapObject = null;
 
-						object = new ContainerObject(action, itemList);
-						objects[xx + yy * width] = object;
-						size++;
-					} else if (actionType != "") {
-						MapObject object;
-						Action action = getAction(actionType);
+					if (itemList != "")
+						mapObject = processMapObject(itemList);
 
-						object = new MapObject(action);
-						objects[xx + yy * width] = object;
-						size++;
+					if (mapObject != null) {
+						if (arrows != "")
+							mapObject.addArrows(Integer.parseInt(arrows));
+						if (message != "")
+							mapObject.setMessage(message);
 					}
+
+					objects[xx + yy * width] = mapObject;
+					size++;
 
 				}
 
@@ -60,19 +59,34 @@ public class ObjectMap {
 
 	}
 
+	private MapObject processMapObject(String itemList) {
+		MapObject mapObject = new Chest();
+
+		int openBracket = itemList.indexOf("{");
+		int closeBracket = itemList.lastIndexOf("}");
+
+		String params = itemList.substring(openBracket + 1, closeBracket);
+		String[] paramList = params.split(",");
+
+		for (int i = 0; i < paramList.length; i++) {
+			String[] pData = paramList[i].trim().split(":");
+			Item item = Item.getItem(pData[0]);
+			int count = Integer.parseInt(pData[1]);
+			mapObject.addItem(item, count);
+		}
+
+		return mapObject;
+	}
+
+	private boolean isNumeric(String str) {
+		for (char c : str.toCharArray()) {
+			if (! Character.isDigit(c)) return false;
+		}
+		return true;
+	}
+
 	public MapObject getMapObject(int x, int y) {
 		return objects[x + y * width];
 	}
 
-	private Action getAction(String type) {
-		Action action = null;
-
-		switch (type) {
-			case "open":
-				action = new OpenAction();
-				break;
-		}
-
-		return action;
-	}
 }

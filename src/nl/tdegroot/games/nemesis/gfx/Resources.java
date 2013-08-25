@@ -15,7 +15,11 @@ public class Resources {
 	public static Image roach;
 
 	// Entities
-	public static Image arrow;
+	public static Image entityArrow;
+
+	// Items
+	public static Image bow;
+	public static Image itemArrow;
 
 	// UI
 	public static Image dialogWindow;
@@ -25,15 +29,26 @@ public class Resources {
 
 	public Resources() {
 		try {
+
+			// Player
 			player = new Image("resources/spritesheets/birk_anim.png");
 
+			// Mobs
 			roach = new Image("resources/spritesheets/roach_anim.png");
 
-			arrow = new Image("resources/textures/entities/arrow.png");
+			// Entities
+			entityArrow = new Image("resources/textures/entities/arrow.png");
 
+			// Items
+			bow = new Image("resources/textures/items/bow.png");
+			itemArrow = new Image("resources/textures/items/arrow.png");
+
+			// UI
 			dialogWindow = new Image("resources/textures/hud/bar_text.png");
 
-			agency_fb = new TrueTypeFont(new Font("Agency FB", Font.BOLD, 16), true);
+			// Fonts
+			agency_fb = new TrueTypeFont(new Font("Tahoma", Font.BOLD, 16), true);
+
 		} catch (SlickException e) {
 			Log.exception(e.getMessage());
 		}

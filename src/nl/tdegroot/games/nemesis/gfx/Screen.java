@@ -9,13 +9,8 @@ import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
-import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.tiled.TiledMap;
-import org.newdawn.slick.util.ResourceLoader;
 
-import java.awt.*;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 public class Screen {

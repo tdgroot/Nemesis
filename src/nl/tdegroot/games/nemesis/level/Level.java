@@ -215,10 +215,6 @@ public class Level implements TileBasedMap {
 		projectiles.add(projectile);
 	}
 
-	public void removeProjectile(Projectile projectile) {
-
-	}
-
 	public TiledMap getMap() {
 		return map;
 	}
