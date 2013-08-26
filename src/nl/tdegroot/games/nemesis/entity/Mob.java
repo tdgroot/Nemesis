@@ -138,12 +138,11 @@ public class Mob extends Entity {
 		return destination;
 	}
 
-	public boolean hit(Projectile p) {
+	public void hit(Projectile p) {
 		health -= p.getDamage();
 		if (health <= 0.0) {
 			remove();
 		}
-		return isRemoved();
 	}
 
 	protected int getDirection(float xa, float ya) {
