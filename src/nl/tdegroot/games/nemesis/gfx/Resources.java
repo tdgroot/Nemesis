@@ -16,7 +16,7 @@ public class Resources {
 
 	// Entities
 	public static Image entityArrow;
-	public static Image bloodParticle;
+	public static Image slimeParticle;
 
 	// Items
 	public static Image bow;
@@ -40,7 +40,7 @@ public class Resources {
 
 			// Entities
 			entityArrow = new Image("resources/textures/entities/arrow.png");
-			bloodParticle = new Image("resources/textures/entities/bloodParticle.png");
+			slimeParticle = new Image("resources/textures/entities/particles/slimeParticle.png");
 
 			// Items
 			bow = new Image("resources/textures/items/bow.png");

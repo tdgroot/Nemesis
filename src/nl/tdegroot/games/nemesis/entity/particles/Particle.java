@@ -1,9 +1,7 @@
 package nl.tdegroot.games.nemesis.entity.particles;
 
-import nl.tdegroot.games.nemesis.Log;
 import nl.tdegroot.games.nemesis.entity.Entity;
 import nl.tdegroot.games.nemesis.gfx.Screen;
-import nl.tdegroot.games.nemesis.level.Level;
 import org.newdawn.slick.Image;
 
 import java.util.ArrayList;
@@ -30,8 +28,8 @@ public class Particle extends Entity {
 
 		this.xx = x;
 		this.yy = y;
-		this.xa = random.nextGaussian();
-		this.ya = random.nextGaussian();
+		this.xa = random.nextGaussian() * 1;
+		this.ya = random.nextGaussian() * 1.5;
 		this.za = random.nextFloat();
 
 		this.particles.add(this);
@@ -52,24 +50,31 @@ public class Particle extends Entity {
 				particles.remove(i);
 				continue;
 			}
-			p.time += 1;
+			p.time += delta;
 			if (p.time >= p.life) p.remove();
-			Log.log(p.time + "");
 			p.za -= 0.1D;
 
-			if (p.zz < 0.0D) {
-				p.zz = 0.0D;
-				p.za *= -0.5D;
-				p.ya *= 0.4D;
-				p.xa *= 0.4D;
+			p.xx += xa;
+			p.yy += ya;
+			p.zz += za;
+			if (zz < 0) {
+				zz = 0;
+				za *= 14;
+				xa *= 0.6;
+				ya *= 20;
 			}
 
-			p.xx += p.xa;
-			p.zz += p.za;
-			p.yy += p.ya;
+			if (! collision(p)) {
+				p.xx += p.xa;
+				p.zz += p.za;
+			}
 
-			p.x = ((int) p.xx);
-			p.y = ((int) p.yy);
+			if (! collision(p)) {
+				p.yy += p.ya;
+			}
+			p.za *= 0.15;
+			p.x = (float) p.xx;
+			p.y = (float) p.yy;
 		}
 		if (particles.size() <= 0) {
 			remove();
@@ -82,6 +87,14 @@ public class Particle extends Entity {
 			int xt = (int) (p.x + p.xa + i % 2 * 2 - 1) / level.tileSize;
 			int yt = (int) (p.y + p.ya + i / 2 * 1 + 4) / level.tileSize;
 			if (level.isSolid(xt, yt)) {
+				if (p.xa != 0.0) {
+					p.xa *= - 0.6;
+				}
+
+				if (p.ya != 0.0) {
+					p.ya *= - 0.6;
+				}
+
 				solid = true;
 			}
 		}

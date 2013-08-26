@@ -1,11 +1,7 @@
 package nl.tdegroot.games.nemesis.entity;
 
-import nl.tdegroot.games.nemesis.Log;
-import nl.tdegroot.games.nemesis.entity.particles.Particle;
 import nl.tdegroot.games.nemesis.gfx.Screen;
 import nl.tdegroot.games.nemesis.level.Level;
-import nl.tdegroot.games.nemesis.map.MapLayer;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
 public class Entity {
@@ -46,12 +42,7 @@ public class Entity {
 		y *= level.tileSize;
 	}
 
-
-
 	public void remove() {
-		if (this instanceof Particle) {
-			Log.log("Removed a particle!");
-		}
 		removed = true;
 	}
 

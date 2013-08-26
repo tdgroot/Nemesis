@@ -68,10 +68,10 @@ public class Mob extends Entity {
 		if (! hasDestination)
 			destination = getDestination(random.nextInt(10), random.nextInt(10));
 
-		float xa = -3.0f;
-		float ya = -4.0f;
+		float xa = 0;
+		float ya = 0;
 
-		move(xa, ya);
+//		move(xa, ya);
 
 		if (isWalking) {
 			if (frame % (102 / delta) == 0) {

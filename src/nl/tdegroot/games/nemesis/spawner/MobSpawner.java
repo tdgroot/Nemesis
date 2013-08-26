@@ -36,7 +36,7 @@ public class MobSpawner {
 		this.spawnerID = spawnerID;
 	}
 
-	public void update() {
+	public void update(int delta) {
 	}
 
 	public int getMaxRange() {
@@ -85,16 +85,16 @@ public class MobSpawner {
 		int randomX = 0;
 		randomX = GameMath.random(x - maxRange, x + (maxRange * 2));
 		while (randomX < 0 || randomX > level.getWidthInTiles()) {
-			randomX = random.nextInt(30);
+			randomX = GameMath.random(x - maxRange, x + (maxRange * 2));
 		}
 		return randomX;
 	}
 
 	public int generateY() {
 		int randomY = 0;
-		randomY = GameMath.random(x - maxRange, x + (maxRange * 2));
+		randomY = GameMath.random(y - maxRange, y + (maxRange * 2));
 		while (randomY < 0 || randomY > level.getHeightInTiles()) {
-			randomY = random.nextInt(30);
+			randomY = GameMath.random(y - maxRange, y + (maxRange * 2));
 		}
 		return randomY;
 	}

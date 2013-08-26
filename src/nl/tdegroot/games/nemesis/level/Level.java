@@ -1,16 +1,16 @@
 package nl.tdegroot.games.nemesis.level;
 
 import nl.tdegroot.games.nemesis.Log;
-import nl.tdegroot.games.nemesis.entity.particles.BloodParticle;
-import nl.tdegroot.games.nemesis.entity.particles.Particle;
-import nl.tdegroot.games.nemesis.map.ObjectMap;
 import nl.tdegroot.games.nemesis.entity.Entity;
 import nl.tdegroot.games.nemesis.entity.Mob;
 import nl.tdegroot.games.nemesis.entity.Player;
+import nl.tdegroot.games.nemesis.entity.particles.Particle;
+import nl.tdegroot.games.nemesis.entity.particles.SlimeParticle;
 import nl.tdegroot.games.nemesis.entity.projectile.Projectile;
 import nl.tdegroot.games.nemesis.gfx.Screen;
 import nl.tdegroot.games.nemesis.map.CollisionMap;
 import nl.tdegroot.games.nemesis.map.MapLayer;
+import nl.tdegroot.games.nemesis.map.ObjectMap;
 import nl.tdegroot.games.nemesis.map.object.MapObject;
 import nl.tdegroot.games.nemesis.spawner.MobSpawner;
 import nl.tdegroot.games.nemesis.spawner.RoachSpawner;
@@ -83,7 +83,7 @@ public class Level implements TileBasedMap {
 		clear();
 
 		for (int i = 0; i < spawners.size(); i++) {
-			spawners.get(i).update();
+			spawners.get(i).update(delta);
 		}
 
 		for (int i = 0; i < entities.size(); i++) {
@@ -135,7 +135,6 @@ public class Level implements TileBasedMap {
 				p.clear();
 				particles.remove(i);
 			}
-			Log.log("Particles: " + particles.size());
 		}
 	}
 
@@ -146,13 +145,18 @@ public class Level implements TileBasedMap {
 			Iterator<Mob> mobIterator = mobs.iterator();
 			while (mobIterator.hasNext()) {
 				Mob mob = mobIterator.next();
-				if (p.getAreaOfEffect().intersects(mob.getVulnerability()) && !p.isRemoved()) {
+				if (p.getAreaOfEffect().intersects(mob.getVulnerability()) && ! p.isRemoved()) {
 					mob.hit(p);
-					if (mob.isRemoved())
-					p.getPlayer().mobKilled(mob.getScore());
-					Particle particle = new BloodParticle(mob.getX() + mob.getWidth() / 2, mob.getY() + mob.getHeight() / 2, 30, 100);
-					particle.setLevel(this);
-					particles.add(particle);
+					if (mob.isRemoved()) {
+						p.getPlayer().mobKilled(mob.getScore());
+						Particle particle = new SlimeParticle(mob.getX() + mob.getWidth() / 2, mob.getY() + mob.getHeight() / 2, 50, 1000);
+						particle.setLevel(this);
+						particles.add(particle);
+					} else {
+						Particle particle = new SlimeParticle(mob.getX() + mob.getWidth() / 2, mob.getY() + mob.getHeight() / 2, 25, 1000);
+						particle.setLevel(this);
+						particles.add(particle);
+					}
 					p.remove();
 					Log.log("Hit: Mob ID: " + mob.getID() + ", Damage: " + p.getDamage() + ", Mob's Health: " + mob.getHealth());
 				}
