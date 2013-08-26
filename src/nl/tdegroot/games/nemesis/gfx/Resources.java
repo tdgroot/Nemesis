@@ -16,12 +16,14 @@ public class Resources {
 
 	// Entities
 	public static Image entityArrow;
+	public static Image bloodParticle;
 
 	// Items
 	public static Image bow;
 	public static Image itemArrow;
 
 	// UI
+	public static Image healthBar;
 	public static Image dialogWindow;
 
 	// Fonts
@@ -38,12 +40,14 @@ public class Resources {
 
 			// Entities
 			entityArrow = new Image("resources/textures/entities/arrow.png");
+			bloodParticle = new Image("resources/textures/entities/bloodParticle.png");
 
 			// Items
 			bow = new Image("resources/textures/items/bow.png");
 			itemArrow = new Image("resources/textures/items/arrow.png");
 
 			// UI
+			healthBar = new Image("resources/textures/hud/bar_healthenergy.png");
 			dialogWindow = new Image("resources/textures/hud/bar_text.png");
 
 			// Fonts

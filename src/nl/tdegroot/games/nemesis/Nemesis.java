@@ -39,7 +39,6 @@ public class Nemesis extends BasicGame {
 		input = new InputHandler();
 		gameContainer.getInput().addMouseListener(input);
 		player.init(level);
-		gameContainer.setVSync(true);
 		Dialog.activate("Welcome, to the world of world of Nemesis!");
 	}
 
@@ -63,12 +62,10 @@ public class Nemesis extends BasicGame {
 		g.drawString("Arrows: " + player.getArrows(), 1175, 10);
 		float dialogOffset = (1280 - 900) / 2;
 		g.setAntiAlias(true);
-//		Resources.dialogWindow.draw(dialogOffset, 720 - 170, 1280 - dialogOffset * 2, 170);
 		if (Dialog.isActive()) {
 			Dialog.render(screen);
 		}
-//		g.fillRect(dialogOffset, 720 - 170, 1280 - dialogOffset * 2, 170);
-//		Log.log("Width: " + (1280 - dialogOffset * 2) + ", Height: " + (720 - 170));
+		Resources.healthBar.draw(0, 0, 125, 200);
 	}
 
 	private synchronized void stop() {

@@ -25,8 +25,8 @@ public class Screen {
 	}
 
 	public void renderMap(TiledMap map, int tileSize) {
-		int x = (int) - (xOffset % tileSize) - tileSize;
-		int y = (int) - (yOffset % tileSize) - tileSize;
+		int x = (int) -(xOffset % tileSize) - tileSize;
+		int y = (int) -(yOffset % tileSize) - tileSize;
 		int sx = (int) (xOffset / tileSize) - 1;
 		int sy = (int) (yOffset / tileSize) - 1;
 		int sectionWidth = (Display.getWidth() / tileSize) + 3;
@@ -50,8 +50,12 @@ public class Screen {
 	}
 
 	public void renderProjectile(Projectile projectile) {
-		projectile.getSprite().setRotation((float) Math.toDegrees(- projectile.getAngle()) - 180.0f);
+		projectile.getSprite().setRotation((float) Math.toDegrees(-projectile.getAngle()) - 180.0f);
 		projectile.getSprite().drawCentered(projectile.getX() - xOffset, projectile.getY() - yOffset);
+	}
+
+	public void renderParticle(float x, float y, Image sprite) {
+		sprite.draw(x - xOffset, y - yOffset);
 	}
 
 	public void renderDialog() {

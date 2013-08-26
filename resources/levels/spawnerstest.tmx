@@ -41,21 +41,27 @@
  <objectgroup name="MapObjects" width="50" height="50">
   <object name="Chest" type="MapObject" x="832" y="512" width="64" height="64">
    <properties>
-    <property name="action" value="gift"/>
     <property name="arrows" value="256"/>
     <property name="items" value="{bow:1}"/>
     <property name="message" value="You found 1 bow and 256 arrows!"/>
+    <property name="type" value="chest"/>
    </properties>
   </object>
   <object name="Read Sign" type="MapObject" x="960" y="832" width="64" height="64">
    <properties>
-    <property name="action" value="read"/>
     <property name="message" value="Open the chest above!"/>
+    <property name="type" value="sign"/>
+   </properties>
+  </object>
+  <object name="Sign" type="MapObject" x="1664" y="960" width="64" height="64">
+   <properties>
+    <property name="message" value="Maarten is gay!"/>
+    <property name="type" value="sign"/>
    </properties>
   </object>
  </objectgroup>
  <objectgroup name="Player" width="50" height="50">
-  <object name="Player Spawn" type="Player Spawn" x="807" y="715" width="113" height="67"/>
+  <object name="Player Spawn" type="Player Spawn" x="833" y="701" width="32" height="34"/>
  </objectgroup>
  <objectgroup name="Spawners" width="50" height="50" opacity="0.9">
   <object name="Roach Spawner" type="Spawner" x="1600" y="1088" width="64" height="64">

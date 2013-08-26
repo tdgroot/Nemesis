@@ -5,7 +5,6 @@ import nl.tdegroot.games.nemesis.item.Item;
 
 public class MapObject {
 
-
 	protected String message;
 
 	public MapObject() {
@@ -18,7 +17,6 @@ public class MapObject {
 	}
 
 	public void addArrows(int amount) {
-
 	}
 
 	public void setMessage(String message) {

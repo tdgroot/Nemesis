@@ -1,6 +1,8 @@
 package nl.tdegroot.games.nemesis.level;
 
 import nl.tdegroot.games.nemesis.Log;
+import nl.tdegroot.games.nemesis.entity.particles.BloodParticle;
+import nl.tdegroot.games.nemesis.entity.particles.Particle;
 import nl.tdegroot.games.nemesis.map.ObjectMap;
 import nl.tdegroot.games.nemesis.entity.Entity;
 import nl.tdegroot.games.nemesis.entity.Mob;
@@ -33,6 +35,7 @@ public class Level implements TileBasedMap {
 	private List<Entity> entities = new ArrayList<Entity>();
 	private List<Mob> mobs = new ArrayList<Mob>();
 	private List<Projectile> projectiles = new ArrayList<Projectile>();
+	private List<Particle> particles = new ArrayList<Particle>();
 
 	public Level(String path) throws SlickException {
 		map = new TiledMap(path);
@@ -95,6 +98,10 @@ public class Level implements TileBasedMap {
 			projectiles.get(i).update(delta);
 		}
 
+		for (int i = 0; i < particles.size(); i++) {
+			particles.get(i).update(delta);
+		}
+
 		checkProjectiles();
 	}
 
@@ -121,6 +128,15 @@ public class Level implements TileBasedMap {
 				projectiles.remove(i);
 			}
 		}
+
+		for (int i = 0; i < particles.size(); i++) {
+			Particle p = particles.get(i);
+			if (p.isRemoved()) {
+				p.clear();
+				particles.remove(i);
+			}
+			Log.log("Particles: " + particles.size());
+		}
 	}
 
 	public void checkProjectiles() {
@@ -131,9 +147,12 @@ public class Level implements TileBasedMap {
 			while (mobIterator.hasNext()) {
 				Mob mob = mobIterator.next();
 				if (p.getAreaOfEffect().intersects(mob.getVulnerability()) && !p.isRemoved()) {
-					if (mob.hit(p)) {
-						p.getPlayer().mobKilled(mob.getScore());
-					}
+					mob.hit(p);
+					if (mob.isRemoved())
+					p.getPlayer().mobKilled(mob.getScore());
+					Particle particle = new BloodParticle(mob.getX() + mob.getWidth() / 2, mob.getY() + mob.getHeight() / 2, 30, 100);
+					particle.setLevel(this);
+					particles.add(particle);
 					p.remove();
 					Log.log("Hit: Mob ID: " + mob.getID() + ", Damage: " + p.getDamage() + ", Mob's Health: " + mob.getHealth());
 				}
@@ -155,6 +174,10 @@ public class Level implements TileBasedMap {
 
 		for (int i = 0; i < projectiles.size(); i++) {
 			projectiles.get(i).render(screen);
+		}
+
+		for (int i = 0; i < particles.size(); i++) {
+			particles.get(i).render(screen);
 		}
 
 	}

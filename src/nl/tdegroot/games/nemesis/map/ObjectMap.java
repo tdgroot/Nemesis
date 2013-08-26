@@ -4,6 +4,7 @@ import nl.tdegroot.games.nemesis.Log;
 import nl.tdegroot.games.nemesis.item.Item;
 import nl.tdegroot.games.nemesis.map.object.Chest;
 import nl.tdegroot.games.nemesis.map.object.MapObject;
+import nl.tdegroot.games.nemesis.map.object.Sign;
 import org.newdawn.slick.tiled.TiledMap;
 
 public class ObjectMap {
@@ -29,16 +30,20 @@ public class ObjectMap {
 			for (int xx = (map.getObjectX(objectLayer, i) / tileSize); xx < x; xx++) {
 				for (int yy = (map.getObjectY(objectLayer, i) / tileSize); yy < y; yy++) {
 
+					String type = map.getObjectProperty(objectLayer, i, "type", "");
 					String arrows = map.getObjectProperty(objectLayer, i, "arrows", "");
 					String message = map.getObjectProperty(objectLayer, i, "message", "");
 					String itemList = map.getObjectProperty(objectLayer, i, "items", "");
 
-					Log.log("Items: " + itemList);
-
 					MapObject mapObject = null;
 
-					if (itemList != "")
-						mapObject = processMapObject(itemList);
+					Log.log("Type: " + type);
+
+					if (type.equals("chest")) {
+						mapObject = processChest(itemList);
+					} else if (type.equals("sign")) {
+						mapObject = new Sign();
+					}
 
 					if (mapObject != null) {
 						if (arrows != "")
@@ -59,7 +64,8 @@ public class ObjectMap {
 
 	}
 
-	private MapObject processMapObject(String itemList) {
+	private MapObject processChest(String itemList) {
+		if (itemList == "") return null;
 		MapObject mapObject = new Chest();
 
 		int openBracket = itemList.indexOf("{");
@@ -80,7 +86,7 @@ public class ObjectMap {
 
 	private boolean isNumeric(String str) {
 		for (char c : str.toCharArray()) {
-			if (! Character.isDigit(c)) return false;
+			if (!Character.isDigit(c)) return false;
 		}
 		return true;
 	}
