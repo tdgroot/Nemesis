@@ -47,9 +47,15 @@
     <property name="message" value="You found 1 bow and 256 arrows!"/>
    </properties>
   </object>
+  <object name="Read Sign" type="MapObject" x="960" y="832" width="64" height="64">
+   <properties>
+    <property name="action" value="read"/>
+    <property name="message" value="Open the chest above!"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup name="Player" width="50" height="50">
-  <object name="Player Spawn" type="Player Spawn" x="832" y="704" width="64" height="64"/>
+  <object name="Player Spawn" type="Player Spawn" x="807" y="715" width="113" height="67"/>
  </objectgroup>
  <objectgroup name="Spawners" width="50" height="50" opacity="0.9">
   <object name="Roach Spawner" type="Spawner" x="1600" y="1088" width="64" height="64">

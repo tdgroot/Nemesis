@@ -29,10 +29,8 @@ public class CollisionMap {
 		}
 	}
 
-	public boolean isSolid(int x, int y) throws ArrayIndexOutOfBoundsException {
-		if (x >= width || y >= height)
-			return true;
-		return solid[x + y * width];
+	public boolean isSolid(int x, int y) {
+		return x >= width || y >= height || solid[x + y * width];
 	}
 
 }

@@ -45,13 +45,13 @@ public class Mob extends Entity {
 
 	public Mob(Image image, float x, float y, int width, int height) {
 		super(image, x, y, width, height);
-		animCount = (int) (image.getWidth() / width);
+		animCount = image.getWidth() / width;
 		sheet = new SpriteSheet(image, width, height);
 	}
 
 	public Mob(Image image, float x, float y, int width, int height, int mobID, int spawnerID) {
 		super(image, x, y, width, height);
-		animCount = (int) (image.getWidth() / width);
+		animCount = image.getWidth() / width;
 		sheet = new SpriteSheet(image, width, height);
 		vulnerability = new Rectangle(x + 10, y + 10, width - 20, height - 20);
 		this.mobID = mobID;

@@ -36,7 +36,7 @@ public class Arrow extends Projectile {
 	}
 
 	private double distance() {
-		double dist = 0.0d;
+		double dist;
 		dist = Math.sqrt(Math.abs((xOrigin - x) * (xOrigin - x) + (yOrigin - y) * (yOrigin - y)));
 		return dist;
 	}

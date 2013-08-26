@@ -39,6 +39,8 @@ public class Nemesis extends BasicGame {
 		input = new InputHandler();
 		gameContainer.getInput().addMouseListener(input);
 		player.init(level);
+		gameContainer.setVSync(true);
+		Dialog.activate("Welcome, to the world of world of Nemesis!");
 	}
 
 	public void update(GameContainer gameContainer, int delta) throws SlickException {
