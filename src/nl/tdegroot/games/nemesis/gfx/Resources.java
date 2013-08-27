@@ -24,6 +24,8 @@ public class Resources {
 
 	// UI
 	public static Image healthBar;
+	public static Image energyBar;
+	public static Image characterBar;
 	public static Image dialogWindow;
 
 	// Fonts
@@ -47,11 +49,13 @@ public class Resources {
 			itemArrow = new Image("resources/textures/items/arrow.png");
 
 			// UI
-			healthBar = new Image("resources/textures/hud/bar_healthenergy.png");
-			dialogWindow = new Image("resources/textures/hud/bar_text.png");
+			healthBar = new Image("resources/textures/ui/healthbar.png");
+			energyBar = new Image("resources/textures/ui/energybar.png");
+			characterBar = new Image("resources/textures/ui/bar_healthenergy.png");
+			dialogWindow = new Image("resources/textures/ui/bar_text.png");
 
 			// Fonts
-			agency_fb = new TrueTypeFont(new Font("Tahoma", Font.BOLD, 16), true);
+			agency_fb = new TrueTypeFont(new Font("Californian FB", Font.BOLD, 16), true);
 
 		} catch (SlickException e) {
 			Log.exception(e.getMessage());

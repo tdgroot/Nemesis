@@ -1,11 +1,13 @@
 package nl.tdegroot.games.nemesis.ui;
 
-import nl.tdegroot.games.nemesis.gfx.Resources;
-import nl.tdegroot.games.nemesis.gfx.Screen;
-import org.newdawn.slick.Image;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import nl.tdegroot.games.nemesis.gfx.Resources;
+
+import org.lwjgl.opengl.Display;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 
 public class Dialog {
 
@@ -20,8 +22,14 @@ public class Dialog {
 	public static void update(int delta) {
 	}
 
-	public static void render(Screen screen) {
-		screen.renderDialog();
+	public static void render(Graphics g) {
+		float dialogOffset = (Display.getWidth() - dialogWindow.getWidth()) / 2;
+		dialogWindow.draw(dialogOffset, Display.getHeight() - dialogWindow.getHeight(), Display.getWidth() - dialogOffset * 2, dialogWindow.getHeight());
+
+		g.setFont(Resources.agency_fb);
+		for (int i = 0; i < history.size(); i++) {
+			g.drawString(history.get(i), dialogOffset + 70, (Display.getHeight() - dialogWindow.getHeight() + 19) + i * 22);
+		}
 	}
 
 	public static void activate(String message) {

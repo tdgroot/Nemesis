@@ -6,8 +6,9 @@ import nl.tdegroot.games.nemesis.ui.Dialog;
 public class Sign extends MapObject {
 
 	public void interact(Player player) {
-		Dialog.activate("The sign says:");
-		Dialog.activate(message);
+		if (message != "") {
+		Dialog.activate("The sign says: " + message);
+		}
 	}
 
 }

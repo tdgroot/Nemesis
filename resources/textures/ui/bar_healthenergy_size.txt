@@ -1,0 +1,2 @@
+20, 17 tot 58, 190 = health ; width=38 height=173 
+66, 17 tot 104, 190 = energy ; width=38 height=173 

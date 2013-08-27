@@ -24,6 +24,7 @@ public class Mob extends Entity {
 	protected boolean wasWalking = false;
 	protected boolean hasDestination = false;
 
+	protected double baseHealth;
 	protected double health;
 
 	protected int mobID = 0;

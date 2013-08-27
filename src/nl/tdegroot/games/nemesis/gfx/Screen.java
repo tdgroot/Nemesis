@@ -32,7 +32,7 @@ public class Screen {
 		int sectionWidth = (Display.getWidth() / tileSize) + 3;
 		int sectionHeight = (Display.getHeight() / tileSize) + 4;
 
-		map.render(x, y, sx, sy, sectionWidth, sectionHeight);
+		map.render(x, y, sx, sy, sectionWidth, sectionHeight, true);
 	}
 
 	public void renderPlayer(Player player) {

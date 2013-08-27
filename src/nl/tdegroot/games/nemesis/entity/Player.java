@@ -20,6 +20,7 @@ public class Player extends Mob {
 	private Bow bow;
 	private Inventory inventory;
 
+	private double energy;
 	private int arrows = 0;
 
 	private int fireRate = 0;
@@ -33,6 +34,11 @@ public class Player extends Mob {
 		inventory = new Inventory();
 
 		movementSpeed = 2.5f;
+		
+		baseHealth = 100.0;
+		health = baseHealth;
+
+		energy = 100.0;
 
 		collisionMulX = 38;
 		collisionAddX = 17;
@@ -78,7 +84,7 @@ public class Player extends Mob {
 		frame++;
 
 		if (isWalking) {
-			if (frame % (50 / delta) == 0) {
+			if (frame % (48 / delta) == 0) {
 				animIndex = ((animIndex + 1) % animCount);
 			}
 		}
@@ -196,5 +202,21 @@ public class Player extends Mob {
 
 	public int getArrows() {
 		return arrows;
+	}
+	
+	public double getHealth() {
+		return health;
+	}
+	
+	public double getPercentHealth() {
+		return (baseHealth / 100 * health);
+	}
+
+	public double getBaseHealth() {
+		return baseHealth;
+	}
+
+	public double getEnergy() {
+		return energy;
 	}
 }
