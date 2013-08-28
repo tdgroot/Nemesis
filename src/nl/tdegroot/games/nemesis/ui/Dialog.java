@@ -3,6 +3,7 @@ package nl.tdegroot.games.nemesis.ui;
 import java.util.ArrayList;
 import java.util.List;
 
+import nl.tdegroot.games.nemesis.Log;
 import nl.tdegroot.games.nemesis.gfx.Resources;
 
 import org.lwjgl.opengl.Display;
@@ -15,11 +16,20 @@ public class Dialog {
 	private static Image dialogWindow = Resources.dialogWindow;
 
 	private static boolean active = false;
+	private static boolean renderKey = false;
 
 	private static int time = 0;
-	private int timer = 0;
 
 	public static void update(int delta) {
+		time++;
+
+		if (active) {
+			if (time % (5 * delta) >= 40) {
+				renderKey = true;
+			} else {
+				renderKey = false;
+			}
+		}
 	}
 
 	public static void render(Graphics g) {
@@ -28,7 +38,10 @@ public class Dialog {
 
 		g.setFont(Resources.agency_fb);
 		for (int i = 0; i < history.size(); i++) {
-			g.drawString(history.get(i), dialogOffset + 70, (Display.getHeight() - dialogWindow.getHeight() + 19) + i * 22);
+			g.drawString(history.get(i), dialogOffset + 70, (Display.getHeight() - dialogWindow.getHeight() + 23) + i * 22);
+		}
+		if (renderKey) {
+			g.drawString("Press C to continue", dialogOffset + 70, Display.getHeight() - 37);
 		}
 	}
 

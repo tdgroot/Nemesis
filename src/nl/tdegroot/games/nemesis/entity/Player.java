@@ -129,7 +129,7 @@ public class Player extends Mob {
 		for (int c = 0; c < 4; c++) {
 			int xt = (int) ((x + xa) + c % 2 * 38 - 17) / level.tileSize;
 			int yt = (int) ((y + ya) + c / 2 * 20 + 10) / level.tileSize;
-			if (level.isSolid(xt, yt))
+			if (level.getCollisionMap().isCollision(xt, yt))
 				solid = true;
 		}
 		return solid;

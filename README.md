@@ -5,9 +5,6 @@ TODO
 
 Technical:
 
-MapObject structure (Work in progress)
-UI
-Dialog
 Mob-AI
 
 Design:

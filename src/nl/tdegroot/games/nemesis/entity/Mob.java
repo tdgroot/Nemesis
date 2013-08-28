@@ -119,7 +119,7 @@ public class Mob extends Entity {
 			int yt = (int) ((y + ya) + c / 2 * collisionMulY + collisionAddY) / level.tileSize;
 
 			try {
-				if (level.isSolid(xt, yt))
+				if (level.isCollision(xt, yt))
 					solid = true;
 			} catch (ArrayIndexOutOfBoundsException e) {
 				Log.exception(e.getMessage());

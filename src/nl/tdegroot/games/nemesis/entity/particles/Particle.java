@@ -59,9 +59,9 @@ public class Particle extends Entity {
 			p.zz += za;
 			if (zz < 0) {
 				zz = 0;
-				za *= 14;
-				xa *= 0.6;
-				ya *= 20;
+				p.za *= 0.1;
+				p.xa *= 0.1;
+				p.ya *= 1.2;
 			}
 
 			if (! collision(p)) {
@@ -86,7 +86,7 @@ public class Particle extends Entity {
 		for (int i = 0; i < 4; i++) {
 			int xt = (int) (p.x + p.xa + i % 2 * 2 - 1) / level.tileSize;
 			int yt = (int) (p.y + p.ya + i / 2 * 1 + 4) / level.tileSize;
-			if (level.isSolid(xt, yt)) {
+			if (level.getCollisionMap().isSolid(xt, yt)) {
 				if (p.xa != 0.0) {
 					p.xa *= - 0.6;
 				}

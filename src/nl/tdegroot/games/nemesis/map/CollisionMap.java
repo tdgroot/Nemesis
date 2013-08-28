@@ -1,10 +1,12 @@
 package nl.tdegroot.games.nemesis.map;
 
+import nl.tdegroot.games.nemesis.Log;
 import org.newdawn.slick.tiled.TiledMap;
 
 public class CollisionMap {
 
 	private boolean[] solid;
+	private boolean[] water;
 	private int width, height;
 
 	public CollisionMap(TiledMap map, int tileSize) {
@@ -13,6 +15,9 @@ public class CollisionMap {
 		height = map.getHeight();
 
 		solid = new boolean[width * height];
+		water = new boolean[width * height];
+
+		Log.log("Map size: " + width * height);
 
 		for (int i = 0; i <= map.getObjectCount(MapLayer.MAP_LAYER_COLLISION); i++) {
 
@@ -27,10 +32,38 @@ public class CollisionMap {
 				}
 			}
 		}
+
+		initWater(map, tileSize);
+	}
+
+	private void initWater(TiledMap map, int tileSize) {
+		int waterLayer = MapLayer.MAP_LAYER_WATER;
+
+		for (int i = 0; i <= map.getObjectCount(waterLayer); i++) {
+
+			int x = (map.getObjectX(waterLayer, i) + map.getObjectWidth(waterLayer, i)) / tileSize;
+			int y = (map.getObjectY(waterLayer, i) + map.getObjectHeight(waterLayer, i)) / tileSize;
+
+			for (int xx = (map.getObjectX(waterLayer, i) / tileSize); xx < x; xx++) {
+				for (int yy = (map.getObjectY(waterLayer, i) / tileSize); yy < y; yy++) {
+
+					water[xx + yy * width] = true;
+
+				}
+			}
+		}
+	}
+
+	public boolean isCollision(int x, int y) {
+		return isSolid(x, y) || isWater(x, y);
 	}
 
 	public boolean isSolid(int x, int y) {
 		return x >= width || y >= height || solid[x + y * width];
+	}
+
+	public boolean isWater(int x, int y) {
+		return water[x + y * width];
 	}
 
 }

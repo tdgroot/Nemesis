@@ -27,7 +27,7 @@ public class RoachSpawner extends MobSpawner {
 		mobsSpawned++;
 		float newX = generateX();
 		float newY = generateY();
-		while (level.isSolid((int) newX, (int) newY)) {
+		while (level.isCollision((int) newX, (int) newY)) {
 			newX = generateX();
 			newY = generateY();
 		}

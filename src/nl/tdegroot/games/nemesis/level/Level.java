@@ -222,8 +222,8 @@ public class Level implements TileBasedMap {
 		return spawner;
 	}
 
-	public boolean isSolid(int x, int y) {
-		return collisionMap.isSolid(x, y);
+	public boolean isCollision(int x, int y) {
+		return collisionMap.isCollision(x, y);
 	}
 
 	public MapObject getMapObject(int x, int y) {
@@ -244,6 +244,10 @@ public class Level implements TileBasedMap {
 
 	public TiledMap getMap() {
 		return map;
+	}
+
+	public CollisionMap getCollisionMap() {
+		return collisionMap;
 	}
 
 	public int getPixelWidth() {
@@ -270,7 +274,7 @@ public class Level implements TileBasedMap {
 	}
 
 	public boolean blocked(PathFindingContext pathFindingContext, int x, int y) {
-		return collisionMap.isSolid(x, y);
+		return collisionMap.isCollision(x, y);
 	}
 
 	public float getCost(PathFindingContext pathFindingContext, int i, int i2) {

@@ -58,19 +58,6 @@ public class Screen {
 		sprite.draw(x - xOffset, y - yOffset);
 	}
 
-	public void renderDialog() {
-		List<String> history = Dialog.history;
-		Image img = Dialog.getImage();
-
-		float dialogOffset = (Display.getWidth() - img.getWidth()) / 2;
-		img.draw(dialogOffset, Display.getHeight() - img.getHeight(), Display.getWidth() - dialogOffset * 2, img.getHeight());
-
-		graphics.setFont(Resources.agency_fb);
-		for (int i = 0; i < history.size(); i++) {
-			graphics.drawString(history.get(i), dialogOffset + 70, (Display.getHeight() - img.getHeight() + 19) + i * 22);
-		}
-	}
-
 	public void renderEntity(Entity entity) {
 	}
 
