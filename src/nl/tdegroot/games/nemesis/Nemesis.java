@@ -34,8 +34,9 @@ public class Nemesis extends BasicGame {
 
 	public void init(GameContainer gameContainer) throws SlickException {
 		resources = new Resources();
-		level = new Level("resources/levels/starterisland.tmx");
 		player = new Player(Resources.player, 48, 47, 53, 64);
+		level = new Level("resources/levels/starterisland.tmx");
+		level.setPlayer(player);
 		camera = new Camera(player, new Vector2f(Display.getWidth(), Display.getHeight()), new Rectangle(0, 0, level.getPixelWidth(), level.getPixelHeight()));
 		screen = new Screen(camera, gameContainer.getGraphics());
 		input = new InputHandler();
@@ -60,7 +61,7 @@ public class Nemesis extends BasicGame {
 		float xOffset = player.getX() - Display.getWidth() / 2;
 		float yOffset = player.getY() - Display.getHeight() / 2;
 		level.render(g, xOffset, yOffset, screen, player);
-		player.render(g, screen);
+//		player.render(g, screen);
 		g.drawString("FPS: " + gameContainer.getFPS(), 135, 10);
 		g.drawString("Mobs Killed: " + player.getKills(), Display.getWidth() - 500, 10);
 		g.drawString("Score: " + player.getScore(), Display.getWidth() - 300, 10);

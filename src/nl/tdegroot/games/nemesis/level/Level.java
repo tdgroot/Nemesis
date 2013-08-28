@@ -26,6 +26,7 @@ import java.util.List;
 
 public class Level implements TileBasedMap {
 
+	private Player player;
 	private TiledMap map;
 	public final int tileSize;
 	private CollisionMap collisionMap;
@@ -46,6 +47,11 @@ public class Level implements TileBasedMap {
 		collisionMap = new CollisionMap(map, tileSize);
 		objectMap = new ObjectMap(map, tileSize);
 		initMobSpawners();
+	}
+
+
+	public void setPlayer(Player player) {
+		this.player = player;
 	}
 
 	public void initMobSpawners() {
@@ -166,15 +172,21 @@ public class Level implements TileBasedMap {
 
 	public void render(Graphics g, float xOffset, float yOffset, Screen screen, Player player) {
 		screen.setOffset(xOffset, yOffset);
-		screen.renderMap(map, tileSize);
+		screen.renderMap(map, tileSize, "tileLayer:objectLayerBack", 2);
+
+		for (int i = 0; i < mobs.size(); i++) {
+			mobs.get(i).render(screen);
+		}
 
 		for (int i = 0; i < entities.size(); i++) {
 			entities.get(i).render(screen);
 		}
 
-		for (int i = 0; i < mobs.size(); i++) {
-			mobs.get(i).render(screen);
-		}
+		player.render(screen);
+
+
+		screen.renderMap(map, tileSize, "objectLayerFront", 1);
+
 
 		for (int i = 0; i < projectiles.size(); i++) {
 			projectiles.get(i).render(screen);

@@ -188,7 +188,7 @@ public class Player extends Mob {
 		score += s;
 	}
 
-	public void render(Graphics g, Screen screen) {
+	public void render(Screen screen) {
 		screen.renderPlayer(this);
 	}
 

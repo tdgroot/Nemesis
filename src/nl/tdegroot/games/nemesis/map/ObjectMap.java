@@ -3,6 +3,7 @@ package nl.tdegroot.games.nemesis.map;
 import nl.tdegroot.games.nemesis.Log;
 import nl.tdegroot.games.nemesis.item.Item;
 import nl.tdegroot.games.nemesis.map.object.Chest;
+import nl.tdegroot.games.nemesis.map.object.Fence;
 import nl.tdegroot.games.nemesis.map.object.MapObject;
 import nl.tdegroot.games.nemesis.map.object.Sign;
 import org.newdawn.slick.tiled.TiledMap;
@@ -43,6 +44,8 @@ public class ObjectMap {
 						mapObject = processChest(itemList);
 					} else if (type.equals("sign")) {
 						mapObject = new Sign();
+					} else if (type.equals("fence")) {
+						mapObject = new Fence();
 					}
 
 					if (mapObject != null) {
