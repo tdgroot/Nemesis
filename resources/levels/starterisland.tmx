@@ -19,12 +19,12 @@
  </layer>
  <layer name="objectLayerFront" width="50" height="50">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3JoQ0AQAgEQRp4Tf+dvj+LgWQmWbVVALDXi/Jd0VE+AAAAAAAAAGDuAxvoUGcQJwAA
+   H4sIAAAAAAAAC+3JoQ0AIAwAwS6ALZb9p6ytqMNAcpe8+ggAeNdq5fB+sVtneAAAAAAAAADAvQK2MAidECcAAA==
   </data>
  </layer>
  <layer name="objectLayerBack" width="50" height="50">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3OMQoAIAwAsTrb/7/Xxdmp0CIJ3H4RAHXyETDH6h7gK7t7AAAAAAAAAOA6HuJzZxAnAAA=
+   H4sIAAAAAAAAC+3PMQoAIAwDwDor/v+5rk5dLNjhDrImJAKgzkoC9DEKOnZBRwd+vJsftwEAAAAAAABuB6c+kgQQJwAA
   </data>
  </layer>
  <objectgroup name="WaterLayer" width="50" height="50" visible="0">
