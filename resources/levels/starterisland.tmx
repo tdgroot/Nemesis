@@ -17,14 +17,14 @@
    H4sIAAAAAAAAC+2YQU8UQRCFe6IelaN6FI7KEfbv+MMm6J/YhKO/YJMVbsIRPCJH9eJMsKHm5VV1VffMKgmHF5Zmtvt9/aqrJ5x06fNJl9KnLn0ZlG5S+jgonT8yZf84fjSMvQvoPZlD0/Hw7L5TH5zzsv0fGa7Sg76n6e+o/PcSz+h/m+70FSTHt6AIj8Zg+daksbzppv6QQzKcEZ4Iy+tgFtozjAU5mNeSPNl4svDqpyOPiLD+LBbMImvdTbUZ1IvPGzG2Ec9thXr4bn4uj6NnjSV//uXMQtZKXrsXa8sx5q2/6+X3WsN3pZDDK5ZJzoLVOvqVObBc8vipkMxyTb7j8Y3niWWi1RRyeM/Hs84+G3JOVkul3qVlYnHIPbR61HXiZ/yY7LfMsfbss0wyR/YiGWT9YybIc2NkIfcY8yidcXbfWBysV0mG3sgN/Vv9dtLXiD9ZT3j3y2dLHHmfWW9l9yC7L5BD1rnswdZ+awwWB6t52RvzT1Z/Hg52Pnryt1JNeetK8uDdpfUsraaQI3tgdwc7GzJD1tO856Omx6JeKXngOce99rx/IcdL4MC6qWXQamtN6oqd9SgHY0EmPD9eBo2DvVuV5LnTz50ZRBlybf0Q68v3nJJXq740DsyE9bAoA+OR/Wr8HdVSV6X6amWQGv+3kWXxlvgsjswyvmNIzcXg4SjlmfV8Rk9Mq2H+g0GHyjq1HEv7HfUtTT9LHXRTSQ6Ld1cM6NcryWHxLsm3gj2/hJ9SF6ASB5tjCbYV8a8JGTwcEUV4sP4jmovjQhn/XVE7Net46so7T5SD+Y/Mj7UW4YiuoXFE+s8l8RxR69nQOFp6aItazscoPOtvjfla9t2bB3r1romZWBzRffJ4sHKw9h/ntjiifaPGT6Suls6jRjU1yvZDjpU4onVTukfmzuJf5hHNq5Tf3BxL9DTPGhaH9t7q9T5Xn/Bo7jwsaVzRcQ/HXuO7zq51+1cvyLv7rr3eVop593As4avkpUUt/pb0FdV4Rv5nf0960q71ByiyN5YQJwAA
   </data>
  </layer>
- <layer name="objectLayerFront" width="50" height="50">
+ <layer name="objectLayerSpecial" width="50" height="50">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3JoQ0AIAwAwS6ALZb9p6ytqMNAcpe8+ggAeNdq5fB+sVtneAAAAAAAAADAvQK2MAidECcAAA==
+   H4sIAAAAAAAAC+3JoQ0AIAwAQQYAC5b9p8RWNAjAkNwlr74UgHfqJjjRQj15vxihmTwAAAAAAAAA4N4CIcMJ4RAnAAA=
   </data>
  </layer>
- <layer name="objectLayerBack" width="50" height="50">
+ <layer name="objectLayer" width="50" height="50">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3PMQoAIAwDwDor/v+5rk5dLNjhDrImJAKgzkoC9DEKOnZBRwd+vJsftwEAAAAAAABuB6c+kgQQJwAA
+   H4sIAAAAAAAAC+3PwQkAIAwEwfgW0n+5fv0bSMCZAva4CADgN6ugkQWNCfx4txu3AQAAAAAAAG4HMM2TeBAnAAA=
   </data>
  </layer>
  <objectgroup name="WaterLayer" width="50" height="50" visible="0">
@@ -87,7 +87,7 @@
   <object x="2624" y="0" width="128" height="128"/>
   <object x="1856" y="0" width="768" height="64"/>
  </objectgroup>
- <objectgroup name="MapObjects" width="50" height="50">
+ <objectgroup name="MapObjects" width="50" height="50" visible="0">
   <object name="chest" type="MapObject" x="640" y="832" width="64" height="64">
    <properties>
     <property name="arrows" value="200"/>
@@ -119,7 +119,7 @@
   </object>
  </objectgroup>
  <objectgroup name="Player" width="50" height="50">
-  <object name="playerspawner" type="Player Spawn" x="640" y="576" width="64" height="64"/>
+  <object name="playerspawner" type="Player Spawn" x="1794" y="461" width="64" height="64"/>
  </objectgroup>
  <objectgroup name="Spawners" width="50" height="50">
   <object name="roachspawner" type="Spawner" x="1920" y="2112" width="64" height="64">
@@ -143,11 +143,11 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup name="Collision" width="50" height="50" visible="0">
+ <objectgroup name="Collision" width="50" height="50">
   <object x="640" y="832" width="64" height="64"/>
   <object x="768" y="640" width="64" height="64"/>
-  <object x="1728" y="320" width="448" height="64"/>
-  <object x="1664" y="576" width="256" height="64"/>
-  <object x="2112" y="576" width="64" height="64"/>
+  <object x="1728" y="366" width="445" height="15"/>
+  <object x="1666" y="576" width="251" height="24"/>
+  <object x="2114" y="576" width="59" height="23"/>
  </objectgroup>
 </map>

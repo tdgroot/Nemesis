@@ -9,10 +9,10 @@ public class CollisionMap {
 	private boolean[] water;
 	private int width, height;
 
-	public CollisionMap(TiledMap map, int tileSize) {
+	public CollisionMap(TiledMap map, int tileSize, int width, int height) {
 
-		width = map.getWidth();
-		height = map.getHeight();
+		this.width = width;
+		this.height = height;
 
 		solid = new boolean[width * height];
 		water = new boolean[width * height];
@@ -21,11 +21,11 @@ public class CollisionMap {
 
 		for (int i = 0; i <= map.getObjectCount(MapLayer.MAP_LAYER_COLLISION); i++) {
 
-			int x = (map.getObjectX(MapLayer.MAP_LAYER_COLLISION, i) + map.getObjectWidth(MapLayer.MAP_LAYER_COLLISION, i)) / tileSize;
-			int y = (map.getObjectY(MapLayer.MAP_LAYER_COLLISION, i) + map.getObjectHeight(MapLayer.MAP_LAYER_COLLISION, i)) / tileSize;
+			int x = (map.getObjectX(MapLayer.MAP_LAYER_COLLISION, i) + map.getObjectWidth(MapLayer.MAP_LAYER_COLLISION, i));
+			int y = (map.getObjectY(MapLayer.MAP_LAYER_COLLISION, i) + map.getObjectHeight(MapLayer.MAP_LAYER_COLLISION, i));
 
-			for (int xx = (map.getObjectX(MapLayer.MAP_LAYER_COLLISION, i) / tileSize); xx < x; xx++) {
-				for (int yy = (map.getObjectY(MapLayer.MAP_LAYER_COLLISION, i) / tileSize); yy < y; yy++) {
+			for (int xx = (map.getObjectX(MapLayer.MAP_LAYER_COLLISION, i)); xx < x; xx++) {
+				for (int yy = (map.getObjectY(MapLayer.MAP_LAYER_COLLISION, i)); yy < y; yy++) {
 
 					solid[xx + yy * width] = true;
 
@@ -41,11 +41,11 @@ public class CollisionMap {
 
 		for (int i = 0; i <= map.getObjectCount(waterLayer); i++) {
 
-			int x = (map.getObjectX(waterLayer, i) + map.getObjectWidth(waterLayer, i)) / tileSize;
-			int y = (map.getObjectY(waterLayer, i) + map.getObjectHeight(waterLayer, i)) / tileSize;
+			int x = (map.getObjectX(waterLayer, i) + map.getObjectWidth(waterLayer, i));
+			int y = (map.getObjectY(waterLayer, i) + map.getObjectHeight(waterLayer, i));
 
-			for (int xx = (map.getObjectX(waterLayer, i) / tileSize); xx < x; xx++) {
-				for (int yy = (map.getObjectY(waterLayer, i) / tileSize); yy < y; yy++) {
+			for (int xx = (map.getObjectX(waterLayer, i)); xx < x; xx++) {
+				for (int yy = (map.getObjectY(waterLayer, i)); yy < y; yy++) {
 
 					water[xx + yy * width] = true;
 

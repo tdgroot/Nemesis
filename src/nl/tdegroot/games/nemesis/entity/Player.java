@@ -12,7 +12,6 @@ import nl.tdegroot.games.nemesis.map.object.MapObject;
 import nl.tdegroot.games.nemesis.ui.Dialog;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
 public class Player extends Mob {
@@ -34,7 +33,7 @@ public class Player extends Mob {
 		inventory = new Inventory();
 
 		movementSpeed = 2.5f;
-		
+
 		baseHealth = 100.0;
 		health = baseHealth;
 
@@ -76,7 +75,7 @@ public class Player extends Mob {
 
 		if (xa != 0 || ya != 0) {
 			isWalking = true;
-			move(xa, ya);
+			move(xa, ya, delta);
 		} else {
 			isWalking = false;
 		}
@@ -127,8 +126,8 @@ public class Player extends Mob {
 	protected boolean collision(float xa, float ya) {
 		boolean solid = false;
 		for (int c = 0; c < 4; c++) {
-			int xt = (int) ((x + xa) + c % 2 * 38 - 17) / level.tileSize;
-			int yt = (int) ((y + ya) + c / 2 * 20 + 10) / level.tileSize;
+			int xt = (int) ((x + xa) + c % 2 * 38 - 17);
+			int yt = (int) ((y + ya) + c / 2 * 20 + 10);
 			if (level.getCollisionMap().isCollision(xt, yt))
 				solid = true;
 		}
@@ -166,6 +165,10 @@ public class Player extends Mob {
 		}
 	}
 
+	public void render(Screen screen) {
+		screen.renderPlayer(this);
+	}
+
 	public void giveItem(Item item) {
 		Log.log("I retrieved item: " + item.getName());
 		inventory.add(0, item);
@@ -188,10 +191,6 @@ public class Player extends Mob {
 		score += s;
 	}
 
-	public void render(Screen screen) {
-		screen.renderPlayer(this);
-	}
-
 	public int getKills() {
 		return mobsKilled;
 	}
@@ -203,11 +202,11 @@ public class Player extends Mob {
 	public int getArrows() {
 		return arrows;
 	}
-	
+
 	public double getHealth() {
 		return health;
 	}
-	
+
 	public double getPercentHealth() {
 		return (baseHealth / 100 * health);
 	}

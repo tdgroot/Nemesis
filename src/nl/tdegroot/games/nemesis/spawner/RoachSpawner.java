@@ -1,5 +1,6 @@
 package nl.tdegroot.games.nemesis.spawner;
 
+import nl.tdegroot.games.nemesis.Log;
 import nl.tdegroot.games.nemesis.entity.Mob;
 import nl.tdegroot.games.nemesis.entity.Roach;
 import nl.tdegroot.games.nemesis.gfx.Resources;
@@ -27,7 +28,7 @@ public class RoachSpawner extends MobSpawner {
 		mobsSpawned++;
 		float newX = generateX();
 		float newY = generateY();
-		while (level.isCollision((int) newX, (int) newY)) {
+		while (level.isCollision((int) newX * level.tileSize, (int) newY * level.tileSize)) {
 			newX = generateX();
 			newY = generateY();
 		}

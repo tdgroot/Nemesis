@@ -32,16 +32,18 @@ public class Mob extends Entity {
 	protected int score = 0;
 
 	public int dir = 0;
+	private int lastDir = 0;
+	protected int ld = 0;
 	public int animIndex = 0;
 	public int animCount = 0;
 	public int animType = 0;
-	public int frame = 0;
 
+	public int frame = 0;
 	protected int collisionMulX = 0;
 	protected int collisionMulY = 0;
 	protected int collisionAddX = 0;
-	protected int collisionAddY = 0;
 
+	protected int collisionAddY = 0;
 	protected float movementSpeed = 0;
 
 	public Mob(Image image, float x, float y, int width, int height) {
@@ -82,14 +84,26 @@ public class Mob extends Entity {
 		vulnerability.setLocation(x + 10, y + 10);
 	}
 
-	public void move(float xa, float ya) {
+	public void move(float xa, float ya, int delta) {
 		if (xa != 0 && ya != 0) {
-			move(xa, 0);
-			move(0, ya);
+			move(xa, 0, delta);
+			move(0, ya, delta);
 			return;
 		}
 
+		if (ld > 0) {
+			ld -= delta / 2;
+		}
+
 		dir = getDirection(xa, ya);
+
+		Log.log("Last dir: " + lastDir);
+		Log.log("LD: " + ld);
+
+		if (lastDir != dir && dir != 1 && dir != 3 && ld <= 0) {
+			lastDir = dir;
+			ld = 500;
+		}
 
 		if (x < 0) {
 			x = 0;
@@ -115,8 +129,8 @@ public class Mob extends Entity {
 		boolean solid = false;
 
 		for (int c = 0; c < 4; c++) {
-			int xt = (int) ((x + xa) + c % 2 * collisionMulX - collisionAddX) / level.tileSize;
-			int yt = (int) ((y + ya) + c / 2 * collisionMulY + collisionAddY) / level.tileSize;
+			int xt = (int) ((x + xa) + c % 2 * collisionMulX - collisionAddX);
+			int yt = (int) ((y + ya) + c / 2 * collisionMulY + collisionAddY);
 
 			try {
 				if (level.isCollision(xt, yt))
@@ -228,6 +242,10 @@ public class Mob extends Entity {
 
 	public int getDir() {
 		return dir;
+	}
+
+	public int getLastDir() {
+		return lastDir;
 	}
 
 	public int getAnimIndex() {

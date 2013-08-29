@@ -44,7 +44,7 @@ public class Level implements TileBasedMap {
 		if (tileSize == 0) {
 			throw new SlickException("Tilewidth and Tileheight are not equal!");
 		}
-		collisionMap = new CollisionMap(map, tileSize);
+		collisionMap = new CollisionMap(map, tileSize, getPixelWidth(), getPixelHeight());
 		objectMap = new ObjectMap(map, tileSize);
 		initMobSpawners();
 	}
@@ -172,7 +172,7 @@ public class Level implements TileBasedMap {
 
 	public void render(Graphics g, float xOffset, float yOffset, Screen screen, Player player) {
 		screen.setOffset(xOffset, yOffset);
-		screen.renderMap(map, tileSize, "tileLayer:objectLayerBack", 2);
+		screen.renderMap(map, tileSize, "tileLayer:objectLayer", 2);
 
 		for (int i = 0; i < mobs.size(); i++) {
 			mobs.get(i).render(screen);
@@ -182,11 +182,13 @@ public class Level implements TileBasedMap {
 			entities.get(i).render(screen);
 		}
 
-		player.render(screen);
-
-
-		screen.renderMap(map, tileSize, "objectLayerFront", 1);
-
+		if (player.getLastDir() == 2) {
+			player.render(screen);
+			screen.renderMap(map, tileSize, "objectLayerSpecial", 1);
+		} else {
+			screen.renderMap(map, tileSize, "objectLayerSpecial", 1);
+			player.render(screen);
+		}
 
 		for (int i = 0; i < projectiles.size(); i++) {
 			projectiles.get(i).render(screen);
