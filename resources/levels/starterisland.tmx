@@ -119,7 +119,7 @@
   </object>
  </objectgroup>
  <objectgroup name="Player" width="50" height="50">
-  <object name="playerspawner" type="Player Spawn" x="1794" y="461" width="64" height="64"/>
+  <object name="playerspawner" type="Player Spawn" x="640" y="704" width="64" height="64"/>
  </objectgroup>
  <objectgroup name="Spawners" width="50" height="50">
   <object name="roachspawner" type="Spawner" x="1920" y="2112" width="64" height="64">
@@ -146,7 +146,7 @@
  <objectgroup name="Collision" width="50" height="50">
   <object x="640" y="832" width="64" height="64"/>
   <object x="768" y="640" width="64" height="64"/>
-  <object x="1728" y="366" width="445" height="15"/>
+  <object x="1728" y="360" width="445" height="21"/>
   <object x="1666" y="576" width="251" height="24"/>
   <object x="2114" y="576" width="59" height="23"/>
  </objectgroup>

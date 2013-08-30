@@ -4,11 +4,14 @@ import nl.tdegroot.games.nemesis.entity.Entity;
 import nl.tdegroot.games.nemesis.entity.Mob;
 import nl.tdegroot.games.nemesis.entity.Player;
 import nl.tdegroot.games.nemesis.entity.projectile.Projectile;
+import nl.tdegroot.games.nemesis.ui.menu.Menu;
+import nl.tdegroot.games.nemesis.ui.menu.PauseMenu;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.tiled.TiledMap;
+import org.newdawn.slick.util.pathfinding.Path;
 
 public class Screen {
 
@@ -65,7 +68,20 @@ public class Screen {
 		sprite.draw(x - xOffset, y - yOffset);
 	}
 
+	public void renderPath(Path destination) {
+		for (int i = 0; i < destination.getLength(); i++) {
+			graphics.fillRect(destination.getX(i), destination.getY(i), 64, 64);
+		}
+	}
+
 	public void renderEntity(Entity entity) {
+	}
+
+	public void renderMenu(Menu menu) {
+		for (int i = 0; i < menu.items.length; i++) {
+			int xx = menu.items[i].length() * 2;
+			graphics.drawString(menu.items[i], Display.getWidth() - xx, Display.getHeight() - i * 12);
+		}
 	}
 
 	public void setOffset(float xOffset, float yOffset) {

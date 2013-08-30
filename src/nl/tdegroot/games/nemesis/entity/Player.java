@@ -64,11 +64,13 @@ public class Player extends Mob {
 		float xa = 0;
 		float ya = 0;
 
+		float deltaMul = 0.065f;
+
 		if (! Dialog.isActive()) {
-			if (Keyboard.isKeyDown(Keyboard.KEY_A) || Keyboard.isKeyDown(Keyboard.KEY_LEFT)) xa -= movementSpeed;
-			if (Keyboard.isKeyDown(Keyboard.KEY_D) || Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) xa += movementSpeed;
-			if (Keyboard.isKeyDown(Keyboard.KEY_W) || Keyboard.isKeyDown(Keyboard.KEY_UP)) ya -= movementSpeed;
-			if (Keyboard.isKeyDown(Keyboard.KEY_S) || Keyboard.isKeyDown(Keyboard.KEY_DOWN)) ya += movementSpeed;
+			if (Keyboard.isKeyDown(Keyboard.KEY_A) || Keyboard.isKeyDown(Keyboard.KEY_LEFT)) xa -= movementSpeed * delta * deltaMul;
+			if (Keyboard.isKeyDown(Keyboard.KEY_D) || Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) xa += movementSpeed * delta * deltaMul;
+			if (Keyboard.isKeyDown(Keyboard.KEY_W) || Keyboard.isKeyDown(Keyboard.KEY_UP)) ya -= movementSpeed * delta * deltaMul;
+			if (Keyboard.isKeyDown(Keyboard.KEY_S) || Keyboard.isKeyDown(Keyboard.KEY_DOWN)) ya += movementSpeed * delta * deltaMul;
 		}
 
 		wasWalking = isWalking;

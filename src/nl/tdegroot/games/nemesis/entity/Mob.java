@@ -1,6 +1,7 @@
 package nl.tdegroot.games.nemesis.entity;
 
 import nl.tdegroot.games.nemesis.Log;
+import nl.tdegroot.games.nemesis.calc.GameMath;
 import nl.tdegroot.games.nemesis.entity.projectile.Arrow;
 import nl.tdegroot.games.nemesis.entity.projectile.Projectile;
 import nl.tdegroot.games.nemesis.gfx.Screen;
@@ -9,20 +10,24 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.util.pathfinding.AStarPathFinder;
+import org.newdawn.slick.util.pathfinding.Mover;
 import org.newdawn.slick.util.pathfinding.Path;
 
 import java.util.Random;
 
-public class Mob extends Entity {
+public class Mob extends Entity implements Mover {
 
 	protected SpriteSheet sheet;
 	private AStarPathFinder pathFinder;
+	private Mover mover;
 	private Path destination;
 	protected Rectangle vulnerability;
+	private Player target;
 
 	protected boolean isWalking = false;
 	protected boolean wasWalking = false;
 	protected boolean hasDestination = false;
+	private int step = 0;
 
 	protected double baseHealth;
 	protected double health;
@@ -61,20 +66,29 @@ public class Mob extends Entity {
 		this.spawnerID = spawnerID;
 	}
 
-	public void init(Level level) {
+	public void init(Level level, Player target) {
 		super.init(level);
+		this.target = target;
 		pathFinder = new AStarPathFinder(level, 50, true);
 	}
 
 	public void update(int delta) {
 		Random random = new Random();
-		if (! hasDestination)
-			destination = getDestination(random.nextInt(10), random.nextInt(10));
+
+		if (!hasDestination)
+			destination = getDestination(GameMath.random(0, 10), GameMath.random(0, 10));
 
 		float xa = 0;
 		float ya = 0;
 
-//		move(xa, ya);
+		if (hasDestination && destination != null) {
+//			xa = destination.getX(step) - x;
+//			ya = destination.getY(step) - y;
+		}
+
+		move(xa, ya, delta);
+
+		step++;
 
 		if (isWalking) {
 			if (frame % (102 / delta) == 0) {
@@ -95,10 +109,18 @@ public class Mob extends Entity {
 			ld -= delta / 2;
 		}
 
-		dir = getDirection(xa, ya);
+		if (ya < 0)
+			dir = 0;
+		if (xa > 0)
+			dir = 1;
+		if (ya > 0)
+			dir = 2;
+		if (xa < 0)
+			dir = 3;
 
-		Log.log("Last dir: " + lastDir);
-		Log.log("LD: " + ld);
+//		dir = getDirection(xa, ya);
+//		Log.log("Last dir: " + lastDir);
+//		Log.log("LD: " + ld);
 
 		if (lastDir != dir && dir != 1 && dir != 3 && ld <= 0) {
 			lastDir = dir;
@@ -113,7 +135,7 @@ public class Mob extends Entity {
 			y = 0;
 		}
 
-		if (! collision(xa, ya)) {
+		if (!collision(xa, ya)) {
 			x += xa;
 			y += ya;
 		}
@@ -144,13 +166,21 @@ public class Mob extends Entity {
 	}
 
 	private Path getDestination(int destX, int destY) {
-
-		int sx = (int) x / level.getTileSize();
-		int sy = (int) y / level.getTileSize();
-		Path destination = pathFinder.findPath(null, sx, sy, destX, destY);
+		Path path = null;
+		int sx = (int) x / level.tileSize;
+		int sy = (int) y / level.tileSize;
+		path = pathFinder.findPath(this, 7, 8, 5, 5);
 		hasDestination = true;
+		step = 0;
+		if (path == null) {
+			Log.log("path is null");
+			hasDestination = false;
+		} else {
+			Log.log("found a path");
+			hasDestination = true;
+		}
 
-		return destination;
+		return path;
 	}
 
 	public void hit(Projectile p) {
@@ -175,21 +205,21 @@ public class Mob extends Entity {
 			} else if (ya > xa) {
 				return 2;
 			}
-		} else if (! xPositive && ! yPositive) {
+		} else if (!xPositive && !yPositive) {
 			if (xa < ya) {
 				return 3;
 			} else if (ya > xa) {
 				return 0;
 			}
-		} else if (xPositive && ! yPositive) {
-			float yy = ya * - 1;
+		} else if (xPositive && !yPositive) {
+			float yy = ya * -1;
 			if (xa > yy) {
 				return 1;
 			} else if (yy > xa) {
 				return 0;
 			}
-		} else if (! xPositive && yPositive) {
-			float xx = xa * - 1;
+		} else if (!xPositive && yPositive) {
+			float xx = xa * -1;
 			if (xx > ya) {
 				return 3;
 			} else if (ya > xx) {
@@ -197,11 +227,13 @@ public class Mob extends Entity {
 			}
 		}
 
-		return - 1;
+		return -1;
 	}
 
 	public void render(Screen screen) {
 		screen.renderMob(this);
+		if (destination != null)
+			screen.renderPath(destination);
 	}
 
 	public Rectangle getVulnerability() {

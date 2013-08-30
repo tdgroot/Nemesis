@@ -5,11 +5,12 @@ TODO
 
 Technical:
 
-Mob-AI
+- Mob-AI
+- Menu Structure
 
 Design:
 
-Container UI
-Roach Animation SpriteSheet
-Textures for the map
+- Container UI
+- Roach Animation SpriteSheet
+- Textures for the map
 

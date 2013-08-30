@@ -28,8 +28,8 @@ public class Particle extends Entity {
 
 		this.xx = x;
 		this.yy = y;
-		this.xa = random.nextGaussian() * 1;
-		this.ya = random.nextGaussian() * 1.5;
+		this.xa = random.nextGaussian() * 1.1f;
+		this.ya = random.nextGaussian() * 1.5f;
 		this.za = random.nextFloat();
 
 		this.particles.add(this);
@@ -63,6 +63,11 @@ public class Particle extends Entity {
 				p.xa *= 0.1;
 				p.ya *= 1.2;
 			}
+
+			if (p.x < 0)
+				p.x =0;
+			if (p.y < 0)
+				p.y =0;
 
 			if (! collision(p)) {
 				p.xx += p.xa;

@@ -2,6 +2,7 @@ package nl.tdegroot.games.nemesis.spawner;
 
 import nl.tdegroot.games.nemesis.calc.GameMath;
 import nl.tdegroot.games.nemesis.entity.Mob;
+import nl.tdegroot.games.nemesis.entity.Player;
 import nl.tdegroot.games.nemesis.level.Level;
 
 import java.util.Random;
@@ -9,6 +10,7 @@ import java.util.Random;
 public class MobSpawner {
 
 	protected Level level;
+	protected Player target;
 	Random random = new Random();
 
 	private final int x, y;
@@ -29,8 +31,9 @@ public class MobSpawner {
 	protected float movementSpeed = 0.0f;
 	protected int mobScore = 0;
 
-	public MobSpawner(Level level, int x, int y, int spawnerID) {
+	public MobSpawner(Level level, Player target, int x, int y, int spawnerID) {
 		this.level = level;
+		this.target = target;
 		this.x = x;
 		this.y = y;
 		this.spawnerID = spawnerID;

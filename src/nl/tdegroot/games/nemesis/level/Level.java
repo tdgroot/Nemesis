@@ -28,6 +28,7 @@ public class Level implements TileBasedMap {
 
 	private Player player;
 	private TiledMap map;
+	private MapLayer mapLayer;
 	public final int tileSize;
 	private CollisionMap collisionMap;
 	private ObjectMap objectMap;
@@ -38,20 +39,18 @@ public class Level implements TileBasedMap {
 	private List<Projectile> projectiles = new ArrayList<Projectile>();
 	private List<Particle> particles = new ArrayList<Particle>();
 
-	public Level(String path) throws SlickException {
+	public Level(String path, Player player) throws SlickException {
+		this.player = player;
 		map = new TiledMap(path);
+		mapLayer = new MapLayer(map);
 		tileSize = map.getTileWidth() & map.getTileHeight();
 		if (tileSize == 0) {
 			throw new SlickException("Tilewidth and Tileheight are not equal!");
 		}
 		collisionMap = new CollisionMap(map, tileSize, getPixelWidth(), getPixelHeight());
 		objectMap = new ObjectMap(map, tileSize);
+		Log.log("Object layers: " + map.getObjectLayerCount());
 		initMobSpawners();
-	}
-
-
-	public void setPlayer(Player player) {
-		this.player = player;
 	}
 
 	public void initMobSpawners() {
@@ -155,11 +154,11 @@ public class Level implements TileBasedMap {
 					mob.hit(p);
 					if (mob.isRemoved()) {
 						p.getPlayer().mobKilled(mob.getScore());
-						Particle particle = new SlimeParticle(mob.getX() + mob.getWidth() / 2, mob.getY() + mob.getHeight() / 2, 50, 1000);
+						Particle particle = new SlimeParticle(mob.getX() + mob.getWidth() / 2, mob.getY() + mob.getHeight() / 2, 200, 1000);
 						particle.setLevel(this);
 						particles.add(particle);
 					} else {
-						Particle particle = new SlimeParticle(mob.getX() + mob.getWidth() / 2, mob.getY() + mob.getHeight() / 2, 25, 1000);
+						Particle particle = new SlimeParticle(mob.getX() + mob.getWidth() / 2, mob.getY() + mob.getHeight() / 2, 75, 1000);
 						particle.setLevel(this);
 						particles.add(particle);
 					}
@@ -170,8 +169,7 @@ public class Level implements TileBasedMap {
 		}
 	}
 
-	public void render(Graphics g, float xOffset, float yOffset, Screen screen, Player player) {
-		screen.setOffset(xOffset, yOffset);
+	public void render(Graphics g, Screen screen) {
 		screen.renderMap(map, tileSize, "tileLayer:objectLayer", 2);
 
 		for (int i = 0; i < mobs.size(); i++) {
@@ -205,7 +203,7 @@ public class Level implements TileBasedMap {
 
 		switch (type) {
 			case "roach":
-				spawner = new RoachSpawner(this, x, y, i);
+				spawner = new RoachSpawner(this, player, x, y, i);
 				break;
 		}
 
@@ -284,11 +282,11 @@ public class Level implements TileBasedMap {
 		return map.getHeight();
 	}
 
-	public void pathFinderVisited(int i, int i2) {
+	public void pathFinderVisited(int x, int y) {
 	}
 
 	public boolean blocked(PathFindingContext pathFindingContext, int x, int y) {
-		return collisionMap.isCollision(x, y);
+		return collisionMap.isCollision(x * tileSize, y * tileSize);
 	}
 
 	public float getCost(PathFindingContext pathFindingContext, int i, int i2) {
