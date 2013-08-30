@@ -5,7 +5,7 @@ import org.newdawn.slick.tiled.TiledMap;
 
 public class CollisionMap {
 
-	private boolean[] solid;
+	public boolean[] solid;
 	private boolean[] water;
 	private int width, height;
 

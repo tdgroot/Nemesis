@@ -19,12 +19,12 @@
  </layer>
  <layer name="objectLayerSpecial" width="50" height="50">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3JoQ0AIAwAQQYAC5b9p8RWNAjAkNwlr74UgHfqJjjRQj15vxihmTwAAAAAAAAA4N4CIcMJ4RAnAAA=
+   H4sIAAAAAAAAC+3JIQoAIBAAQR+gRvH/L7VeOAxqEWZg05YC8E7bBCdqqCfvFyM0kwcAAAAAAAAA3Ft15W1JECcAAA==
   </data>
  </layer>
  <layer name="objectLayer" width="50" height="50">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3PwQkAIAwEwfgW0n+5fv0bSMCZAva4CADgN6ugkQWNCfx4txu3AQAAAAAAAG4HMM2TeBAnAAA=
+   H4sIAAAAAAAAC+3PuQ0AIAwEsCDRsf++UNInIhT2APdEAAAvze4BxyjI+OFHBT/yVmM3AAAAAAAAwG0DTsDqKRAnAAA=
   </data>
  </layer>
  <objectgroup name="WaterLayer" width="50" height="50" visible="0">
@@ -119,7 +119,7 @@
   </object>
  </objectgroup>
  <objectgroup name="Player" width="50" height="50">
-  <object name="playerspawner" type="Player Spawn" x="640" y="704" width="64" height="64"/>
+  <object name="playerspawner" type="Player Spawn" x="1884" y="442" width="64" height="64"/>
  </objectgroup>
  <objectgroup name="Spawners" width="50" height="50">
   <object name="roachspawner" type="Spawner" x="1920" y="2112" width="64" height="64">
@@ -149,5 +149,6 @@
   <object x="1728" y="360" width="445" height="21"/>
   <object x="1666" y="576" width="251" height="24"/>
   <object x="2114" y="576" width="59" height="23"/>
+  <object type="Collision" x="1897" y="576" width="23" height="255"/>
  </objectgroup>
 </map>

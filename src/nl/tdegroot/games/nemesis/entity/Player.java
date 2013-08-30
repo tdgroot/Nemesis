@@ -4,6 +4,7 @@ import nl.tdegroot.games.nemesis.InputHandler;
 import nl.tdegroot.games.nemesis.Log;
 import nl.tdegroot.games.nemesis.entity.projectile.Arrow;
 import nl.tdegroot.games.nemesis.entity.projectile.Projectile;
+import nl.tdegroot.games.nemesis.gfx.Resources;
 import nl.tdegroot.games.nemesis.gfx.Screen;
 import nl.tdegroot.games.nemesis.item.Bow;
 import nl.tdegroot.games.nemesis.item.Item;
@@ -16,11 +17,11 @@ import org.newdawn.slick.Image;
 
 public class Player extends Mob {
 
-	private Bow bow;
+	private Bow bow = new Bow("Bow", Resources.bow);
 	private Inventory inventory;
 
 	private double energy;
-	private int arrows = 0;
+	private int arrows = 250;
 
 	private int fireRate = 0;
 	private int mobsKilled = 0;

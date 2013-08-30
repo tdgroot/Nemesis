@@ -30,12 +30,16 @@ public class Nemesis extends BasicGame {
 	private Screen screen;
 	private UIHandler uiHandler;
 	private Menu menu = null;
+	private GameContainer gameContainer;
+
+	public int mt = 0;
 
 	public Nemesis() {
 		super("Nemesis");
 	}
 
 	public void init(GameContainer gameContainer) throws SlickException {
+		this.gameContainer = gameContainer;
 		resources = new Resources();
 		player = new Player(Resources.player, 48, 47, 53, 64);
 		level = new Level("resources/levels/starterisland.tmx", player);
@@ -50,17 +54,27 @@ public class Nemesis extends BasicGame {
 		Dialog.activate("Welcome, to the world of world of Nemesis!");
 	}
 
+	public void resetGame() {
+		try {
+			init(gameContainer);
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public void update(GameContainer gameContainer, int delta) throws SlickException {
 		if (gameContainer.hasFocus()) {
+			if (mt > 0) {
+				mt -= delta;
+			}
 			if (menu != null) {
 				menu.update(delta);
 			} else {
 				player.update(delta);
 				level.update(delta);
 				uiHandler.update(delta);
-				if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
+				if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE) && mt <= 0 && !Dialog.isActive()) {
 					setMenu(new PauseMenu());
-					Log.log("Opening Pause Menu");
 				}
 			}
 		}
@@ -92,11 +106,11 @@ public class Nemesis extends BasicGame {
 	public void setMenu(Menu menu) {
 		this.menu = menu;
 		if (menu != null) menu.init(this);
+		mt = 250;
 	}
 
-	private synchronized void stop() {
+
+	public synchronized void stop() {
 		System.exit(0);
 	}
-
-
 }

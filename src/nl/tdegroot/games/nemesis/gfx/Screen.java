@@ -5,17 +5,20 @@ import nl.tdegroot.games.nemesis.entity.Mob;
 import nl.tdegroot.games.nemesis.entity.Player;
 import nl.tdegroot.games.nemesis.entity.projectile.Projectile;
 import nl.tdegroot.games.nemesis.ui.menu.Menu;
-import nl.tdegroot.games.nemesis.ui.menu.PauseMenu;
 import org.lwjgl.opengl.Display;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.tiled.TiledMap;
 import org.newdawn.slick.util.pathfinding.Path;
 
+import java.awt.*;
+
 public class Screen {
 
-	private float xOffset, yOffset;
+	public float xOffset, yOffset;
 	private Camera camera;
 	private Graphics graphics;
 
@@ -78,9 +81,20 @@ public class Screen {
 	}
 
 	public void renderMenu(Menu menu) {
+		graphics.setColor(new Color(0, 0, 0, 150));
+		graphics.fillRect(0, 0, Display.getWidth(), Display.getHeight());
+		graphics.setColor(Color.white);
 		for (int i = 0; i < menu.items.length; i++) {
-			int xx = menu.items[i].length() * 2;
-			graphics.drawString(menu.items[i], Display.getWidth() - xx, Display.getHeight() - i * 12);
+			String msg = menu.items[i];
+			int xx = msg.length() / 8;
+			if (i == menu.selected) {
+				graphics.setAntiAlias(true);
+				graphics.setFont(new TrueTypeFont(new Font("Courier New", Font.BOLD, 16), true));
+				msg = "> " + msg + " <";
+			} else {
+				graphics.resetFont();
+			}
+			graphics.drawString(msg, (Display.getWidth() - msg.length() * 8) / 2, (44 + i * 3) * 8);
 		}
 	}
 
