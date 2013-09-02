@@ -12,7 +12,7 @@ import org.newdawn.slick.Image;
 
 public class Dialog {
 
-	public static List<String> history = new ArrayList<String>();
+	public static List<String> history;
 	private static Image dialogWindow = Resources.dialogWindow;
 
 	private static boolean active = false;
@@ -24,12 +24,14 @@ public class Dialog {
 		time++;
 
 		if (active) {
-			if (time % (5 * delta) >= 40) {
-				renderKey = true;
-			} else {
-				renderKey = false;
-			}
+			renderKey = time % (5 * delta) >= 40;
 		}
+	}
+
+	public static void init() {
+		history = new ArrayList<String>();
+		active = false;
+		renderKey = false;
 	}
 
 	public static void render(Graphics g) {

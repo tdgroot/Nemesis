@@ -1,7 +1,6 @@
 package nl.tdegroot.games.nemesis.entity;
 
 import nl.tdegroot.games.nemesis.Log;
-import nl.tdegroot.games.nemesis.calc.GameMath;
 import nl.tdegroot.games.nemesis.entity.projectile.Arrow;
 import nl.tdegroot.games.nemesis.entity.projectile.Projectile;
 import nl.tdegroot.games.nemesis.gfx.Screen;
@@ -12,8 +11,6 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.util.pathfinding.AStarPathFinder;
 import org.newdawn.slick.util.pathfinding.Mover;
 import org.newdawn.slick.util.pathfinding.Path;
-
-import java.util.Random;
 
 public class Mob extends Entity implements Mover {
 
@@ -39,9 +36,12 @@ public class Mob extends Entity implements Mover {
 	public int dir = 0;
 	private int lastDir = 0;
 	protected int ld = 0;
+	protected int ldDefault = 0;
 	public int animIndex = 0;
 	public int animCount = 0;
 	public int animType = 0;
+
+	protected float deltaMul = 0.006f;
 
 	public int frame = 0;
 	protected int collisionMulX = 0;
@@ -73,58 +73,38 @@ public class Mob extends Entity implements Mover {
 	}
 
 	public void update(int delta) {
-		Random random = new Random();
-
-		if (!hasDestination)
-			destination = getDestination(GameMath.random(0, 10), GameMath.random(0, 10));
-
-		float xa = 0;
-		float ya = 0;
-
-		if (hasDestination && destination != null) {
-//			xa = destination.getX(step) - x;
-//			ya = destination.getY(step) - y;
-		}
-
-		move(xa, ya, delta);
-
-		step++;
-
 		if (isWalking) {
 			if (frame % (102 / delta) == 0) {
 				animIndex = ((animIndex + 1) % animCount);
 			}
 		}
-		vulnerability.setLocation(x + 10, y + 10);
 	}
 
 	public void move(float xa, float ya, int delta) {
+		if (xa == 0 && ya == 0) return;
+
 		if (xa != 0 && ya != 0) {
 			move(xa, 0, delta);
 			move(0, ya, delta);
 			return;
 		}
 
+
 		if (ld > 0) {
 			ld -= delta / 2;
 		}
 
-		if (ya < 0)
-			dir = 0;
-		if (xa > 0)
-			dir = 1;
-		if (ya > 0)
-			dir = 2;
-		if (xa < 0)
-			dir = 3;
-
-//		dir = getDirection(xa, ya);
-//		Log.log("Last dir: " + lastDir);
-//		Log.log("LD: " + ld);
+		dir = getDirection(xa, ya);
 
 		if (lastDir != dir && dir != 1 && dir != 3 && ld <= 0) {
 			lastDir = dir;
-			ld = 500;
+			ld = ldDefault;
+		}
+
+		float limit = movementSpeed * delta * deltaMul;
+
+		if (xa > -limit && xa < limit && ya > -limit && ya < limit) {
+			dir = lastDir;
 		}
 
 		if (x < 0) {
@@ -135,11 +115,14 @@ public class Mob extends Entity implements Mover {
 			y = 0;
 		}
 
-		if (!collision(xa, ya)) {
-			x += xa;
-			y += ya;
+		if (collision(xa, ya)) {
+			return;
 		}
 
+		x += xa;
+		y += ya;
+
+		return;
 	}
 
 	protected void shoot(float x, float y, double dir, Player player) {
@@ -227,7 +210,7 @@ public class Mob extends Entity implements Mover {
 			}
 		}
 
-		return -1;
+		return dir;
 	}
 
 	public void render(Screen screen) {

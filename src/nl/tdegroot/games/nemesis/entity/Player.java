@@ -12,7 +12,9 @@ import nl.tdegroot.games.nemesis.map.MapLayer;
 import nl.tdegroot.games.nemesis.map.object.MapObject;
 import nl.tdegroot.games.nemesis.ui.Dialog;
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
 public class Player extends Mob {
@@ -45,6 +47,8 @@ public class Player extends Mob {
 		collisionMulY = 20;
 		collisionAddY = 10;
 
+		ldDefault = 500;
+
 		Log.log("Player initialized. Player Width: " + getWidth() + ", Player Height: " + getHeight());
 	}
 
@@ -67,11 +71,15 @@ public class Player extends Mob {
 
 		float deltaMul = 0.065f;
 
-		if (! Dialog.isActive()) {
-			if (Keyboard.isKeyDown(Keyboard.KEY_A) || Keyboard.isKeyDown(Keyboard.KEY_LEFT)) xa -= movementSpeed * delta * deltaMul;
-			if (Keyboard.isKeyDown(Keyboard.KEY_D) || Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) xa += movementSpeed * delta * deltaMul;
-			if (Keyboard.isKeyDown(Keyboard.KEY_W) || Keyboard.isKeyDown(Keyboard.KEY_UP)) ya -= movementSpeed * delta * deltaMul;
-			if (Keyboard.isKeyDown(Keyboard.KEY_S) || Keyboard.isKeyDown(Keyboard.KEY_DOWN)) ya += movementSpeed * delta * deltaMul;
+		if (!Dialog.isActive()) {
+			if (Keyboard.isKeyDown(Keyboard.KEY_A) || Keyboard.isKeyDown(Keyboard.KEY_LEFT))
+				xa -= movementSpeed * delta * deltaMul;
+			if (Keyboard.isKeyDown(Keyboard.KEY_D) || Keyboard.isKeyDown(Keyboard.KEY_RIGHT))
+				xa += movementSpeed * delta * deltaMul;
+			if (Keyboard.isKeyDown(Keyboard.KEY_W) || Keyboard.isKeyDown(Keyboard.KEY_UP))
+				ya -= movementSpeed * delta * deltaMul;
+			if (Keyboard.isKeyDown(Keyboard.KEY_S) || Keyboard.isKeyDown(Keyboard.KEY_DOWN))
+				ya += movementSpeed * delta * deltaMul;
 		}
 
 		wasWalking = isWalking;
@@ -91,7 +99,7 @@ public class Player extends Mob {
 			}
 		}
 
-		if (! wasWalking) {
+		if (!wasWalking) {
 			animIndex = 0;
 		}
 
@@ -169,6 +177,8 @@ public class Player extends Mob {
 	}
 
 	public void render(Screen screen) {
+		Graphics graphics = screen.getGraphics();
+		graphics.drawLine(Display.getWidth() / 2, Display.getHeight() / 2, Mouse.getX(), Display.getHeight() - Mouse.getY());
 		screen.renderPlayer(this);
 	}
 

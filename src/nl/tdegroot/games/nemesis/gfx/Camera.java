@@ -58,11 +58,7 @@ public class Camera {
 		float width = entity.getWidth();
 		float height = entity.getHeight();
 
-		if ((x + width > xOffset && x < Display.getWidth())&& (y +height > yOffset && y < Display.getWidth())) {
-			return false;
-		} else {
-			return true;
-		}
+		return !((x + width > xOffset && x < Display.getWidth()) && (y + height > yOffset && y < Display.getWidth()));
 	}
 
 }

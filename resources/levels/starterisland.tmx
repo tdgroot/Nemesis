@@ -27,7 +27,7 @@
    H4sIAAAAAAAAC+3PuQ0AIAwEsCDRsf++UNInIhT2APdEAAAvze4BxyjI+OFHBT/yVmM3AAAAAAAAwG0DTsDqKRAnAAA=
   </data>
  </layer>
- <objectgroup name="WaterLayer" width="50" height="50" visible="0">
+ <objectgroup name="WaterLayer" width="50" height="50">
   <object x="1472" y="576" width="192" height="64"/>
   <object x="1408" y="576" width="64" height="192"/>
   <object x="1472" y="640" width="128" height="128"/>
@@ -87,7 +87,7 @@
   <object x="2624" y="0" width="128" height="128"/>
   <object x="1856" y="0" width="768" height="64"/>
  </objectgroup>
- <objectgroup name="MapObjects" width="50" height="50" visible="0">
+ <objectgroup name="MapObjects" width="50" height="50">
   <object name="chest" type="MapObject" x="640" y="832" width="64" height="64">
    <properties>
     <property name="arrows" value="200"/>
@@ -149,6 +149,6 @@
   <object x="1728" y="360" width="445" height="21"/>
   <object x="1666" y="576" width="251" height="24"/>
   <object x="2114" y="576" width="59" height="23"/>
-  <object type="Collision" x="1897" y="576" width="23" height="255"/>
+  <object x="1897" y="576" width="23" height="255"/>
  </objectgroup>
 </map>

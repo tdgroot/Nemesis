@@ -5,20 +5,25 @@ import nl.tdegroot.games.nemesis.Nemesis;
 import nl.tdegroot.games.nemesis.gfx.Screen;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
-import org.newdawn.slick.*;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.TrueTypeFont;
 
 import java.awt.*;
-import java.awt.Font;
 
-public class PauseMenu extends Menu {
+public class MainMenu extends Menu {
 
 	private int kt = 0;
+	private int xt = 0;
+
+	public MainMenu() {
+		Log.log("Main Menu started");
+	}
 
 	public void init(Nemesis game) {
 		super.init(game);
-		items = new String[] {"Resume", "Restart", "Main Menu", "Quit Game"};
+		items = new String[] {"Play", "Controls", "About", "Quit Game"};
+		xt = 200;
 	}
 
 	public void update(int delta) {
@@ -27,6 +32,7 @@ public class PauseMenu extends Menu {
 			return;
 		}
 		if (kt > 0) kt -= delta;
+		if (xt > 0) xt -= delta;
 
 		if ((Keyboard.isKeyDown(Keyboard.KEY_UP) || Keyboard.isKeyDown(Keyboard.KEY_W)) && kt <= 0) {
 			selected--;
@@ -42,15 +48,12 @@ public class PauseMenu extends Menu {
 		if (selected < 0) selected += length;
 		if (selected >= length) selected -= length;
 
-		if (Keyboard.isKeyDown(Keyboard.KEY_X)) {
+		if (Keyboard.isKeyDown(Keyboard.KEY_X) && xt <= 0) {
 			if (selected == 0) game.setMenu(null);
 
-			if (selected == 1) {
-				game.resetGame();
-				game.setMenu(null);
-			}
+			if (selected == 1) game.setMenu(new ControlsMenu());
 
-			if (selected == 2) game.setMenu(new MainMenu());
+			if (selected == 2) game.setMenu(new AboutMenu());
 
 			if (selected == 3) game.stop();
 
@@ -60,7 +63,7 @@ public class PauseMenu extends Menu {
 
 	public void render(Screen screen) {
 		Graphics graphics = screen.getGraphics();
-		graphics.setColor(new Color(0, 0, 0, 150));
+		graphics.setColor(new Color(0, 0, 0, 255));
 		graphics.fillRect(0, 0, Display.getWidth(), Display.getHeight());
 		graphics.setColor(Color.white);
 		for (int i = 0; i < items.length; i++) {

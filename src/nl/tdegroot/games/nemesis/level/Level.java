@@ -144,13 +144,9 @@ public class Level implements TileBasedMap {
 	}
 
 	public void checkProjectiles() {
-		Iterator<Projectile> pIterator = projectiles.iterator();
-		while (pIterator.hasNext()) {
-			Projectile p = pIterator.next();
-			Iterator<Mob> mobIterator = mobs.iterator();
-			while (mobIterator.hasNext()) {
-				Mob mob = mobIterator.next();
-				if (p.getAreaOfEffect().intersects(mob.getVulnerability()) && ! p.isRemoved()) {
+		for (Projectile p : projectiles) {
+			for (Mob mob : mobs) {
+				if (p.getAreaOfEffect().intersects(mob.getVulnerability()) && !p.isRemoved()) {
 					mob.hit(p);
 					if (mob.isRemoved()) {
 						p.getPlayer().mobKilled(mob.getScore());
@@ -270,10 +266,6 @@ public class Level implements TileBasedMap {
 		return map.getHeight() * map.getTileHeight();
 	}
 
-	public int getTileSize() {
-		return tileSize;
-	}
-
 	public int getWidthInTiles() {
 		return map.getWidth();
 	}
@@ -295,5 +287,9 @@ public class Level implements TileBasedMap {
 
 	public List<Projectile> getProjectiles() {
 		return projectiles;
+	}
+
+	public Player getPlayer() {
+		return player;
 	}
 }

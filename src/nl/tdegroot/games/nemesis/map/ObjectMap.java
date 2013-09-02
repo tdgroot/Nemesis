@@ -40,12 +40,16 @@ public class ObjectMap {
 
 					Log.log("Type: " + type);
 
-					if (type.equals("chest")) {
-						mapObject = processChest(itemList);
-					} else if (type.equals("sign")) {
-						mapObject = new Sign();
-					} else if (type.equals("fence")) {
-						mapObject = new Fence();
+					switch (type) {
+						case "chest":
+							mapObject = processChest(itemList);
+							break;
+						case "sign":
+							mapObject = new Sign();
+							break;
+						case "fence":
+							mapObject = new Fence();
+							break;
 					}
 
 					if (mapObject != null) {

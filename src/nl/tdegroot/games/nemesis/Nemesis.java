@@ -48,10 +48,12 @@ public class Nemesis extends BasicGame {
 		input = new InputHandler();
 		uiHandler = new UIHandler(player);
 		player.init(level);
+		Dialog.init();
 		gameContainer.getInput().addMouseListener(input);
 		gameContainer.setVSync(true);
 		gameContainer.setAlwaysRender(true);
-		Dialog.activate("Welcome, to the world of world of Nemesis!");
+		Dialog.activate("Welcome, to the world of Nemesis!");
+		Dialog.activate("To start, try reading some of the signs!");
 	}
 
 	public void resetGame() {
@@ -60,6 +62,7 @@ public class Nemesis extends BasicGame {
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
+		mt = 0;
 	}
 
 	public void update(GameContainer gameContainer, int delta) throws SlickException {
@@ -78,7 +81,6 @@ public class Nemesis extends BasicGame {
 				}
 			}
 		}
-//		if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) stop();
 	}
 
 	public void logic(GameContainer gameContainer) {
@@ -89,14 +91,15 @@ public class Nemesis extends BasicGame {
 		float yOffset = player.getY() - Display.getHeight() / 2;
 		screen.setOffset(xOffset, yOffset);
 		level.render(g, screen);
-		g.drawString("FPS: " + gameContainer.getFPS(), 135, 10);
 		g.drawString("Mobs Killed: " + player.getKills(), Display.getWidth() - 500, 10);
 		g.drawString("Score: " + player.getScore(), Display.getWidth() - 300, 10);
 		g.drawString("Arrows: " + player.getArrows(), Display.getWidth() - 150, 10);
 		g.setAntiAlias(true);
 		uiHandler.render(g);
-		if (menu != null)
+		if (menu != null) {
 			menu.render(screen);
+		}
+		g.drawString("FPS: " + gameContainer.getFPS(), 135, 10);
 	}
 
 	public Menu getMenu() {
@@ -109,8 +112,10 @@ public class Nemesis extends BasicGame {
 		mt = 250;
 	}
 
-
 	public synchronized void stop() {
 		System.exit(0);
+
 	}
+
+
 }
