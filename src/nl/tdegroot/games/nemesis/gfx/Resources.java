@@ -16,6 +16,7 @@ public class Resources {
 
 	// Entities
 	public static Image entityArrow;
+	public static Image steve;
 	public static Image slimeParticle;
 
 	// Items
@@ -30,6 +31,7 @@ public class Resources {
 
 	// Fonts
 	public static TrueTypeFont agency_fb;
+	public static TrueTypeFont courier_new_bold;
 
 	public Resources() {
 		try {
@@ -43,6 +45,7 @@ public class Resources {
 			// Entities
 			entityArrow = new Image("resources/textures/entities/arrow.png");
 			slimeParticle = new Image("resources/textures/entities/particles/slimeParticle.png");
+			steve = new Image("resources/textures/entities/npc/steve.png");
 
 			// Items
 			bow = new Image("resources/textures/items/bow.png");
@@ -56,6 +59,7 @@ public class Resources {
 
 			// Fonts
 			agency_fb = new TrueTypeFont(new Font("Californian FB", Font.BOLD, 16), true);
+			courier_new_bold = new TrueTypeFont(new Font("Courier New", Font.BOLD, 32), true);
 
 		} catch (SlickException e) {
 			Log.exception(e.getMessage());

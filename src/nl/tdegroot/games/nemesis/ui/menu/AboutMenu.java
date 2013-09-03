@@ -20,6 +20,10 @@ public class AboutMenu extends Menu {
 			"Timon de Groot (Programmer)",
 	};
 
+	public AboutMenu(Menu parent) {
+		super(parent);
+	}
+
 	public void init(Nemesis game) {
 		super.init(game);
 		kt = 300;
@@ -28,7 +32,7 @@ public class AboutMenu extends Menu {
 	public void update(int delta) {
 		if (kt > 0) kt -= delta;
 		if ((Keyboard.isKeyDown(Keyboard.KEY_ESCAPE) || Keyboard.isKeyDown(Keyboard.KEY_X) || Keyboard.isKeyDown(Keyboard.KEY_C)) && kt <= 0) {
-			game.setMenu(new MainMenu());
+			game.setMenu(parent);
 		}
 	}
 
@@ -39,7 +43,7 @@ public class AboutMenu extends Menu {
 		graphics.setColor(new Color(255, 255, 255));
 		for (int i = 0; i < about.length; i++) {
 			String msg = about[i];
-			graphics.drawString(msg, (Display.getWidth() - msg.length() * 8) / 2, ((Display.getHeight() - about.length * 8) / 2) + i * 18);
+			graphics.drawString(msg, (Display.getWidth() - graphics.getFont().getWidth(msg)) / 2, ((Display.getHeight() - about.length * 8) / 2) + i * 18);
 		}
 	}
 }

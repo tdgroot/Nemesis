@@ -13,11 +13,15 @@ public class Item {
 	public static Item bow = new Bow("Bow", Resources.bow);
 
 	private final String name;
-	private final Image image;
+	private final Image sprite;
+	public final int buyCost;
+	public final int sellCost;
 
-	public Item(String name, Image image) {
+	public Item(String name, Image image, int buyCost, int sellCost) {
 		this.name = name;
-		this.image = image;
+		this.sprite = image;
+		this.buyCost = buyCost;
+		this.sellCost = sellCost;
 		itemList.add(this);
 	}
 
@@ -33,4 +37,7 @@ public class Item {
 		return name;
 	}
 
+	public Image getSprite() {
+		return sprite;
+	}
 }

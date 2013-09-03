@@ -4,12 +4,14 @@ import nl.tdegroot.games.nemesis.Log;
 import nl.tdegroot.games.nemesis.entity.Entity;
 import nl.tdegroot.games.nemesis.entity.Mob;
 import nl.tdegroot.games.nemesis.entity.Player;
+import nl.tdegroot.games.nemesis.entity.npc.NPC;
 import nl.tdegroot.games.nemesis.entity.particles.Particle;
 import nl.tdegroot.games.nemesis.entity.particles.SlimeParticle;
 import nl.tdegroot.games.nemesis.entity.projectile.Projectile;
 import nl.tdegroot.games.nemesis.gfx.Screen;
 import nl.tdegroot.games.nemesis.map.CollisionMap;
 import nl.tdegroot.games.nemesis.map.MapLayer;
+import nl.tdegroot.games.nemesis.map.NPCMap;
 import nl.tdegroot.games.nemesis.map.ObjectMap;
 import nl.tdegroot.games.nemesis.map.object.MapObject;
 import nl.tdegroot.games.nemesis.spawner.MobSpawner;
@@ -32,6 +34,7 @@ public class Level implements TileBasedMap {
 	public final int tileSize;
 	private CollisionMap collisionMap;
 	private ObjectMap objectMap;
+	private NPCMap npcMap;
 
 	private List<MobSpawner> spawners = new ArrayList<MobSpawner>();
 	private List<Entity> entities = new ArrayList<Entity>();
@@ -49,6 +52,7 @@ public class Level implements TileBasedMap {
 		}
 		collisionMap = new CollisionMap(map, tileSize, getPixelWidth(), getPixelHeight());
 		objectMap = new ObjectMap(map, tileSize);
+		npcMap = new NPCMap(map, this, tileSize);
 		Log.log("Object layers: " + map.getObjectLayerCount());
 		initMobSpawners();
 	}
@@ -71,10 +75,11 @@ public class Level implements TileBasedMap {
 					String mobScore = map.getObjectProperty(MapLayer.MAP_LAYER_SPAWNERS, i, "score", "");
 					String mobHealth = map.getObjectProperty(MapLayer.MAP_LAYER_SPAWNERS, i, "health", "");
 					String mobSpeed = map.getObjectProperty(MapLayer.MAP_LAYER_SPAWNERS, i, "speed", "");
+					String mobDamage = map.getObjectProperty(MapLayer.MAP_LAYER_SPAWNERS, i, "damage", "");
 
 
 					if (spawnerType != "") {
-						spawners.add(getSpawner(spawnerType, spawnTime, maxMobs, mobScore, mobHealth, mobSpeed, xx, yy, i));
+						spawners.add(getSpawner(spawnerType, spawnTime, maxMobs, mobScore, mobHealth, mobSpeed, mobDamage, xx, yy, i));
 						Log.log("Spawner created with ID: " + i + ", mobHealth: " + mobHealth + ", mobSpeed: " + mobSpeed + ", mobScore: " + mobScore);
 					}
 
@@ -194,7 +199,7 @@ public class Level implements TileBasedMap {
 
 	}
 
-	public MobSpawner getSpawner(String type, String spawnTime, String maxMobs, String mobScore, String mobHealth, String mobSpeed, int x, int y, int i) {
+	public MobSpawner getSpawner(String type, String spawnTime, String maxMobs, String mobScore, String mobHealth, String mobSpeed, String mobDamage, int x, int y, int i) {
 		MobSpawner spawner = null;
 
 		switch (type) {
@@ -225,6 +230,10 @@ public class Level implements TileBasedMap {
 				spawner.setMovementSpeed(Float.parseFloat(mobSpeed));
 			}
 
+			if (mobDamage != "") {
+				spawner.setMobDamage(Double.parseDouble(mobDamage));
+			}
+
 		}
 
 		return spawner;
@@ -236,6 +245,10 @@ public class Level implements TileBasedMap {
 
 	public MapObject getMapObject(int x, int y) {
 		return objectMap.getMapObject(x, y);
+	}
+
+	public NPC getNPC(int x, int y) {
+		return npcMap.getNPC(x, y);
 	}
 
 	public void addEntity(Entity entity) {

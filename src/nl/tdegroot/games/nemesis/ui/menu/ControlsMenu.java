@@ -25,6 +25,10 @@ public class ControlsMenu extends Menu {
 			"Escape: Open / Close menu"
 	};
 
+	public ControlsMenu(Menu parent) {
+		super(parent);
+	}
+
 	public void init(Nemesis game) {
 		super.init(game);
 		kt = 300;
@@ -33,7 +37,7 @@ public class ControlsMenu extends Menu {
 	public void update(int delta) {
 		if (kt > 0) kt -= delta;
 		if ((Keyboard.isKeyDown(Keyboard.KEY_ESCAPE) || Keyboard.isKeyDown(Keyboard.KEY_X) || Keyboard.isKeyDown(Keyboard.KEY_C)) && kt <= 0) {
-			game.setMenu(new MainMenu());
+			game.setMenu(parent);
 		}
 	}
 
@@ -44,7 +48,7 @@ public class ControlsMenu extends Menu {
 		graphics.setColor(new Color(255, 255, 255));
 		for (int i = 0; i < controls.length; i++) {
 			String msg = controls[i];
-			graphics.drawString(msg, (Display.getWidth() - msg.length() * 8) / 2, ((Display.getHeight() - controls.length * 8) / 2) + i * 18);
+			graphics.drawString(msg, (Display.getWidth() - graphics.getFont().getWidth(msg)) / 2, ((Display.getHeight() - controls.length * 8) / 2) + i * 18);
 		}
 	}
 

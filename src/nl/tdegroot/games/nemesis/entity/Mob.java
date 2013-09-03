@@ -19,7 +19,7 @@ public class Mob extends Entity implements Mover {
 	private Mover mover;
 	private Path destination;
 	protected Rectangle vulnerability;
-	private Player target;
+	protected Player target;
 
 	protected boolean isWalking = false;
 	protected boolean wasWalking = false;
@@ -32,6 +32,7 @@ public class Mob extends Entity implements Mover {
 	protected int mobID = 0;
 	protected int spawnerID = 0;
 	protected int score = 0;
+	protected int ht = 0;
 
 	public int dir = 0;
 	private int lastDir = 0;
@@ -50,6 +51,7 @@ public class Mob extends Entity implements Mover {
 
 	protected int collisionAddY = 0;
 	protected float movementSpeed = 0;
+	protected double damage;
 
 	public Mob(Image image, float x, float y, int width, int height) {
 		super(image, x, y, width, height);
@@ -81,14 +83,11 @@ public class Mob extends Entity implements Mover {
 	}
 
 	public void move(float xa, float ya, int delta) {
-		if (xa == 0 && ya == 0) return;
-
 		if (xa != 0 && ya != 0) {
 			move(xa, 0, delta);
 			move(0, ya, delta);
 			return;
 		}
-
 
 		if (ld > 0) {
 			ld -= delta / 2;
@@ -102,7 +101,6 @@ public class Mob extends Entity implements Mover {
 		}
 
 		float limit = movementSpeed * delta * deltaMul;
-
 		if (xa > -limit && xa < limit && ya > -limit && ya < limit) {
 			dir = lastDir;
 		}
@@ -121,8 +119,6 @@ public class Mob extends Entity implements Mover {
 
 		x += xa;
 		y += ya;
-
-		return;
 	}
 
 	protected void shoot(float x, float y, double dir, Player player) {
@@ -144,7 +140,6 @@ public class Mob extends Entity implements Mover {
 				Log.exception(e.getMessage());
 			}
 		}
-
 		return solid;
 	}
 
@@ -164,6 +159,11 @@ public class Mob extends Entity implements Mover {
 		}
 
 		return path;
+	}
+
+	public void hurt(double damage) {
+		health -= damage;
+		if (health < 0) health = 0;
 	}
 
 	public void hit(Projectile p) {
@@ -277,5 +277,13 @@ public class Mob extends Entity implements Mover {
 
 	public int getSpawnerID() {
 		return spawnerID;
+	}
+
+	public void setDamage(double damage) {
+		this.damage = damage;
+	}
+
+	public double getDamage() {
+		return damage;
 	}
 }

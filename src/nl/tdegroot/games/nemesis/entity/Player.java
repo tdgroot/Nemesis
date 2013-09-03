@@ -2,12 +2,15 @@ package nl.tdegroot.games.nemesis.entity;
 
 import nl.tdegroot.games.nemesis.InputHandler;
 import nl.tdegroot.games.nemesis.Log;
+import nl.tdegroot.games.nemesis.Nemesis;
+import nl.tdegroot.games.nemesis.entity.npc.NPC;
 import nl.tdegroot.games.nemesis.entity.projectile.Arrow;
 import nl.tdegroot.games.nemesis.entity.projectile.Projectile;
 import nl.tdegroot.games.nemesis.gfx.Resources;
 import nl.tdegroot.games.nemesis.gfx.Screen;
 import nl.tdegroot.games.nemesis.item.Bow;
 import nl.tdegroot.games.nemesis.item.Item;
+import nl.tdegroot.games.nemesis.level.Level;
 import nl.tdegroot.games.nemesis.map.MapLayer;
 import nl.tdegroot.games.nemesis.map.object.MapObject;
 import nl.tdegroot.games.nemesis.ui.Dialog;
@@ -16,15 +19,17 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.geom.Rectangle;
 
 public class Player extends Mob {
 
 	private Bow bow = new Bow("Bow", Resources.bow);
 	private Inventory inventory;
+	private Nemesis game;
 
 	private double energy;
-	private int arrows = 250;
 
+	private int arrows = 250;
 	private int fireRate = 0;
 	private int mobsKilled = 0;
 	private int score = 0;
@@ -34,6 +39,7 @@ public class Player extends Mob {
 		super(image, x, y, width, height);
 
 		inventory = new Inventory();
+		vulnerability = new Rectangle(x, y, 53, 64);
 
 		movementSpeed = 2.5f;
 
@@ -50,6 +56,12 @@ public class Player extends Mob {
 		ldDefault = 500;
 
 		Log.log("Player initialized. Player Width: " + getWidth() + ", Player Height: " + getHeight());
+	}
+
+	public void init(Level level, Nemesis game) {
+		this.game = game;
+		setLevel(level);
+		positionate();
 	}
 
 	protected void positionate() {
@@ -87,6 +99,7 @@ public class Player extends Mob {
 		if (xa != 0 || ya != 0) {
 			isWalking = true;
 			move(xa, ya, delta);
+			vulnerability.setLocation(x, y);
 		} else {
 			isWalking = false;
 		}
@@ -101,6 +114,10 @@ public class Player extends Mob {
 
 		if (!wasWalking) {
 			animIndex = 0;
+		}
+
+		if (health <= 0) {
+			Log.log("YOU'RE DEAD!");
 		}
 
 		clear();
@@ -147,6 +164,7 @@ public class Player extends Mob {
 
 	public void interact() {
 		MapObject object = null;
+		NPC npc = null;
 		for (int c = 0; c < 4; c++) {
 			int xt = 0;
 			int yt = 0;
@@ -168,10 +186,15 @@ public class Player extends Mob {
 			}
 			if (level.getMapObject(xt, yt) != null)
 				object = level.getMapObject(xt, yt);
+			if (level.getNPC(xt, yt) != null)
+				npc = level.getNPC(xt, yt);
 		}
 
 		if (object != null) {
 			object.interact(this);
+			it = 250;
+		} else if (npc != null) {
+			npc.interact(this, game);
 			it = 250;
 		}
 	}
@@ -230,5 +253,9 @@ public class Player extends Mob {
 
 	public double getEnergy() {
 		return energy;
+	}
+
+	public boolean isDead() {
+		return health <= 0.0;
 	}
 }

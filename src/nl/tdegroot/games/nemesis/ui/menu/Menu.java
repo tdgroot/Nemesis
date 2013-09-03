@@ -8,6 +8,12 @@ public class Menu {
 	protected Nemesis game;
 	public int selected;
 	public String[] items;
+	protected int kt = 0;
+	protected Menu parent;
+
+	public Menu(Menu parent) {
+		this.parent = parent;
+	}
 
 	public void init(Nemesis game) {
 		this.game = game;

@@ -5,7 +5,7 @@ import org.newdawn.slick.Image;
 public class Bow extends Item {
 
 	public Bow(String name, Image image) {
-		super("Bow", image);
+		super("Bow", image, 25, 15);
 	}
 
 }

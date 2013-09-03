@@ -27,7 +27,7 @@
    H4sIAAAAAAAAC+3PuQ0AIAwEsCDRsf++UNInIhT2APdEAAAvze4BxyjI+OFHBT/yVmM3AAAAAAAAwG0DTsDqKRAnAAA=
   </data>
  </layer>
- <objectgroup name="WaterLayer" width="50" height="50">
+ <objectgroup name="WaterLayer" width="50" height="50" visible="0">
   <object x="1472" y="576" width="192" height="64"/>
   <object x="1408" y="576" width="64" height="192"/>
   <object x="1472" y="640" width="128" height="128"/>
@@ -124,6 +124,7 @@
  <objectgroup name="Spawners" width="50" height="50">
   <object name="roachspawner" type="Spawner" x="1920" y="2112" width="64" height="64">
    <properties>
+    <property name="damage" value="12.5"/>
     <property name="health" value="200"/>
     <property name="maxMobs" value="35"/>
     <property name="score" value="20"/>
@@ -134,12 +135,13 @@
   </object>
   <object name="roachspawner" type="Spawner" x="2496" y="768" width="64" height="64">
    <properties>
+    <property name="damage" value="9.5"/>
     <property name="health" value="95.55"/>
     <property name="maxMobs" value="15"/>
     <property name="score" value="5"/>
     <property name="spawnTime" value="5000"/>
     <property name="spawner" value="roach"/>
-    <property name="speed" value="14.55"/>
+    <property name="speed" value="26.5"/>
    </properties>
   </object>
  </objectgroup>
@@ -150,5 +152,16 @@
   <object x="1666" y="576" width="251" height="24"/>
   <object x="2114" y="576" width="59" height="23"/>
   <object x="1897" y="576" width="23" height="255"/>
+  <object x="2176" y="320" width="64" height="64"/>
+ </objectgroup>
+ <objectgroup name="NPC" width="50" height="50">
+  <object name="Steve" type="NPC" x="2176" y="320" width="64" height="64">
+   <properties>
+    <property name="arrows" value="1000"/>
+    <property name="items" value="{bow:50, bow:41}"/>
+    <property name="name" value="steve"/>
+    <property name="type" value="shop"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

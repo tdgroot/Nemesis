@@ -7,6 +7,7 @@ import nl.tdegroot.games.nemesis.gfx.Screen;
 import nl.tdegroot.games.nemesis.level.Level;
 import nl.tdegroot.games.nemesis.ui.Dialog;
 import nl.tdegroot.games.nemesis.ui.UIHandler;
+import nl.tdegroot.games.nemesis.ui.menu.DeadMenu;
 import nl.tdegroot.games.nemesis.ui.menu.Menu;
 import nl.tdegroot.games.nemesis.ui.menu.PauseMenu;
 import org.lwjgl.input.Keyboard;
@@ -47,7 +48,7 @@ public class Nemesis extends BasicGame {
 		screen = new Screen(camera, gameContainer.getGraphics());
 		input = new InputHandler();
 		uiHandler = new UIHandler(player);
-		player.init(level);
+		player.init(level, this);
 		Dialog.init();
 		gameContainer.getInput().addMouseListener(input);
 		gameContainer.setVSync(true);
@@ -77,8 +78,9 @@ public class Nemesis extends BasicGame {
 				level.update(delta);
 				uiHandler.update(delta);
 				if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE) && mt <= 0 && !Dialog.isActive()) {
-					setMenu(new PauseMenu());
+					setMenu(new PauseMenu(null));
 				}
+				if (player.isDead()) setMenu(new DeadMenu(null, player));
 			}
 		}
 	}

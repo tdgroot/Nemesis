@@ -4,9 +4,12 @@ import nl.tdegroot.games.nemesis.gfx.Screen;
 import nl.tdegroot.games.nemesis.level.Level;
 import org.newdawn.slick.Image;
 
+import java.util.Random;
+
 public class Entity {
 
 	Image sprite;
+	protected Random random = new Random();
 	protected Level level;
 
 	protected float x, y;
@@ -16,26 +19,20 @@ public class Entity {
 	protected boolean removed = false;
 
 	public Entity() {
-
 	}
 
-	public Entity(Image image, float x, float y, int width, int height) {
+	public Entity(Image sprite, float x, float y, int width, int height) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
+		this.sprite = sprite;
 	}
 
 	public void init(Level level) {
 		setLevel(level);
 		positionate();
 	}
-
-	public void initPlayer(Level level) {
-		setLevel(level);
-		positionate();
-	}
-
 
 	protected void positionate() {
 		x *= level.tileSize;

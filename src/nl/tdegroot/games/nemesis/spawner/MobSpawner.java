@@ -30,6 +30,7 @@ public class MobSpawner {
 	protected double mobHealth = 0.0;
 	protected float movementSpeed = 0.0f;
 	protected int mobScore = 0;
+	protected double mobDamage = 0.0;
 
 	public MobSpawner(Level level, Player target, int x, int y, int spawnerID) {
 		this.level = level;
@@ -108,5 +109,13 @@ public class MobSpawner {
 
 	public void removeMob() {
 		mobsAlive--;
+	}
+
+	public void setMobDamage(double mobDamage) {
+		this.mobDamage = mobDamage;
+	}
+
+	public double getMobDamage() {
+		return mobDamage;
 	}
 }

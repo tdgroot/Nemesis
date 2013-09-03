@@ -24,29 +24,30 @@ public class Roach extends Mob {
 		collisionAddY = 29;
 
 		ldDefault = 1000;
-		followRange = 400;
+		followRange = 415;
 	}
 
 	public void update(int delta) {
 		super.update(delta);
-		Random random = new Random();
 		Player player = level.getPlayer();
 
 		if (level.getPlayer() != null && randomWalkTime <= 0) {
 			float xd = player.x - x;
 			float yd = player.y - y;
 			if (xd * xd + yd * yd < followRange * followRange) {
-				if (xd * xd + yd * yd > 10 * 10) {
-					xa = 0;
-					ya = 0;
-					if (xd < -1) xa -= movementSpeed * delta * deltaMul;
-					if (xd > 1) xa += movementSpeed * delta * deltaMul;
-					if (yd < -1) ya -= movementSpeed * delta * deltaMul;
-					if (yd > 1) ya += movementSpeed * delta * deltaMul;
-					Log.log("Roach in range!");
-				} else {
-					return;
+				if (!(xd * xd + yd * yd > 10 * 10)) {
+					if (vulnerability.intersects(target.getVulnerability()) && ht <= 0) {
+						player.hurt(damage);
+						ht = 750;
+					}
 				}
+				xa = 0;
+				ya = 0;
+				if (xd < -2) xa -= movementSpeed * delta * deltaMul;
+				if (xd > 2) xa += movementSpeed * delta * deltaMul;
+				if (yd < -2) ya -= movementSpeed * delta * deltaMul;
+				if (yd > 2) ya += movementSpeed * delta * deltaMul;
+				Log.log("Roach in range!");
 			} else if (random.nextInt(200) == 0) {
 				randomWalkTime = 1250;
 				xa = ((random.nextInt(3) - 1) * random.nextInt(2)) * delta * 0.12f;
@@ -54,11 +55,15 @@ public class Roach extends Mob {
 			}
 		}
 
-		move(xa, ya, delta);
+		if (xa != 0 || ya != 0) {
+			move(xa, ya, delta);
+		}
 
 		if (randomWalkTime > 0) randomWalkTime -= delta;
+		if (ht > 0) ht -= delta;
 
 		vulnerability.setLocation(x + 10, y + 10);
+
 	}
 
 }

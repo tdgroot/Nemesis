@@ -53,6 +53,7 @@ public class Screen {
 		sheet.startUse();
 		sheet.renderInUse((int) camera.getXOffset(), (int) camera.getYOffset(), player.getAnimIndex(), player.getDir());
 		sheet.endUse();
+		graphics.drawRect(camera.getXOffset(), camera.getYOffset(), 53, 64);
 	}
 
 	public void renderMob(Mob mob) {
@@ -78,6 +79,7 @@ public class Screen {
 	}
 
 	public void renderEntity(Entity entity) {
+		entity.getSprite().draw(entity.getX() * 64 - xOffset, entity.getY() * 64 - yOffset);
 	}
 
 	public void renderMenu(Menu menu) {

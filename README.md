@@ -5,8 +5,9 @@ TODO
 
 Technical:
 
-- Mob-AI
-- Menu Structure
+- Implement Currency
+- NPC
+- Show Menu
 
 Design:
 
