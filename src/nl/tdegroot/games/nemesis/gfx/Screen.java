@@ -4,17 +4,13 @@ import nl.tdegroot.games.nemesis.entity.Entity;
 import nl.tdegroot.games.nemesis.entity.Mob;
 import nl.tdegroot.games.nemesis.entity.Player;
 import nl.tdegroot.games.nemesis.entity.projectile.Projectile;
-import nl.tdegroot.games.nemesis.ui.menu.Menu;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
-import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.tiled.TiledMap;
 import org.newdawn.slick.util.pathfinding.Path;
-
-import java.awt.*;
 
 public class Screen {
 
@@ -82,22 +78,12 @@ public class Screen {
 		entity.getSprite().draw(entity.getX() * 64 - xOffset, entity.getY() * 64 - yOffset);
 	}
 
-	public void renderMenu(Menu menu) {
-		graphics.setColor(new Color(0, 0, 0, 150));
-		graphics.fillRect(0, 0, Display.getWidth(), Display.getHeight());
-		graphics.setColor(Color.white);
-		for (int i = 0; i < menu.items.length; i++) {
-			String msg = menu.items[i];
-			int xx = msg.length() / 8;
-			if (i == menu.selected) {
-				graphics.setAntiAlias(true);
-				graphics.setFont(new TrueTypeFont(new Font("Courier New", Font.BOLD, 16), true));
-				msg = "> " + msg + " <";
-			} else {
-				graphics.resetFont();
-			}
-			graphics.drawString(msg, (Display.getWidth() - msg.length() * 8) / 2, (44 + i * 3) * 8);
-		}
+	public void renderText(String msg, float x, float y, boolean fixed, Color color) {
+		Color old = graphics.getColor();
+		graphics.setColor(color);
+		if (fixed) graphics.drawString(msg, x, y);
+		else graphics.drawString(msg, (x - graphics.getFont().getWidth(msg) / 2) - xOffset, y - yOffset);
+		graphics.setColor(old);
 	}
 
 	public void setOffset(float xOffset, float yOffset) {

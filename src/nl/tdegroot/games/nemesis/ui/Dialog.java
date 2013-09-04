@@ -1,14 +1,12 @@
 package nl.tdegroot.games.nemesis.ui;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import nl.tdegroot.games.nemesis.Log;
 import nl.tdegroot.games.nemesis.gfx.Resources;
-
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Dialog {
 

@@ -8,9 +8,6 @@ import nl.tdegroot.games.nemesis.gfx.Screen;
 import nl.tdegroot.games.nemesis.item.Item;
 import nl.tdegroot.games.nemesis.ui.menu.ShopMenu;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Steve extends ShopNPC {
 
 	public Steve(float x, float y, int id) {

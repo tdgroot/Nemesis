@@ -1,9 +1,7 @@
 package nl.tdegroot.games.nemesis.ui;
 
-import nl.tdegroot.games.nemesis.Log;
 import nl.tdegroot.games.nemesis.entity.Player;
 import nl.tdegroot.games.nemesis.gfx.Resources;
-
 import org.newdawn.slick.Graphics;
 
 

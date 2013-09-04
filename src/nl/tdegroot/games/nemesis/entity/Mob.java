@@ -1,10 +1,13 @@
 package nl.tdegroot.games.nemesis.entity;
 
 import nl.tdegroot.games.nemesis.Log;
+import nl.tdegroot.games.nemesis.entity.particles.Particle;
+import nl.tdegroot.games.nemesis.entity.particles.TextParticle;
 import nl.tdegroot.games.nemesis.entity.projectile.Arrow;
 import nl.tdegroot.games.nemesis.entity.projectile.Projectile;
 import nl.tdegroot.games.nemesis.gfx.Screen;
 import nl.tdegroot.games.nemesis.level.Level;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Rectangle;
@@ -47,11 +50,12 @@ public class Mob extends Entity implements Mover {
 	public int frame = 0;
 	protected int collisionMulX = 0;
 	protected int collisionMulY = 0;
+	protected int collisionAddY = 0;
 	protected int collisionAddX = 0;
 
-	protected int collisionAddY = 0;
 	protected float movementSpeed = 0;
 	protected double damage;
+	protected double critChance = 9.0;
 
 	public Mob(Image image, float x, float y, int width, int height) {
 		super(image, x, y, width, height);
@@ -70,8 +74,8 @@ public class Mob extends Entity implements Mover {
 
 	public void init(Level level, Player target) {
 		super.init(level);
+		if (level == null) Log.log("Level is null!");
 		this.target = target;
-		pathFinder = new AStarPathFinder(level, 50, true);
 	}
 
 	public void update(int delta) {
@@ -121,11 +125,6 @@ public class Mob extends Entity implements Mover {
 		y += ya;
 	}
 
-	protected void shoot(float x, float y, double dir, Player player) {
-		Projectile projectile = new Arrow(x, y, dir, player);
-		level.addProjectile(projectile);
-	}
-
 	protected boolean collision(float xa, float ya) {
 		boolean solid = false;
 
@@ -161,16 +160,33 @@ public class Mob extends Entity implements Mover {
 		return path;
 	}
 
-	public void hurt(double damage) {
-		health -= damage;
+	public void hurt(Mob mob) {
+		Color color = new Color(255, 0, 0);
+		double dmg = mob.getDamage() + (random.nextInt(8) - 4) / 1.5;
+		if (random.nextInt(100) < mob.getCritChance()) {
+			color = new Color(255, 106, 0);
+			dmg *= 1.35;
+		}
+		health -= dmg;
 		if (health < 0) health = 0;
+		Player player = level.getPlayer();
+		Particle p = new TextParticle("" + Math.round(dmg * 100.0) / 100.0, player.getX(), player.getY() - 50, 500, TextParticle.Type.BIG, color);
+		p.setLevel(level);
+		level.addParticle(p);
 	}
 
 	public void hit(Projectile p) {
-		health -= p.getDamage();
-		if (health <= 0.0) {
-			remove();
+		Color color = new Color(255, 0, 0);
+		double dmg = p.getDamage() + (random.nextInt(8) - 4) / 1.5;
+		if (random.nextInt(100) < p.getCritChance()) {
+			color = new Color(255, 131, 0);
+			dmg *= 1.35;
 		}
+		health -= dmg;
+		if (health <= 0.0) remove();
+		Particle particle  = new TextParticle("" + Math.round(dmg * 100.0) / 100.0, getX(), getY() - 50, 500, TextParticle.Type.MEDIUM, color);
+		particle.setLevel(level);
+		level.addParticle(particle);
 	}
 
 	protected int getDirection(float xa, float ya) {
@@ -285,5 +301,9 @@ public class Mob extends Entity implements Mover {
 
 	public double getDamage() {
 		return damage;
+	}
+
+	public double getCritChance() {
+		return critChance;
 	}
 }

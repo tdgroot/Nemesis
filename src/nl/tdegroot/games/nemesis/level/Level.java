@@ -23,7 +23,6 @@ import org.newdawn.slick.util.pathfinding.PathFindingContext;
 import org.newdawn.slick.util.pathfinding.TileBasedMap;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class Level implements TileBasedMap {
@@ -261,6 +260,10 @@ public class Level implements TileBasedMap {
 
 	public void addProjectile(Projectile projectile) {
 		projectiles.add(projectile);
+	}
+
+	public void addParticle(Particle particle) {
+		particles.add(particle);
 	}
 
 	public TiledMap getMap() {

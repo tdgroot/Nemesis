@@ -7,7 +7,6 @@ Technical:
 
 - Implement Currency
 - NPC
-- Show Menu
 
 Design:
 

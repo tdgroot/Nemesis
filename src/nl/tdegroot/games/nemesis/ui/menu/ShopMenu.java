@@ -9,8 +9,6 @@ import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
-import java.util.List;
-
 public class ShopMenu extends Menu {
 
 	private ShopNPC npc;

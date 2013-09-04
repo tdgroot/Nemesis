@@ -3,8 +3,6 @@ package nl.tdegroot.games.nemesis.entity;
 import nl.tdegroot.games.nemesis.Log;
 import org.newdawn.slick.Image;
 
-import java.util.Random;
-
 public class Roach extends Mob {
 
 	private int randomWalkTime = 0;
@@ -37,7 +35,7 @@ public class Roach extends Mob {
 			if (xd * xd + yd * yd < followRange * followRange) {
 				if (!(xd * xd + yd * yd > 10 * 10)) {
 					if (vulnerability.intersects(target.getVulnerability()) && ht <= 0) {
-						player.hurt(damage);
+						player.hurt(this);
 						ht = 750;
 					}
 				}
@@ -48,6 +46,7 @@ public class Roach extends Mob {
 				if (yd < -2) ya -= movementSpeed * delta * deltaMul;
 				if (yd > 2) ya += movementSpeed * delta * deltaMul;
 				Log.log("Roach in range!");
+
 			} else if (random.nextInt(200) == 0) {
 				randomWalkTime = 1250;
 				xa = ((random.nextInt(3) - 1) * random.nextInt(2)) * delta * 0.12f;

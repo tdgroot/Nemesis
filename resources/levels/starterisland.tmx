@@ -87,7 +87,7 @@
   <object x="2624" y="0" width="128" height="128"/>
   <object x="1856" y="0" width="768" height="64"/>
  </objectgroup>
- <objectgroup name="MapObjects" width="50" height="50">
+ <objectgroup name="MapObjects" width="50" height="50" visible="0">
   <object name="chest" type="MapObject" x="640" y="832" width="64" height="64">
    <properties>
     <property name="arrows" value="200"/>
@@ -118,10 +118,10 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup name="Player" width="50" height="50">
+ <objectgroup name="Player" width="50" height="50" visible="0">
   <object name="playerspawner" type="Player Spawn" x="1884" y="442" width="64" height="64"/>
  </objectgroup>
- <objectgroup name="Spawners" width="50" height="50">
+ <objectgroup name="Spawners" width="50" height="50" visible="0">
   <object name="roachspawner" type="Spawner" x="1920" y="2112" width="64" height="64">
    <properties>
     <property name="damage" value="12.5"/>
@@ -145,7 +145,7 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup name="Collision" width="50" height="50">
+ <objectgroup name="Collision" width="50" height="50" visible="0">
   <object x="640" y="832" width="64" height="64"/>
   <object x="768" y="640" width="64" height="64"/>
   <object x="1728" y="360" width="445" height="21"/>

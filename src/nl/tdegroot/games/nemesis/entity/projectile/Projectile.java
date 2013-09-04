@@ -14,7 +14,9 @@ public class Projectile extends Entity {
 	protected float distance;
 	protected double nx, ny;
 	protected float speed, range;
+
 	protected double damage;
+	protected double critChance;
 
 	protected Rectangle aoe;
 	protected Player player;
@@ -59,5 +61,17 @@ public class Projectile extends Entity {
 
 	public Player getPlayer() {
 		return player;
+	}
+
+	public double getCritChance() {
+		return critChance;
+	}
+
+	public void setDamage(double damage) {
+		this.damage = damage;
+	}
+
+	public void setCritChance(double critChance) {
+		this.critChance = critChance;
 	}
 }

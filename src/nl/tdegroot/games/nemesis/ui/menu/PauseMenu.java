@@ -1,16 +1,11 @@
 package nl.tdegroot.games.nemesis.ui.menu;
 
-import nl.tdegroot.games.nemesis.Log;
 import nl.tdegroot.games.nemesis.Nemesis;
 import nl.tdegroot.games.nemesis.gfx.Screen;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
-import org.newdawn.slick.*;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
-
-import java.awt.*;
-import java.awt.Font;
 
 public class PauseMenu extends Menu {
 

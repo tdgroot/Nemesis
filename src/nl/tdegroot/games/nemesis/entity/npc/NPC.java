@@ -1,12 +1,9 @@
 package nl.tdegroot.games.nemesis.entity.npc;
 
-import nl.tdegroot.games.nemesis.Log;
 import nl.tdegroot.games.nemesis.Nemesis;
 import nl.tdegroot.games.nemesis.entity.Entity;
 import nl.tdegroot.games.nemesis.entity.Player;
 import nl.tdegroot.games.nemesis.gfx.Screen;
-import nl.tdegroot.games.nemesis.item.Item;
-import nl.tdegroot.games.nemesis.ui.menu.Menu;
 import org.newdawn.slick.Image;
 
 public class NPC extends Entity {

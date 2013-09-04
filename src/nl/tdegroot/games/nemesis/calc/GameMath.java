@@ -1,6 +1,5 @@
 package nl.tdegroot.games.nemesis.calc;
 
-import nl.tdegroot.games.nemesis.Log;
 import nl.tdegroot.games.nemesis.level.Level;
 
 import java.util.Random;

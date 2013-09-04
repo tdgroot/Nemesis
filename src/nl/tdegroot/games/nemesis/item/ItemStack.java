@@ -1,7 +1,5 @@
 package nl.tdegroot.games.nemesis.item;
 
-import org.newdawn.slick.Image;
-
 import java.util.ArrayList;
 import java.util.List;
 

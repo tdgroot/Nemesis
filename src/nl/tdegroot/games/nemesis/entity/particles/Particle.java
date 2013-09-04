@@ -25,7 +25,8 @@ public class Particle extends Entity {
 	public Particle(float x, float y, int life, Image sprite) {
 		this.sprite = sprite;
 		this.life = life;
-
+		this.x = x;
+		this.y = y;
 		this.xx = x;
 		this.yy = y;
 		this.xa = random.nextGaussian() * 1.1f;

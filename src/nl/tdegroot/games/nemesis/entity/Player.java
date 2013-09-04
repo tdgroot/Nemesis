@@ -42,9 +42,10 @@ public class Player extends Mob {
 		vulnerability = new Rectangle(x, y, 53, 64);
 
 		movementSpeed = 2.5f;
+		damage = 35;
+		critChance = 15;
 
-		baseHealth = 100.0;
-		health = baseHealth;
+		health = baseHealth = 1000.0;
 
 		energy = 100.0;
 
@@ -149,6 +150,13 @@ public class Player extends Mob {
 		} else if (Keyboard.isKeyDown(Keyboard.KEY_X) && it <= 0) {
 			interact();
 		}
+	}
+
+	protected void shoot(float x, float y, double dir, Player player) {
+		Projectile projectile = new Arrow(x, y, dir, player);
+		projectile.setDamage(damage);
+		projectile.setCritChance(critChance);
+		level.addProjectile(projectile);
 	}
 
 	protected boolean collision(float xa, float ya) {
