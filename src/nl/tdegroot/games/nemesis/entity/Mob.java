@@ -1,9 +1,9 @@
 package nl.tdegroot.games.nemesis.entity;
 
 import nl.tdegroot.games.nemesis.Log;
+import nl.tdegroot.games.nemesis.entity.particles.BloodParticle;
 import nl.tdegroot.games.nemesis.entity.particles.Particle;
 import nl.tdegroot.games.nemesis.entity.particles.TextParticle;
-import nl.tdegroot.games.nemesis.entity.projectile.Arrow;
 import nl.tdegroot.games.nemesis.entity.projectile.Projectile;
 import nl.tdegroot.games.nemesis.gfx.Screen;
 import nl.tdegroot.games.nemesis.level.Level;
@@ -18,9 +18,6 @@ import org.newdawn.slick.util.pathfinding.Path;
 public class Mob extends Entity implements Mover {
 
 	protected SpriteSheet sheet;
-	private AStarPathFinder pathFinder;
-	private Mover mover;
-	private Path destination;
 	protected Rectangle vulnerability;
 	protected Player target;
 
@@ -93,11 +90,12 @@ public class Mob extends Entity implements Mover {
 			return;
 		}
 
-		if (ld > 0) {
-			ld -= delta / 2;
-		}
+		if (ld > 0) ld -= delta / 2;
 
-		dir = getDirection(xa, ya);
+		if (ya < 0) dir = 0;
+		if (xa > 0) dir = 1;
+		if (ya > 0) dir = 2;
+		if (xa < 0) dir = 3;
 
 		if (lastDir != dir && dir != 1 && dir != 3 && ld <= 0) {
 			lastDir = dir;
@@ -105,21 +103,12 @@ public class Mob extends Entity implements Mover {
 		}
 
 		float limit = movementSpeed * delta * deltaMul;
-		if (xa > -limit && xa < limit && ya > -limit && ya < limit) {
-			dir = lastDir;
-		}
+		if (xa > -limit && xa < limit && ya > -limit && ya < limit) dir = lastDir;
 
-		if (x < 0) {
-			x = 0;
-		}
+		if (x < 0) x = 0;
+		if (y < 0) y = 0;
 
-		if (y < 0) {
-			y = 0;
-		}
-
-		if (collision(xa, ya)) {
-			return;
-		}
+		if (collision(xa, ya)) return;
 
 		x += xa;
 		y += ya;
@@ -131,13 +120,7 @@ public class Mob extends Entity implements Mover {
 		for (int c = 0; c < 4; c++) {
 			int xt = (int) ((x + xa) + c % 2 * collisionMulX - collisionAddX);
 			int yt = (int) ((y + ya) + c / 2 * collisionMulY + collisionAddY);
-
-			try {
-				if (level.isCollision(xt, yt))
-					solid = true;
-			} catch (ArrayIndexOutOfBoundsException e) {
-				Log.exception(e.getMessage());
-			}
+			if (level.isCollision(xt, yt)) solid = true;
 		}
 		return solid;
 	}
@@ -146,7 +129,6 @@ public class Mob extends Entity implements Mover {
 		Path path = null;
 		int sx = (int) x / level.tileSize;
 		int sy = (int) y / level.tileSize;
-		path = pathFinder.findPath(this, 7, 8, 5, 5);
 		hasDestination = true;
 		step = 0;
 		if (path == null) {
@@ -161,30 +143,37 @@ public class Mob extends Entity implements Mover {
 	}
 
 	public void hurt(Mob mob) {
-		Color color = new Color(255, 0, 0);
+		Color fontColor = new Color(255, 0, 0);
 		double dmg = mob.getDamage() + (random.nextInt(8) - 4) / 1.5;
+		TextParticle.Type fontType = TextParticle.Type.NORMAL;
 		if (random.nextInt(100) < mob.getCritChance()) {
-			color = new Color(255, 106, 0);
+			fontColor = new Color(255, 106, 0);
 			dmg *= 1.35;
+			fontType = TextParticle.Type.BIG;
 		}
 		health -= dmg;
 		if (health < 0) health = 0;
 		Player player = level.getPlayer();
-		Particle p = new TextParticle("" + Math.round(dmg * 100.0) / 100.0, player.getX(), player.getY() - 50, 500, TextParticle.Type.BIG, color);
+		Particle bloodParticle = new BloodParticle(player.getX(), player.getY(), 75, 600);
+		bloodParticle.setLevel(level);
+		level.addParticle(bloodParticle);
+		Particle p = new TextParticle("" + Math.round(dmg * 100.0) / 100.0, player.getX(), player.getY() - 50, 500, fontType, fontColor);
 		p.setLevel(level);
 		level.addParticle(p);
 	}
 
 	public void hit(Projectile p) {
-		Color color = new Color(255, 0, 0);
+		Color fontColor = new Color(255, 0, 0);
 		double dmg = p.getDamage() + (random.nextInt(8) - 4) / 1.5;
+		TextParticle.Type fontType = TextParticle.Type.NORMAL;
 		if (random.nextInt(100) < p.getCritChance()) {
-			color = new Color(255, 131, 0);
-			dmg *= 1.35;
+			fontColor = new Color(255, 131, 0);
+			dmg *= 1.5;
+			fontType = TextParticle.Type.BIG;
 		}
 		health -= dmg;
 		if (health <= 0.0) remove();
-		Particle particle  = new TextParticle("" + Math.round(dmg * 100.0) / 100.0, getX(), getY() - 50, 500, TextParticle.Type.MEDIUM, color);
+		Particle particle = new TextParticle("" + Math.round(dmg * 100.0) / 100.0, getX(), getY() - 50, 500, fontType, fontColor);
 		particle.setLevel(level);
 		level.addParticle(particle);
 	}
@@ -231,8 +220,6 @@ public class Mob extends Entity implements Mover {
 
 	public void render(Screen screen) {
 		screen.renderMob(this);
-		if (destination != null)
-			screen.renderPath(destination);
 	}
 
 	public Rectangle getVulnerability() {

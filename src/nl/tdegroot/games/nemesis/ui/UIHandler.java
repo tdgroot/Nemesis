@@ -2,6 +2,7 @@ package nl.tdegroot.games.nemesis.ui;
 
 import nl.tdegroot.games.nemesis.entity.Player;
 import nl.tdegroot.games.nemesis.gfx.Resources;
+import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Graphics;
 
 
@@ -25,6 +26,11 @@ public class UIHandler {
 			Dialog.render(g);
 		}
 		characterHUD.render(g);
+		Resources.scoreBar.draw(Display.getWidth() - Resources.scoreBar.getWidth(), 0);
+		g.setAntiAlias(true);
+		int scoreHeight = 18;
+		g.drawString("" + player.getKills(), Display.getWidth() - 460, scoreHeight);
+		g.drawString("" + player.getScore(), Display.getWidth() - 210, scoreHeight);
 	}
 	
 	

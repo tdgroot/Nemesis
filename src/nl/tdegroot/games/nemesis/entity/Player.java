@@ -45,7 +45,7 @@ public class Player extends Mob {
 		damage = 35;
 		critChance = 15;
 
-		health = baseHealth = 1000.0;
+		health = baseHealth = 250.0;
 
 		energy = 100.0;
 
@@ -209,7 +209,7 @@ public class Player extends Mob {
 
 	public void render(Screen screen) {
 		Graphics graphics = screen.getGraphics();
-		graphics.drawLine(Display.getWidth() / 2, Display.getHeight() / 2, Mouse.getX(), Display.getHeight() - Mouse.getY());
+//		graphics.drawLine(Display.getWidth() / 2, Display.getHeight() / 2, Mouse.getX(), Display.getHeight() - Mouse.getY());
 		screen.renderPlayer(this);
 	}
 
@@ -241,6 +241,10 @@ public class Player extends Mob {
 
 	public int getScore() {
 		return score;
+	}
+
+	public void distractScore(int buyCost) {
+		score -= buyCost;
 	}
 
 	public int getArrows() {

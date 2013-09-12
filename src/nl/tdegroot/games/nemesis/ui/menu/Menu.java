@@ -6,7 +6,7 @@ import nl.tdegroot.games.nemesis.gfx.Screen;
 public class Menu {
 
 	protected Nemesis game;
-	public int selected;
+	public int selected = 0;
 	public String[] items;
 	protected int kt = 0;
 	protected Menu parent;

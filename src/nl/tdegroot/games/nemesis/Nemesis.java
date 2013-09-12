@@ -93,10 +93,6 @@ public class Nemesis extends BasicGame {
 		float yOffset = player.getY() - Display.getHeight() / 2;
 		screen.setOffset(xOffset, yOffset);
 		level.render(g, screen);
-		g.drawString("Mobs Killed: " + player.getKills(), Display.getWidth() - 500, 10);
-		g.drawString("Score: " + player.getScore(), Display.getWidth() - 300, 10);
-		g.drawString("Arrows: " + player.getArrows(), Display.getWidth() - 150, 10);
-		g.setAntiAlias(true);
 		uiHandler.render(g);
 		if (menu != null) {
 			menu.render(screen);
@@ -116,7 +112,10 @@ public class Nemesis extends BasicGame {
 
 	public synchronized void stop() {
 		System.exit(0);
+	}
 
+	public Player getPlayer() {
+		return player;
 	}
 
 

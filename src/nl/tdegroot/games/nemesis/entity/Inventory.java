@@ -22,7 +22,7 @@ public class Inventory {
 		for (int i = 0; i < items.size(); i++) {
 			if (items.get(i).equals(item)) count++;
 		}
-		return 0;
+		return count;
 	}
 
 	public int size() {

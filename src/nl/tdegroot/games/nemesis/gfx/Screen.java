@@ -5,10 +5,7 @@ import nl.tdegroot.games.nemesis.entity.Mob;
 import nl.tdegroot.games.nemesis.entity.Player;
 import nl.tdegroot.games.nemesis.entity.projectile.Projectile;
 import org.lwjgl.opengl.Display;
-import org.newdawn.slick.Color;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.*;
 import org.newdawn.slick.tiled.TiledMap;
 import org.newdawn.slick.util.pathfinding.Path;
 
@@ -49,7 +46,7 @@ public class Screen {
 		sheet.startUse();
 		sheet.renderInUse((int) camera.getXOffset(), (int) camera.getYOffset(), player.getAnimIndex(), player.getDir());
 		sheet.endUse();
-		graphics.drawRect(camera.getXOffset(), camera.getYOffset(), 53, 64);
+//		graphics.drawRect(camera.getXOffset(), camera.getYOffset(), 53, 64);
 	}
 
 	public void renderMob(Mob mob) {
@@ -78,12 +75,14 @@ public class Screen {
 		entity.getSprite().draw(entity.getX() * 64 - xOffset, entity.getY() * 64 - yOffset);
 	}
 
-	public void renderText(String msg, float x, float y, boolean fixed, Color color) {
+	public void renderText(String msg, float x, float y, boolean fixed, TrueTypeFont font, Color color) {
+		graphics.setFont(font);
 		Color old = graphics.getColor();
 		graphics.setColor(color);
 		if (fixed) graphics.drawString(msg, x, y);
 		else graphics.drawString(msg, (x - graphics.getFont().getWidth(msg) / 2) - xOffset, y - yOffset);
 		graphics.setColor(old);
+		graphics.resetFont();
 	}
 
 	public void setOffset(float xOffset, float yOffset) {

@@ -11,11 +11,13 @@ public class Item {
 	private static List<Item> itemList = new ArrayList<Item>();
 
 	public static Item bow = new Bow("Bow", Resources.bow);
+	public static Item arrow = new Arrow(6, 3);
 
 	private final String name;
 	private final Image sprite;
 	public final int buyCost;
 	public final int sellCost;
+	private boolean equipable;
 
 	public Item(String name, Image image, int buyCost, int sellCost) {
 		this.name = name;
@@ -39,5 +41,9 @@ public class Item {
 
 	public Image getSprite() {
 		return sprite;
+	}
+
+	public boolean isEquipable() {
+		return false;
 	}
 }

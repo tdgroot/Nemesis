@@ -24,7 +24,7 @@ public class Particle extends Entity {
 
 	public Particle(float x, float y, int life, Image sprite) {
 		this.sprite = sprite;
-		this.life = life;
+		this.life = life + (random.nextInt(200) - 100);
 		this.x = x;
 		this.y = y;
 		this.xx = x;
@@ -38,7 +38,7 @@ public class Particle extends Entity {
 
 	public Particle(float x, float y, int amount, int life, Image sprite) {
 		this.sprite = sprite;
-		this.life = life;
+		this.life = life + (random.nextInt(200) - 100);
 		for (int i = 0; i < amount; i++) {
 			this.particles.add(new Particle(x, y, life, sprite));
 		}
@@ -66,16 +66,16 @@ public class Particle extends Entity {
 			}
 
 			if (p.x < 0)
-				p.x =0;
+				p.x = 0;
 			if (p.y < 0)
-				p.y =0;
+				p.y = 0;
 
-			if (! collision(p)) {
+			if (!collision(p)) {
 				p.xx += p.xa;
 				p.zz += p.za;
 			}
 
-			if (! collision(p)) {
+			if (!collision(p)) {
 				p.yy += p.ya;
 			}
 			p.za *= 0.15;
@@ -94,11 +94,11 @@ public class Particle extends Entity {
 			int yt = (int) (p.y + p.ya + i / 2 * 1 + 4) / level.tileSize;
 			if (level.getCollisionMap().isSolid(xt, yt)) {
 				if (p.xa != 0.0) {
-					p.xa *= - 0.6;
+					p.xa *= -0.6;
 				}
 
 				if (p.ya != 0.0) {
-					p.ya *= - 0.6;
+					p.ya *= -0.6;
 				}
 
 				solid = true;

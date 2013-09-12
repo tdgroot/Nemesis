@@ -1,5 +1,6 @@
 package nl.tdegroot.games.nemesis.entity.particles;
 
+import nl.tdegroot.games.nemesis.gfx.Resources;
 import nl.tdegroot.games.nemesis.gfx.Screen;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.TrueTypeFont;
@@ -7,7 +8,7 @@ import org.newdawn.slick.TrueTypeFont;
 public class TextParticle extends Particle {
 
 	public enum Type {
-		BIG, MEDIUM, TINY
+		BIG, NORMAL, TINY
 	}
 
 	Color color;
@@ -21,7 +22,11 @@ public class TextParticle extends Particle {
 		this.msg = msg;
 		this.type = type;
 
-
+		if (type == Type.BIG) {
+			font = Resources.CRIT_HIT;
+		} else if (type == Type.NORMAL) {
+			font = Resources.NORMAL_HIT;
+		}
 
 		ya = random.nextGaussian();
 		xa = random.nextGaussian();
@@ -35,7 +40,7 @@ public class TextParticle extends Particle {
 	}
 
 	public void render(Screen screen) {
-		screen.renderText(msg, x, y, false, color);
+		screen.renderText(msg, x, y, false, font, color);
 	}
 
 }

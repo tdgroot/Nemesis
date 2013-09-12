@@ -47,7 +47,7 @@ public class NPCMap {
 
 					switch (type) {
 						case "shop":
-							npc = processShop(name, itemList, arrows, message, xx, yy, i);
+							npc = processShop(name, itemList, Integer.parseInt(arrows), message, xx, yy, i);
 							break;
 					}
 
@@ -57,9 +57,7 @@ public class NPCMap {
 		}
 	}
 
-	private ShopNPC processShop(String name, String itemList, String arrows, String message, float x, float y, int id) {
-		if (itemList == "") return null;
-
+	private ShopNPC processShop(String name, String itemList, int arrows, String message, float x, float y, int id) {
 		ShopNPC npc = null;
 
 		switch (name) {
@@ -68,26 +66,36 @@ public class NPCMap {
 				break;
 		}
 
-		int openBracket = itemList.indexOf("{");
-		int closeBracket = itemList.lastIndexOf("}");
 
-		String params = itemList.substring(openBracket + 1, closeBracket);
-		String[] paramList = params.split(",");
+		if (arrows > 0) {
+			if (arrows > 1) {
+				npc.addItem(new ItemStack(Item.arrow, arrows), 1);
+			} else {
+				npc.addItem(Item.arrow, 1);
+			}
+		}
 
-		for (int i = 0; i < paramList.length; i++) {
-			String[] pData = paramList[i].trim().split(":");
-			Item item = Item.getItem(pData[0]);
-			int count = Integer.parseInt(pData[1]);
-			if (count > 1) {
-				npc.addItem(new ItemStack(item, count), 1);
-			} else if (count == 1){
-				npc.addItem(item, 1);
+		if (itemList != "") {
+			int openBracket = itemList.indexOf("{");
+			int closeBracket = itemList.lastIndexOf("}");
+
+			String params = itemList.substring(openBracket + 1, closeBracket);
+			String[] paramList = params.split(",");
+			for (int i = 0; i < paramList.length; i++) {
+				String[] pData = paramList[i].trim().split(":");
+				Item item = Item.getItem(pData[0]);
+				int count = Integer.parseInt(pData[1]);
+				if (count > 1) {
+					npc.addItem(new ItemStack(item, count), 1);
+				} else if (count == 1) {
+					npc.addItem(item, 1);
+				}
 			}
 		}
 
 		if (npc != null) {
-			if (arrows != "")
-				npc.addArrows(Integer.parseInt(arrows));
+			if (arrows > 0)
+				npc.addArrows(arrows);
 			if (message != "")
 				npc.setMessage(message);
 			level.addEntity(npc);

@@ -17,21 +17,26 @@ public class Resources {
 	// Entities
 	public static Image entityArrow;
 	public static Image steve;
+
 	public static Image slimeParticle;
+	public static Image bloodParticle;
 
 	// Items
 	public static Image bow;
-	public static Image itemArrow;
 
+	public static Image itemArrow;
 	// UI
 	public static Image healthBar;
 	public static Image energyBar;
 	public static Image characterBar;
 	public static Image dialogWindow;
 
+	public static Image scoreBar;
 	// Fonts
 	public static TrueTypeFont agency_fb;
 	public static TrueTypeFont courier_new_bold;
+	public static final TrueTypeFont NORMAL_HIT = new TrueTypeFont(new Font("Courier New", 0, 16), true);
+	public static final TrueTypeFont CRIT_HIT = new TrueTypeFont(new Font("Courier New", Font.BOLD, 25), true);
 
 	public Resources() {
 		try {
@@ -45,6 +50,7 @@ public class Resources {
 			// Entities
 			entityArrow = new Image("resources/textures/entities/arrow.png");
 			slimeParticle = new Image("resources/textures/entities/particles/slimeParticle.png");
+			bloodParticle = new Image("resources/textures/entities/particles/bloodParticle.png");
 			steve = new Image("resources/textures/entities/npc/steve.png");
 
 			// Items
@@ -56,6 +62,7 @@ public class Resources {
 			energyBar = new Image("resources/textures/ui/energybar.png");
 			characterBar = new Image("resources/textures/ui/bar_healthenergy.png");
 			dialogWindow = new Image("resources/textures/ui/bar_text.png");
+			scoreBar = new Image("resources/textures/ui/scorebar.png");
 
 			// Fonts
 			agency_fb = new TrueTypeFont(new Font("Californian FB", Font.BOLD, 16), true);
