@@ -1,6 +1,7 @@
 package nl.tdegroot.games.nemesis.entity;
 
 import nl.tdegroot.games.nemesis.Log;
+
 import org.newdawn.slick.Image;
 
 public class Roach extends Mob {
@@ -28,11 +29,11 @@ public class Roach extends Mob {
 	public void update(int delta) {
 		super.update(delta);
 		Player player = level.getPlayer();
-
+		if (triggered) tt -= delta;
 		if (level.getPlayer() != null && randomWalkTime <= 0) {
 			float xd = player.x - x;
 			float yd = player.y - y;
-			if (xd * xd + yd * yd < followRange * followRange) {
+			if (xd * xd + yd * yd < followRange * followRange || triggered) {
 				if (!(xd * xd + yd * yd > 10 * 10)) {
 					if (vulnerability.intersects(target.getVulnerability()) && ht <= 0) {
 						player.hurt(this);
@@ -45,13 +46,13 @@ public class Roach extends Mob {
 				if (xd > 2) xa += movementSpeed * delta * deltaMul;
 				if (yd < -2) ya -= movementSpeed * delta * deltaMul;
 				if (yd > 2) ya += movementSpeed * delta * deltaMul;
-				Log.log("Roach in range!");
 
 			} else if (random.nextInt(200) == 0) {
 				randomWalkTime = 1250;
 				xa = ((random.nextInt(3) - 1) * random.nextInt(2)) * delta * 0.12f;
 				ya = ((random.nextInt(3) - 1) * random.nextInt(2)) * delta * 0.12f;
 			}
+			if (tt <= 0) triggered = false;
 		}
 
 		if (xa != 0 || ya != 0) {

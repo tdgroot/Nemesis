@@ -7,13 +7,12 @@ import nl.tdegroot.games.nemesis.entity.particles.TextParticle;
 import nl.tdegroot.games.nemesis.entity.projectile.Projectile;
 import nl.tdegroot.games.nemesis.gfx.Screen;
 import nl.tdegroot.games.nemesis.level.Level;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Rectangle;
-import org.newdawn.slick.util.pathfinding.AStarPathFinder;
 import org.newdawn.slick.util.pathfinding.Mover;
-import org.newdawn.slick.util.pathfinding.Path;
 
 public class Mob extends Entity implements Mover {
 
@@ -23,9 +22,10 @@ public class Mob extends Entity implements Mover {
 
 	protected boolean isWalking = false;
 	protected boolean wasWalking = false;
-	protected boolean hasDestination = false;
-	private int step = 0;
-
+	protected boolean triggered = false;
+	
+	protected int tt = 0;
+	
 	protected double baseHealth;
 	protected double health;
 
@@ -123,23 +123,6 @@ public class Mob extends Entity implements Mover {
 			if (level.isCollision(xt, yt)) solid = true;
 		}
 		return solid;
-	}
-
-	private Path getDestination(int destX, int destY) {
-		Path path = null;
-		int sx = (int) x / level.tileSize;
-		int sy = (int) y / level.tileSize;
-		hasDestination = true;
-		step = 0;
-		if (path == null) {
-			Log.log("path is null");
-			hasDestination = false;
-		} else {
-			Log.log("found a path");
-			hasDestination = true;
-		}
-
-		return path;
 	}
 
 	public void hurt(Mob mob) {
@@ -240,6 +223,11 @@ public class Mob extends Entity implements Mover {
 
 	public int getScore() {
 		return score;
+	}
+	
+	public void trigger() {
+		triggered = true;
+		tt = 650;
 	}
 
 	public void setHealth(double health) {

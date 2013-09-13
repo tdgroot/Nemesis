@@ -8,8 +8,10 @@ import nl.tdegroot.games.nemesis.level.Level;
 import nl.tdegroot.games.nemesis.ui.Dialog;
 import nl.tdegroot.games.nemesis.ui.UIHandler;
 import nl.tdegroot.games.nemesis.ui.menu.DeadMenu;
+import nl.tdegroot.games.nemesis.ui.menu.MainMenu;
 import nl.tdegroot.games.nemesis.ui.menu.Menu;
 import nl.tdegroot.games.nemesis.ui.menu.PauseMenu;
+
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.BasicGame;
@@ -25,9 +27,7 @@ public class Nemesis extends BasicGame {
 	private Player player;
 
 	private Camera camera;
-	@SuppressWarnings("unused")
-	private Resources resources;
-	InputHandler input;
+	private InputHandler input;
 	private Screen screen;
 	private UIHandler uiHandler;
 	private Menu menu = null;
@@ -41,7 +41,7 @@ public class Nemesis extends BasicGame {
 
 	public void init(GameContainer gameContainer) throws SlickException {
 		this.gameContainer = gameContainer;
-		resources = new Resources();
+		new Resources();
 		player = new Player(Resources.player, 48, 47, 53, 64);
 		level = new Level("resources/levels/starterisland.tmx", player);
 		camera = new Camera(player, new Vector2f(Display.getWidth(), Display.getHeight()), new Rectangle(0, 0, level.getPixelWidth(), level.getPixelHeight()));
@@ -51,10 +51,10 @@ public class Nemesis extends BasicGame {
 		player.init(level, this);
 		Dialog.init();
 		gameContainer.getInput().addMouseListener(input);
-		gameContainer.setVSync(true);
 		gameContainer.setAlwaysRender(true);
 		Dialog.activate("Welcome, to the world of Nemesis!");
 		Dialog.activate("To start, try reading some of the signs!");
+		setMenu(new MainMenu(null));
 	}
 
 	public void resetGame() {
@@ -80,7 +80,8 @@ public class Nemesis extends BasicGame {
 				if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE) && mt <= 0 && !Dialog.isActive()) {
 					setMenu(new PauseMenu(null));
 				}
-				if (player.isDead()) setMenu(new DeadMenu(null, player));
+				if (player.isDead())
+					setMenu(new DeadMenu(null, player));
 			}
 		}
 	}
@@ -106,7 +107,8 @@ public class Nemesis extends BasicGame {
 
 	public void setMenu(Menu menu) {
 		this.menu = menu;
-		if (menu != null) menu.init(this);
+		if (menu != null)
+			menu.init(this);
 		mt = 250;
 	}
 
@@ -117,6 +119,5 @@ public class Nemesis extends BasicGame {
 	public Player getPlayer() {
 		return player;
 	}
-
 
 }

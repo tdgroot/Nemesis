@@ -4,6 +4,7 @@ import nl.tdegroot.games.nemesis.Nemesis;
 import nl.tdegroot.games.nemesis.entity.Entity;
 import nl.tdegroot.games.nemesis.entity.Player;
 import nl.tdegroot.games.nemesis.gfx.Screen;
+
 import org.newdawn.slick.Image;
 
 public class NPC extends Entity {

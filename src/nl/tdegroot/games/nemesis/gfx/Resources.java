@@ -1,11 +1,13 @@
 package nl.tdegroot.games.nemesis.gfx;
 
+import java.awt.Font;
+
 import nl.tdegroot.games.nemesis.Log;
+
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.TrueTypeFont;
-
-import java.awt.*;
 
 public class Resources {
 
@@ -38,6 +40,13 @@ public class Resources {
 	public static final TrueTypeFont NORMAL_HIT = new TrueTypeFont(new Font("Courier New", 0, 16), true);
 	public static final TrueTypeFont CRIT_HIT = new TrueTypeFont(new Font("Courier New", Font.BOLD, 25), true);
 
+	// Sounds
+	public static Sound select;
+	public static Sound mob_death;
+	public static Sound bow_shot;
+	public static Sound interact;
+	public static Sound mob_hit;
+	
 	public Resources() {
 		try {
 
@@ -67,7 +76,14 @@ public class Resources {
 			// Fonts
 			agency_fb = new TrueTypeFont(new Font("Californian FB", Font.BOLD, 16), true);
 			courier_new_bold = new TrueTypeFont(new Font("Courier New", Font.BOLD, 32), true);
-
+			
+			// Sounds
+			select = new Sound("resources/sounds/select.wav");
+			mob_death = new Sound("resources/sounds/mob_death.wav");
+			bow_shot = new Sound("resources/sounds/bow_shot.wav");
+			interact = new Sound("resources/sounds/interact.wav");
+			mob_hit = new Sound("resources/sounds/mob_hit.wav");
+			
 		} catch (SlickException e) {
 			Log.exception(e.getMessage());
 		}

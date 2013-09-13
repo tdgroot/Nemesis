@@ -2,6 +2,7 @@ package nl.tdegroot.games.nemesis.entity.particles;
 
 import nl.tdegroot.games.nemesis.gfx.Resources;
 import nl.tdegroot.games.nemesis.gfx.Screen;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.TrueTypeFont;
 

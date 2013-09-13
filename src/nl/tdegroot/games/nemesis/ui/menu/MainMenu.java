@@ -1,7 +1,9 @@
 package nl.tdegroot.games.nemesis.ui.menu;
 
 import nl.tdegroot.games.nemesis.Nemesis;
+import nl.tdegroot.games.nemesis.gfx.Resources;
 import nl.tdegroot.games.nemesis.gfx.Screen;
+
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Color;
@@ -19,7 +21,7 @@ public class MainMenu extends Menu {
 	public void init(Nemesis game) {
 		super.init(game);
 		items = new String[]{"Play", "Controls", "About", "Quit Game"};
-		xt = 200;
+		xt = 400;
 	}
 
 	public void update(int delta) {
@@ -32,10 +34,12 @@ public class MainMenu extends Menu {
 
 		if ((Keyboard.isKeyDown(Keyboard.KEY_UP) || Keyboard.isKeyDown(Keyboard.KEY_W)) && kt <= 0) {
 			selected--;
+			Resources.select.play();
 			kt = 200;
 		}
 		if ((Keyboard.isKeyDown(Keyboard.KEY_DOWN) || Keyboard.isKeyDown(Keyboard.KEY_S)) && kt <= 0) {
 			selected++;
+			Resources.select.play();
 			kt = 200;
 		}
 
@@ -45,11 +49,20 @@ public class MainMenu extends Menu {
 		if (selected >= length) selected -= length;
 
 		if (Keyboard.isKeyDown(Keyboard.KEY_X) && xt <= 0) {
-			if (selected == 0) game.setMenu(null);
+			if (selected == 0) {
+				Resources.interact.play();
+				game.setMenu(null);
+			}
 
-			if (selected == 1) game.setMenu(new ControlsMenu(this));
+			if (selected == 1) {
+				Resources.interact.play();
+				game.setMenu(new ControlsMenu(this));
+			}
 
-			if (selected == 2) game.setMenu(new AboutMenu(this));
+			if (selected == 2) {
+				Resources.interact.play();
+				game.setMenu(new AboutMenu(this));
+			}
 
 			if (selected == 3) game.stop();
 

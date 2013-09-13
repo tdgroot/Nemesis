@@ -1,10 +1,11 @@
 package nl.tdegroot.games.nemesis.item;
 
-import nl.tdegroot.games.nemesis.gfx.Resources;
-import org.newdawn.slick.Image;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import nl.tdegroot.games.nemesis.gfx.Resources;
+
+import org.newdawn.slick.Image;
 
 public class Item {
 
@@ -17,7 +18,6 @@ public class Item {
 	private final Image sprite;
 	public final int buyCost;
 	public final int sellCost;
-	private boolean equipable;
 
 	public Item(String name, Image image, int buyCost, int sellCost) {
 		this.name = name;

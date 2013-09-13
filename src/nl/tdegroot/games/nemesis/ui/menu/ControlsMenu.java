@@ -1,7 +1,9 @@
 package nl.tdegroot.games.nemesis.ui.menu;
 
 import nl.tdegroot.games.nemesis.Nemesis;
+import nl.tdegroot.games.nemesis.gfx.Resources;
 import nl.tdegroot.games.nemesis.gfx.Screen;
+
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Color;
@@ -37,6 +39,7 @@ public class ControlsMenu extends Menu {
 	public void update(int delta) {
 		if (kt > 0) kt -= delta;
 		if ((Keyboard.isKeyDown(Keyboard.KEY_ESCAPE) || Keyboard.isKeyDown(Keyboard.KEY_X) || Keyboard.isKeyDown(Keyboard.KEY_C)) && kt <= 0) {
+			Resources.interact.play();
 			game.setMenu(parent);
 		}
 	}

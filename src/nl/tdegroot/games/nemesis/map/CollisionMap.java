@@ -1,6 +1,7 @@
 package nl.tdegroot.games.nemesis.map;
 
 import nl.tdegroot.games.nemesis.Log;
+
 import org.newdawn.slick.tiled.TiledMap;
 
 public class CollisionMap {

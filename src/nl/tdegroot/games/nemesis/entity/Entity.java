@@ -1,10 +1,11 @@
 package nl.tdegroot.games.nemesis.entity;
 
+import java.util.Random;
+
 import nl.tdegroot.games.nemesis.gfx.Screen;
 import nl.tdegroot.games.nemesis.level.Level;
-import org.newdawn.slick.Image;
 
-import java.util.Random;
+import org.newdawn.slick.Image;
 
 public class Entity {
 

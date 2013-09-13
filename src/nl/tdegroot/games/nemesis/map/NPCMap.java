@@ -7,6 +7,7 @@ import nl.tdegroot.games.nemesis.entity.npc.Steve;
 import nl.tdegroot.games.nemesis.item.Item;
 import nl.tdegroot.games.nemesis.item.ItemStack;
 import nl.tdegroot.games.nemesis.level.Level;
+
 import org.newdawn.slick.tiled.TiledMap;
 
 public class NPCMap {

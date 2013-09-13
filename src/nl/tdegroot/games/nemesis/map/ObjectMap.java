@@ -6,6 +6,7 @@ import nl.tdegroot.games.nemesis.map.object.Chest;
 import nl.tdegroot.games.nemesis.map.object.Fence;
 import nl.tdegroot.games.nemesis.map.object.MapObject;
 import nl.tdegroot.games.nemesis.map.object.Sign;
+
 import org.newdawn.slick.tiled.TiledMap;
 
 public class ObjectMap {
@@ -89,13 +90,6 @@ public class ObjectMap {
 		}
 
 		return mapObject;
-	}
-
-	private boolean isNumeric(String str) {
-		for (char c : str.toCharArray()) {
-			if (!Character.isDigit(c)) return false;
-		}
-		return true;
 	}
 
 	public MapObject getMapObject(int x, int y) {

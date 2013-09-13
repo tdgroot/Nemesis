@@ -14,10 +14,9 @@ import nl.tdegroot.games.nemesis.level.Level;
 import nl.tdegroot.games.nemesis.map.MapLayer;
 import nl.tdegroot.games.nemesis.map.object.MapObject;
 import nl.tdegroot.games.nemesis.ui.Dialog;
+
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
 
@@ -27,7 +26,15 @@ public class Player extends Mob {
 	private Inventory inventory;
 	private Nemesis game;
 
+	private int animSpeedDefault;
+	private int animSpeedSprint;
+
+	private boolean sprint = false;
+	private double sprintMultiplier;
+
 	private double energy;
+	private double baseEnergy;
+	private double energyRegen;
 
 	private int arrows = 250;
 	private int fireRate = 0;
@@ -41,13 +48,18 @@ public class Player extends Mob {
 		inventory = new Inventory();
 		vulnerability = new Rectangle(x, y, 53, 64);
 
+		animSpeedDefault = 48;
+		animSpeedSprint = 35;
+
 		movementSpeed = 2.5f;
+		sprintMultiplier = 1.8;
 		damage = 35;
 		critChance = 15;
 
 		health = baseHealth = 250.0;
 
-		energy = 100.0;
+		energy = baseEnergy = 100.0;
+		energyRegen = 0.20;
 
 		collisionMulX = 38;
 		collisionAddX = 17;
@@ -74,10 +86,9 @@ public class Player extends Mob {
 	}
 
 	public void update(int delta) {
-		if (fireRate > 0)
-			fireRate--;
-		if (it > 0)
-			it -= delta;
+		frame++;
+		if (fireRate > 0) fireRate--;
+		if (it > 0) it -= delta;
 
 		float xa = 0;
 		float ya = 0;
@@ -85,14 +96,27 @@ public class Player extends Mob {
 		float deltaMul = 0.065f;
 
 		if (!Dialog.isActive()) {
-			if (Keyboard.isKeyDown(Keyboard.KEY_A) || Keyboard.isKeyDown(Keyboard.KEY_LEFT))
-				xa -= movementSpeed * delta * deltaMul;
-			if (Keyboard.isKeyDown(Keyboard.KEY_D) || Keyboard.isKeyDown(Keyboard.KEY_RIGHT))
-				xa += movementSpeed * delta * deltaMul;
-			if (Keyboard.isKeyDown(Keyboard.KEY_W) || Keyboard.isKeyDown(Keyboard.KEY_UP))
-				ya -= movementSpeed * delta * deltaMul;
-			if (Keyboard.isKeyDown(Keyboard.KEY_S) || Keyboard.isKeyDown(Keyboard.KEY_DOWN))
-				ya += movementSpeed * delta * deltaMul;
+			float speed = movementSpeed * delta * deltaMul;
+			if (sprint) speed *= sprintMultiplier;
+
+			if (Keyboard.isKeyDown(Keyboard.KEY_A) || Keyboard.isKeyDown(Keyboard.KEY_LEFT)) {
+				xa -= speed;
+			}
+			if (Keyboard.isKeyDown(Keyboard.KEY_D) || Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) {
+				xa += speed;
+			}
+			if (Keyboard.isKeyDown(Keyboard.KEY_W) || Keyboard.isKeyDown(Keyboard.KEY_UP)) {
+				ya -= speed;
+			}
+			if (Keyboard.isKeyDown(Keyboard.KEY_S) || Keyboard.isKeyDown(Keyboard.KEY_DOWN)) {
+				ya += speed;
+			}
+
+			sprint = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) && energy > energyRegen;
+
+			if (sprint && isWalking) energy -= 0.35;
+			if (energy < 0) energy = 0;
+			if (!(sprint && isWalking) && energy < baseEnergy) energy += energyRegen;
 		}
 
 		wasWalking = isWalking;
@@ -105,10 +129,10 @@ public class Player extends Mob {
 			isWalking = false;
 		}
 
-		frame++;
 
 		if (isWalking) {
-			if (frame % (48 / delta) == 0) {
+			int rate = sprint ? animSpeedSprint : animSpeedDefault;
+			if (frame % (rate / delta) == 0) {
 				animIndex = ((animIndex + 1) % animCount);
 			}
 		}
@@ -147,6 +171,7 @@ public class Player extends Mob {
 			shoot(x, y, dir, this);
 			arrows--;
 			fireRate = Arrow.FIRE_RATE;
+			Resources.bow_shot.play();
 		} else if (Keyboard.isKeyDown(Keyboard.KEY_X) && it <= 0) {
 			interact();
 		}
@@ -164,8 +189,7 @@ public class Player extends Mob {
 		for (int c = 0; c < 4; c++) {
 			int xt = (int) ((x + xa) + c % 2 * 38 - 17);
 			int yt = (int) ((y + ya) + c / 2 * 20 + 10);
-			if (level.getCollisionMap().isCollision(xt, yt))
-				solid = true;
+			if (level.getCollisionMap().isCollision(xt, yt)) solid = true;
 		}
 		return solid;
 	}
@@ -192,24 +216,25 @@ public class Player extends Mob {
 				xt = (int) ((x - level.tileSize / 2) + c % 2 * collisionMulX - collisionAddX) / level.tileSize;
 				yt = (int) ((y) + c / 2 * collisionMulY + collisionAddY) / level.tileSize;
 			}
-			if (level.getMapObject(xt, yt) != null)
-				object = level.getMapObject(xt, yt);
-			if (level.getNPC(xt, yt) != null)
-				npc = level.getNPC(xt, yt);
+			if (level.getMapObject(xt, yt) != null) object = level.getMapObject(xt, yt);
+			if (level.getNPC(xt, yt) != null) npc = level.getNPC(xt, yt);
 		}
 
 		if (object != null) {
 			object.interact(this);
+			Resources.interact.play();
 			it = 250;
 		} else if (npc != null) {
 			npc.interact(this, game);
+			Resources.interact.play();
 			it = 250;
 		}
 	}
 
 	public void render(Screen screen) {
-		Graphics graphics = screen.getGraphics();
-//		graphics.drawLine(Display.getWidth() / 2, Display.getHeight() / 2, Mouse.getX(), Display.getHeight() - Mouse.getY());
+//		Graphics graphics = screen.getGraphics();
+		// graphics.drawLine(Display.getWidth() / 2, Display.getHeight() / 2,
+		// Mouse.getX(), Display.getHeight() - Mouse.getY());
 		screen.renderPlayer(this);
 	}
 
@@ -222,8 +247,8 @@ public class Player extends Mob {
 		}
 	}
 
-	public void equip(Bow bow) {
-		this.bow = bow;
+	public void equip(Item item) {
+		if (item instanceof Bow) this.bow = (Bow) item;
 	}
 
 	public void addArrows(int amount) {
@@ -243,8 +268,8 @@ public class Player extends Mob {
 		return score;
 	}
 
-	public void distractScore(int buyCost) {
-		score -= buyCost;
+	public void distractScore(int amount) {
+		score -= amount;
 	}
 
 	public int getArrows() {

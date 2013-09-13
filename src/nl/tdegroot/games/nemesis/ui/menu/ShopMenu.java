@@ -3,11 +3,12 @@ package nl.tdegroot.games.nemesis.ui.menu;
 import nl.tdegroot.games.nemesis.Log;
 import nl.tdegroot.games.nemesis.entity.Player;
 import nl.tdegroot.games.nemesis.entity.npc.ShopNPC;
+import nl.tdegroot.games.nemesis.gfx.Resources;
 import nl.tdegroot.games.nemesis.gfx.Screen;
 import nl.tdegroot.games.nemesis.item.Arrow;
-import nl.tdegroot.games.nemesis.item.Bow;
 import nl.tdegroot.games.nemesis.item.Item;
 import nl.tdegroot.games.nemesis.item.ItemStack;
+
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Color;
@@ -33,8 +34,7 @@ public class ShopMenu extends Menu {
 	}
 
 	public void initItems() {
-		if (npc.getItems().size() > slotsPerBank)
-			banks = (int) Math.ceil((double) npc.getItems().size() / (double) slotsPerBank);
+		if (npc.getItems().size() > slotsPerBank) banks = (int) Math.ceil((double) npc.getItems().size() / (double) slotsPerBank);
 		items = new Item[banks][slotsPerBank];
 		for (int b = 0; b < banks; b++) {
 			for (int s = 0; s < slotsPerBank; s++) {
@@ -51,30 +51,45 @@ public class ShopMenu extends Menu {
 		if (kt > 0) kt -= delta;
 		if (bt > 0) bt -= delta;
 		if ((Keyboard.isKeyDown(Keyboard.KEY_ESCAPE) || Keyboard.isKeyDown(Keyboard.KEY_C)) && kt <= 0) {
+			Resources.interact.play();
 			game.setMenu(null);
 		}
 
 		int checkSel = Math.abs(selected - 1);
-		if (Keyboard.isKeyDown(Keyboard.KEY_UP) && kt <= 0 && items[currentBank][checkSel] != null) {
-			kt = 200;
-			selected--;
+		if (Keyboard.isKeyDown(Keyboard.KEY_UP) && kt <= 0) {
+			if (items[currentBank][checkSel] != null) {
+				selected--;
+				Resources.select.play();
+				kt = 200;
+			} else {
+				Resources.select.play();
+				kt = 200;
+			}
 		}
 
 		checkSel = selected + 1 < slotsPerBank ? selected + 1 : selected;
-		if (Keyboard.isKeyDown(Keyboard.KEY_DOWN) && kt <= 0 && items[currentBank][checkSel] != null) {
-			kt = 200;
-			selected++;
+		if (Keyboard.isKeyDown(Keyboard.KEY_DOWN) && kt <= 0) {
+			if (items[currentBank][checkSel] != null) {
+				selected++;
+				Resources.select.play();
+				kt = 200;
+			} else {
+				Resources.select.play();
+				kt = 200;
+			}
 		}
 
 		if (Keyboard.isKeyDown(Keyboard.KEY_LEFT) && kt <= 0) {
-			kt = 200;
 			currentBank--;
+			Resources.select.play();
+			kt = 200;
 			selected = 0;
 		}
 
 		if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT) && kt <= 0) {
-			kt = 200;
 			currentBank++;
+			Resources.select.play();
+			kt = 200;
 			selected = 0;
 		}
 
@@ -85,6 +100,7 @@ public class ShopMenu extends Menu {
 		if (currentBank >= banks) currentBank -= banks;
 
 		if (Keyboard.isKeyDown(Keyboard.KEY_X) && bt <= 0 && kt <= 0) {
+			if (!Resources.interact.playing()) Resources.interact.play();
 			Player player = game.getPlayer();
 			Item item = items[currentBank][selected];
 			if (item instanceof ItemStack) {
@@ -94,14 +110,16 @@ public class ShopMenu extends Menu {
 						stack.remove(1);
 						player.addArrows(1);
 						player.distractScore(stack.item.buyCost);
-						bt = 60;
+						bt = 70;
 						Log.log("Arrows: " + player.getArrows());
 					}
 				} else {
 					if (stack.item.isEquipable()) {
 						stack.remove(1);
-						player.equip((Bow) item);
-
+						player.equip(stack.item);
+						bt = 70;
+					} else {
+						player.giveItem(stack.item);
 					}
 				}
 			}

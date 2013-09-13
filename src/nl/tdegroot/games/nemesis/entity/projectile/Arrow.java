@@ -3,6 +3,7 @@ package nl.tdegroot.games.nemesis.entity.projectile;
 import nl.tdegroot.games.nemesis.entity.Player;
 import nl.tdegroot.games.nemesis.gfx.Resources;
 import nl.tdegroot.games.nemesis.gfx.Screen;
+
 import org.newdawn.slick.geom.Rectangle;
 
 public class Arrow extends Projectile {

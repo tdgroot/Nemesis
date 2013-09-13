@@ -4,6 +4,7 @@ import nl.tdegroot.games.nemesis.Nemesis;
 import nl.tdegroot.games.nemesis.entity.Player;
 import nl.tdegroot.games.nemesis.gfx.Resources;
 import nl.tdegroot.games.nemesis.gfx.Screen;
+
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Color;
@@ -33,10 +34,12 @@ public class DeadMenu extends Menu {
 
 		if ((Keyboard.isKeyDown(Keyboard.KEY_UP) || Keyboard.isKeyDown(Keyboard.KEY_W)) && kt <= 0) {
 			selected--;
+			Resources.select.play();
 			kt = 200;
 		}
 		if ((Keyboard.isKeyDown(Keyboard.KEY_DOWN) || Keyboard.isKeyDown(Keyboard.KEY_S)) && kt <= 0) {
 			selected++;
+			Resources.select.play();
 			kt = 200;
 		}
 
@@ -46,13 +49,17 @@ public class DeadMenu extends Menu {
 		if (selected >= length) selected -= length;
 
 		if (Keyboard.isKeyDown(Keyboard.KEY_X)) {
-
+			
 			if (selected == 0) {
+				Resources.interact.play();
 				game.resetGame();
 				game.setMenu(null);
 			}
 
-			if (selected == 1) game.setMenu(new MainMenu(null));
+			if (selected == 1) {
+				Resources.interact.play();
+				game.setMenu(new MainMenu(null));
+			}
 
 			if (selected == 2) game.stop();
 

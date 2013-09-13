@@ -1,12 +1,12 @@
 package nl.tdegroot.games.nemesis.map.object;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import nl.tdegroot.games.nemesis.Log;
 import nl.tdegroot.games.nemesis.entity.Player;
 import nl.tdegroot.games.nemesis.item.Item;
 import nl.tdegroot.games.nemesis.ui.Dialog;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Chest extends MapObject {
 

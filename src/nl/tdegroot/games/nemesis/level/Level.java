@@ -1,5 +1,8 @@
 package nl.tdegroot.games.nemesis.level;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import nl.tdegroot.games.nemesis.Log;
 import nl.tdegroot.games.nemesis.entity.Entity;
 import nl.tdegroot.games.nemesis.entity.Mob;
@@ -8,6 +11,7 @@ import nl.tdegroot.games.nemesis.entity.npc.NPC;
 import nl.tdegroot.games.nemesis.entity.particles.Particle;
 import nl.tdegroot.games.nemesis.entity.particles.SlimeParticle;
 import nl.tdegroot.games.nemesis.entity.projectile.Projectile;
+import nl.tdegroot.games.nemesis.gfx.Resources;
 import nl.tdegroot.games.nemesis.gfx.Screen;
 import nl.tdegroot.games.nemesis.map.CollisionMap;
 import nl.tdegroot.games.nemesis.map.MapLayer;
@@ -16,20 +20,17 @@ import nl.tdegroot.games.nemesis.map.ObjectMap;
 import nl.tdegroot.games.nemesis.map.object.MapObject;
 import nl.tdegroot.games.nemesis.spawner.MobSpawner;
 import nl.tdegroot.games.nemesis.spawner.RoachSpawner;
+
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 import org.newdawn.slick.util.pathfinding.PathFindingContext;
 import org.newdawn.slick.util.pathfinding.TileBasedMap;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Level implements TileBasedMap {
 
 	private Player player;
 	private TiledMap map;
-	private MapLayer mapLayer;
 	public final int tileSize;
 	private CollisionMap collisionMap;
 	private ObjectMap objectMap;
@@ -44,11 +45,9 @@ public class Level implements TileBasedMap {
 	public Level(String path, Player player) throws SlickException {
 		this.player = player;
 		map = new TiledMap(path);
-		mapLayer = new MapLayer(map);
+		new MapLayer(map);
 		tileSize = map.getTileWidth() & map.getTileHeight();
-		if (tileSize == 0) {
-			throw new SlickException("Tilewidth and Tileheight are not equal!");
-		}
+		if (tileSize == 0) { throw new SlickException("Tilewidth and Tileheight are not equal!"); }
 		collisionMap = new CollisionMap(map, tileSize, getPixelWidth(), getPixelHeight());
 		objectMap = new ObjectMap(map, tileSize);
 		npcMap = new NPCMap(map, this, tileSize);
@@ -75,7 +74,6 @@ public class Level implements TileBasedMap {
 					String mobHealth = map.getObjectProperty(MapLayer.MAP_LAYER_SPAWNERS, i, "health", "");
 					String mobSpeed = map.getObjectProperty(MapLayer.MAP_LAYER_SPAWNERS, i, "speed", "");
 					String mobDamage = map.getObjectProperty(MapLayer.MAP_LAYER_SPAWNERS, i, "damage", "");
-
 
 					if (spawnerType != "") {
 						spawners.add(getSpawner(spawnerType, spawnTime, maxMobs, mobScore, mobHealth, mobSpeed, mobDamage, xx, yy, i));
@@ -117,11 +115,10 @@ public class Level implements TileBasedMap {
 	public void clear() {
 		for (int i = 0; i < mobs.size(); i++) {
 			Mob mob = mobs.get(i);
-			boolean removeSpawner = false;
 			if (mob.isRemoved()) {
 				int spawnerID = mob.getSpawnerID();
-				int mobID = mob.getID();
 				mobs.remove(i);
+				Resources.mob_death.play();
 				for (int j = 0; j < spawners.size(); j++) {
 					MobSpawner spawner = spawners.get(j);
 					if (spawner.getID() == spawnerID) {
@@ -154,13 +151,15 @@ public class Level implements TileBasedMap {
 					mob.hit(p);
 					if (mob.isRemoved()) {
 						p.getPlayer().mobKilled(mob.getScore());
-						Particle particle = new SlimeParticle(mob.getX() + mob.getWidth() / 2, mob.getY() + mob.getHeight() / 2, 200, 1000);
+						Particle particle = new SlimeParticle(mob.getX() + mob.getWidth() / 2, mob.getY() + mob.getHeight() / 2, 125, 1000);
 						particle.setLevel(this);
 						particles.add(particle);
 					} else {
+						Resources.mob_hit.play();
 						Particle particle = new SlimeParticle(mob.getX() + mob.getWidth() / 2, mob.getY() + mob.getHeight() / 2, 75, 1000);
 						particle.setLevel(this);
 						particles.add(particle);
+						mob.trigger();
 					}
 					p.remove();
 					Log.log("Hit: Mob ID: " + mob.getID() + ", Damage: " + p.getDamage() + ", Mob's Health: " + mob.getHealth());
@@ -202,9 +201,9 @@ public class Level implements TileBasedMap {
 		MobSpawner spawner = null;
 
 		switch (type) {
-			case "roach":
-				spawner = new RoachSpawner(this, player, x, y, i);
-				break;
+		case "roach":
+			spawner = new RoachSpawner(this, player, x, y, i);
+			break;
 		}
 
 		if (spawner != null) {

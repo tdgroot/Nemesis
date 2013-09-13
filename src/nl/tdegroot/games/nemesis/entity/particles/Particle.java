@@ -1,18 +1,19 @@
 package nl.tdegroot.games.nemesis.entity.particles;
 
-import nl.tdegroot.games.nemesis.entity.Entity;
-import nl.tdegroot.games.nemesis.gfx.Screen;
-import org.newdawn.slick.Image;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import nl.tdegroot.games.nemesis.entity.Entity;
+import nl.tdegroot.games.nemesis.gfx.Screen;
+
+import org.newdawn.slick.Image;
 
 public class Particle extends Entity {
 
 	protected Image sprite;
 
-	protected List<Particle> particles = new ArrayList();
+	protected List<Particle> particles = new ArrayList<Particle>();
 
 	protected int time = 0;
 
