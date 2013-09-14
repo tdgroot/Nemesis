@@ -45,7 +45,10 @@ public class Resources {
 	public static Sound mob_death;
 	public static Sound bow_shot;
 	public static Sound interact;
+	public static Sound interact_fail;
 	public static Sound mob_hit;
+	public static Sound player_hit;
+	public static Sound steve_interact;
 	
 	public Resources() {
 		try {
@@ -82,7 +85,10 @@ public class Resources {
 			mob_death = new Sound("resources/sounds/mob_death.wav");
 			bow_shot = new Sound("resources/sounds/bow_shot.wav");
 			interact = new Sound("resources/sounds/interact.wav");
+			interact_fail = new Sound("resources/sounds/interact_fail.wav");
 			mob_hit = new Sound("resources/sounds/mob_hit.wav");
+			player_hit = new Sound("resources/sounds/au.wav");
+			steve_interact = new Sound("resources/sounds/steve.wav");
 			
 		} catch (SlickException e) {
 			Log.exception(e.getMessage());

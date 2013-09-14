@@ -5,6 +5,7 @@ import nl.tdegroot.games.nemesis.entity.particles.BloodParticle;
 import nl.tdegroot.games.nemesis.entity.particles.Particle;
 import nl.tdegroot.games.nemesis.entity.particles.TextParticle;
 import nl.tdegroot.games.nemesis.entity.projectile.Projectile;
+import nl.tdegroot.games.nemesis.gfx.Resources;
 import nl.tdegroot.games.nemesis.gfx.Screen;
 import nl.tdegroot.games.nemesis.level.Level;
 
@@ -135,6 +136,7 @@ public class Mob extends Entity implements Mover {
 			fontType = TextParticle.Type.BIG;
 		}
 		health -= dmg;
+		Resources.player_hit.play(1.0f, 0.3f);
 		if (health < 0) health = 0;
 		Player player = level.getPlayer();
 		Particle bloodParticle = new BloodParticle(player.getX(), player.getY(), 75, 600);

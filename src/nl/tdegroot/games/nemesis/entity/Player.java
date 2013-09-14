@@ -226,7 +226,6 @@ public class Player extends Mob {
 			it = 250;
 		} else if (npc != null) {
 			npc.interact(this, game);
-			Resources.interact.play();
 			it = 250;
 		}
 	}

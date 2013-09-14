@@ -19,6 +19,7 @@ public class Steve extends ShopNPC {
 
 	public void interact(Player player, Nemesis game) {
 		Log.log("STEVE INTERACTION");
+		Resources.steve_interact.play();
 		game.setMenu(new ShopMenu(null, this));
 	}
 

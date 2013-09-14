@@ -100,18 +100,21 @@ public class ShopMenu extends Menu {
 		if (currentBank >= banks) currentBank -= banks;
 
 		if (Keyboard.isKeyDown(Keyboard.KEY_X) && bt <= 0 && kt <= 0) {
-			if (!Resources.interact.playing()) Resources.interact.play();
 			Player player = game.getPlayer();
 			Item item = items[currentBank][selected];
 			if (item instanceof ItemStack) {
 				ItemStack stack = (ItemStack) item;
 				if (stack.item instanceof Arrow) {
 					if (player.getScore() >= stack.item.buyCost) {
+						if (!Resources.interact.playing()) Resources.interact.play();
 						stack.remove(1);
 						player.addArrows(1);
 						player.distractScore(stack.item.buyCost);
 						bt = 70;
 						Log.log("Arrows: " + player.getArrows());
+					} else {
+						if (!Resources.interact_fail.playing()) Resources.interact_fail.play();
+						bt = 150;
 					}
 				} else {
 					if (stack.item.isEquipable()) {

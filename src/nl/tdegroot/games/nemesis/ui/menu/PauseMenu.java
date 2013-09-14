@@ -78,7 +78,7 @@ public class PauseMenu extends Menu {
 			if (i == selected) {
 				msg = "> " + msg + " <";
 			}
-			graphics.drawString(msg, (Display.getWidth() - graphics.getFont().getWidth(msg)) / 2, (44 + i * 3) * 8);
+			graphics.drawString(msg, (Display.getWidth() - graphics.getFont().getWidth(msg)) / 2, ((Display.getHeight() - items.length * graphics.getFont().getHeight(msg)) / 2) + (i * 3) * 8);
 		}
 	}
 

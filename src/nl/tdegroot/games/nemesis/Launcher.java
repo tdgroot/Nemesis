@@ -1,30 +1,33 @@
 package nl.tdegroot.games.nemesis;
 
-import java.awt.EventQueue;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.UIManager;
-import javax.swing.border.EmptyBorder;
-
+import org.eclipse.wb.swing.FocusTraversalOnArray;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
-import javax.swing.JFormattedTextField;
-import org.eclipse.wb.swing.FocusTraversalOnArray;
-import java.awt.Component;
+
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Properties;
 
 public class Launcher extends JFrame {
 
 	private static final long serialVersionUID = 4138047282156541171L;
 
 	private JPanel contentPane;
+	private final String location = System.getenv("APPDATA") + "\\.nemesis";
+
+	private int width, height;
+	private boolean vs, fs;
+
+	final JComboBox cbResolution = new JComboBox();
+	final JCheckBox ckbxVsync = new JCheckBox("VSync");
+	final JCheckBox ckbxFullscreen = new JCheckBox("Fullscreen");
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -55,8 +58,7 @@ public class Launcher extends JFrame {
 		contentPane.setLayout(null);
 		setLocationRelativeTo(null);
 
-		final JComboBox cbResolution = new JComboBox();
-		cbResolution.setModel(new DefaultComboBoxModel(new String[] { "1024 x 768", "1024 x 720", "1280 x 720", "1280 x 768", "1600 x 900", "1920 x 1080" }));
+		cbResolution.setModel(new DefaultComboBoxModel(new String[] {"1024 x 768", "1024 x 720", "1280 x 720", "1280 x 768", "1600 x 900", "1920 x 1080"}));
 		cbResolution.setSelectedIndex(2);
 		cbResolution.setBounds(186, 49, 106, 20);
 		contentPane.add(cbResolution);
@@ -65,11 +67,10 @@ public class Launcher extends JFrame {
 		lblResolution.setBounds(83, 52, 209, 14);
 		contentPane.add(lblResolution);
 
-		final JCheckBox ckbxVsync = new JCheckBox("VSync");
+		ckbxVsync.setSelected(true);
 		ckbxVsync.setBounds(110, 90, 97, 23);
 		contentPane.add(ckbxVsync);
 
-		final JCheckBox ckbxFullscreen = new JCheckBox("Fullscreen");
 		ckbxFullscreen.setBounds(213, 90, 97, 23);
 		contentPane.add(ckbxFullscreen);
 
@@ -77,12 +78,12 @@ public class Launcher extends JFrame {
 		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String[] arr = ((String) cbResolution.getSelectedItem()).split(" x ");
-				int width = Integer.parseInt(arr[0]);
-				int height = Integer.parseInt(arr[1]);
-				boolean vs = ckbxVsync.isSelected();
-				boolean fs = ckbxFullscreen.isSelected();
+				width = Integer.parseInt(arr[0]);
+				height = Integer.parseInt(arr[1]);
+				vs = ckbxVsync.isSelected();
+				fs = ckbxFullscreen.isSelected();
 				try {
-					launch(width, height, vs, fs);
+					launch();
 				} catch (SlickException ex) {
 					ex.printStackTrace();
 				}
@@ -100,11 +101,12 @@ public class Launcher extends JFrame {
 		});
 		btnQuit.setBounds(207, 163, 89, 23);
 		contentPane.add(btnQuit);
-		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{contentPane, cbResolution, ckbxVsync, ckbxFullscreen, btnStart, btnQuit}));
+		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[] {contentPane, cbResolution, ckbxVsync, ckbxFullscreen, btnStart, btnQuit}));
+		loadConfig();
 	}
 
-	private void launch(int width, int height, boolean vs, boolean fs) throws SlickException {
-
+	private void launch() throws SlickException {
+		saveConfig();
 		AppGameContainer game = new AppGameContainer(new Nemesis());
 		game.setDisplayMode(width, height, fs);
 		game.setShowFPS(false);
@@ -113,6 +115,46 @@ public class Launcher extends JFrame {
 		game.setMaximumLogicUpdateInterval(1000 / 60);
 		game.setMinimumLogicUpdateInterval(1000 / 60);
 		game.start();
+	}
+
+	private void saveConfig() {
+		File file = new File(location);
+		if (! file.exists()) {
+			file.mkdir();
+		}
+
+		Properties prop = new Properties();
+
+		try {
+			prop.setProperty("width", "" + width);
+			prop.setProperty("height", "" + height);
+			prop.setProperty("vs", "" + vs);
+			prop.setProperty("fs", "" + fs);
+
+			prop.store(new FileOutputStream(location + "\\" + "config.cfg"), null);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	private void loadConfig() {
+		Properties prop = new Properties();
+
+		try {
+			prop.load(new FileInputStream(location + "\\" + "config.cfg"));
+			width = Integer.parseInt(prop.getProperty("width"));
+			height = Integer.parseInt(prop.getProperty("height"));
+			vs = Boolean.parseBoolean(prop.getProperty("vs"));
+			fs = Boolean.parseBoolean(prop.getProperty("fs"));
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+
+		String res = width + " x " + height;
+		cbResolution.setSelectedItem(res);
+		ckbxVsync.setSelected(vs);
+		ckbxFullscreen.setSelected(fs);
 
 	}
+
 }

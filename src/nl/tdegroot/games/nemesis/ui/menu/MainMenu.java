@@ -3,7 +3,6 @@ package nl.tdegroot.games.nemesis.ui.menu;
 import nl.tdegroot.games.nemesis.Nemesis;
 import nl.tdegroot.games.nemesis.gfx.Resources;
 import nl.tdegroot.games.nemesis.gfx.Screen;
-
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Color;
@@ -20,7 +19,7 @@ public class MainMenu extends Menu {
 
 	public void init(Nemesis game) {
 		super.init(game);
-		items = new String[]{"Play", "Controls", "About", "Quit Game"};
+		items = new String[] {"Play", "Controls", "About", "Quit Game"};
 		xt = 400;
 	}
 
@@ -80,7 +79,7 @@ public class MainMenu extends Menu {
 			if (i == selected) {
 				msg = "> " + msg + " <";
 			}
-			graphics.drawString(msg, (Display.getWidth() - graphics.getFont().getWidth(msg)) / 2, (44 + i * 3) * 8);
+			graphics.drawString(msg, (Display.getWidth() - graphics.getFont().getWidth(msg)) / 2, ((Display.getHeight() - items.length * graphics.getFont().getHeight(msg)) / 2) + (i * 3) * 8);
 		}
 	}
 

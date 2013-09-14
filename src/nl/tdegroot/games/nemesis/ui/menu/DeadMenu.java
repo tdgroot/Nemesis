@@ -1,6 +1,7 @@
 package nl.tdegroot.games.nemesis.ui.menu;
 
 import nl.tdegroot.games.nemesis.Nemesis;
+import nl.tdegroot.games.nemesis.Score;
 import nl.tdegroot.games.nemesis.entity.Player;
 import nl.tdegroot.games.nemesis.gfx.Resources;
 import nl.tdegroot.games.nemesis.gfx.Screen;
@@ -15,10 +16,13 @@ public class DeadMenu extends Menu {
 	private int time;
 	private boolean renderText = false;
 	private Player player;
+	private int hiscore = 0;
 
 	public DeadMenu(Menu parent, Player player) {
 		super(parent);
 		this.player = player;
+		hiscore = Score.load();
+		if (player.getScore() > hiscore) Score.save(player.getScore());
 	}
 
 	public void init(Nemesis game) {
@@ -75,9 +79,11 @@ public class DeadMenu extends Menu {
 		if (renderText) {
 			String dead_message = "YOU'RE DEAD";
 			String score_message = "Your score: " + player.getScore();
+			String hiscore_message = "Hiscore: " + hiscore;
 			graphics.setFont(Resources.courier_new_bold);
 			graphics.drawString(dead_message, (Display.getWidth() - graphics.getFont().getWidth(dead_message)) / 2, 50);
 			graphics.drawString(score_message, (Display.getWidth() - graphics.getFont().getWidth(score_message)) / 2, 100);
+			graphics.drawString(hiscore_message, (Display.getWidth() - graphics.getFont().getWidth(hiscore_message)) / 2, 150);
 			graphics.resetFont();
 		}
 		for (int i = 0; i < items.length; i++) {
