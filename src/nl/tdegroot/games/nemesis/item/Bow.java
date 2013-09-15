@@ -8,7 +8,7 @@ public class Bow extends Item {
 		super("Bow", image, 25, 15);
 	}
 
-	public boolean isEquipable() {
+	public boolean equipable() {
 		return true;
 	}
 

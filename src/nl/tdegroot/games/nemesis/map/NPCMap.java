@@ -84,8 +84,8 @@ public class NPCMap {
 			String[] paramList = params.split(",");
 			for (int i = 0; i < paramList.length; i++) {
 				String[] pData = paramList[i].trim().split(":");
-				Item item = Item.getItem(pData[0]);
-				int count = Integer.parseInt(pData[1]);
+				Item item = Item.getItem(pData[0].trim());
+				int count = Integer.parseInt(pData[1].trim());
 				if (count > 1) {
 					npc.addItem(new ItemStack(item, count), 1);
 				} else if (count == 1) {

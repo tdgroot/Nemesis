@@ -74,9 +74,10 @@ public class Level implements TileBasedMap {
 					String mobHealth = map.getObjectProperty(MapLayer.MAP_LAYER_SPAWNERS, i, "health", "");
 					String mobSpeed = map.getObjectProperty(MapLayer.MAP_LAYER_SPAWNERS, i, "speed", "");
 					String mobDamage = map.getObjectProperty(MapLayer.MAP_LAYER_SPAWNERS, i, "damage", "");
+					String mobCash = map.getObjectProperty(MapLayer.MAP_LAYER_SPAWNERS, i, "cash", "");
 
 					if (spawnerType != "") {
-						spawners.add(getSpawner(spawnerType, spawnTime, maxMobs, mobScore, mobHealth, mobSpeed, mobDamage, xx, yy, i));
+						spawners.add(getSpawner(spawnerType, spawnTime, maxMobs, mobScore, mobHealth, mobSpeed, mobDamage, mobCash, xx, yy, i));
 						Log.log("Spawner created with ID: " + i + ", mobHealth: " + mobHealth + ", mobSpeed: " + mobSpeed + ", mobScore: " + mobScore);
 					}
 
@@ -150,7 +151,7 @@ public class Level implements TileBasedMap {
 				if (p.getAreaOfEffect().intersects(mob.getVulnerability()) && !p.isRemoved()) {
 					mob.hit(p);
 					if (mob.isRemoved()) {
-						p.getPlayer().mobKilled(mob.getScore());
+						p.getPlayer().mobKilled(mob.getScore(), mob.getCash());
 						Particle particle = new SlimeParticle(mob.getX() + mob.getWidth() / 2, mob.getY() + mob.getHeight() / 2, 125, 1000);
 						particle.setLevel(this);
 						particles.add(particle);
@@ -197,7 +198,7 @@ public class Level implements TileBasedMap {
 
 	}
 
-	public MobSpawner getSpawner(String type, String spawnTime, String maxMobs, String mobScore, String mobHealth, String mobSpeed, String mobDamage, int x, int y, int i) {
+	public MobSpawner getSpawner(String type, String spawnTime, String maxMobs, String mobScore, String mobHealth, String mobSpeed, String mobDamage, String mobCash, int x, int y, int i) {
 		MobSpawner spawner = null;
 
 		switch (type) {
@@ -230,6 +231,10 @@ public class Level implements TileBasedMap {
 
 			if (mobDamage != "") {
 				spawner.setMobDamage(Double.parseDouble(mobDamage));
+			}
+
+			if (mobCash != "") {
+				spawner.setMobCash(Integer.parseInt(mobCash));
 			}
 
 		}

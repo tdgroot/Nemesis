@@ -124,10 +124,11 @@
  <objectgroup name="Spawners" width="50" height="50">
   <object name="roachspawner" type="Spawner" x="1920" y="2112" width="64" height="64">
    <properties>
+    <property name="cash" value="25"/>
     <property name="damage" value="12.5"/>
     <property name="health" value="200"/>
     <property name="maxMobs" value="35"/>
-    <property name="score" value="25"/>
+    <property name="score" value="15"/>
     <property name="spawnTime" value="1500"/>
     <property name="spawner" value="roach"/>
     <property name="speed" value="22.55"/>
@@ -135,10 +136,11 @@
   </object>
   <object name="roachspawner" type="Spawner" x="2496" y="768" width="64" height="64">
    <properties>
+    <property name="cash" value="15"/>
     <property name="damage" value="9.5"/>
     <property name="health" value="95.55"/>
     <property name="maxMobs" value="15"/>
-    <property name="score" value="15"/>
+    <property name="score" value="10"/>
     <property name="spawnTime" value="5000"/>
     <property name="spawner" value="roach"/>
     <property name="speed" value="26.5"/>
@@ -158,7 +160,7 @@
   <object name="Steve" type="NPC" x="2176" y="320" width="64" height="64">
    <properties>
     <property name="arrows" value="1000"/>
-    <property name="items" value=""/>
+    <property name="items" value="{fish: 400}"/>
     <property name="name" value="steve"/>
     <property name="type" value="shop"/>
    </properties>

@@ -9,12 +9,12 @@ import nl.tdegroot.games.nemesis.entity.projectile.Projectile;
 import nl.tdegroot.games.nemesis.gfx.Resources;
 import nl.tdegroot.games.nemesis.gfx.Screen;
 import nl.tdegroot.games.nemesis.item.Bow;
+import nl.tdegroot.games.nemesis.item.FoodItem;
 import nl.tdegroot.games.nemesis.item.Item;
 import nl.tdegroot.games.nemesis.level.Level;
 import nl.tdegroot.games.nemesis.map.MapLayer;
 import nl.tdegroot.games.nemesis.map.object.MapObject;
 import nl.tdegroot.games.nemesis.ui.Dialog;
-
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Image;
@@ -41,6 +41,7 @@ public class Player extends Mob {
 	private int mobsKilled = 0;
 	private int score = 0;
 	private int it = 0;
+	private int et = 0;
 
 	public Player(Image image, float x, float y, int width, int height) {
 		super(image, x, y, width, height);
@@ -89,13 +90,14 @@ public class Player extends Mob {
 		frame++;
 		if (fireRate > 0) fireRate--;
 		if (it > 0) it -= delta;
+		if (et > 0) et -= delta;
 
 		float xa = 0;
 		float ya = 0;
 
 		float deltaMul = 0.065f;
 
-		if (!Dialog.isActive()) {
+		if (! Dialog.isActive()) {
 			float speed = movementSpeed * delta * deltaMul;
 			if (sprint) speed *= sprintMultiplier;
 
@@ -116,7 +118,7 @@ public class Player extends Mob {
 
 			if (sprint && isWalking) energy -= 0.35;
 			if (energy < 0) energy = 0;
-			if (!(sprint && isWalking) && energy < baseEnergy) energy += energyRegen;
+			if (! (sprint && isWalking) && energy < baseEnergy) energy += energyRegen;
 		}
 
 		wasWalking = isWalking;
@@ -137,7 +139,7 @@ public class Player extends Mob {
 			}
 		}
 
-		if (!wasWalking) {
+		if (! wasWalking) {
 			animIndex = 0;
 		}
 
@@ -174,6 +176,10 @@ public class Player extends Mob {
 			Resources.bow_shot.play();
 		} else if (Keyboard.isKeyDown(Keyboard.KEY_X) && it <= 0) {
 			interact();
+		} else if (Keyboard.isKeyDown(Keyboard.KEY_H) && et <= 0) {
+			if (eat()) {
+				Resources.eat.play();
+			}
 		}
 	}
 
@@ -230,6 +236,19 @@ public class Player extends Mob {
 		}
 	}
 
+	public boolean eat() {
+		for (int i = 0; i < inventory.size(); i++) {
+			if (inventory.get(i).eatable()) {
+				FoodItem item = (FoodItem) inventory.get(i);
+				heal(item.healPoints);
+				inventory.remove(item);
+				et = 450;
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public void render(Screen screen) {
 //		Graphics graphics = screen.getGraphics();
 		// graphics.drawLine(Display.getWidth() / 2, Display.getHeight() / 2,
@@ -254,9 +273,10 @@ public class Player extends Mob {
 		arrows += amount;
 	}
 
-	public void mobKilled(int s) {
+	public void mobKilled(int s, int cash) {
 		mobsKilled++;
 		score += s;
+		this.cash += cash;
 	}
 
 	public int getKills() {
@@ -267,8 +287,8 @@ public class Player extends Mob {
 		return score;
 	}
 
-	public void distractScore(int amount) {
-		score -= amount;
+	public void chargeCash(int amount) {
+		cash -= amount;
 	}
 
 	public int getArrows() {

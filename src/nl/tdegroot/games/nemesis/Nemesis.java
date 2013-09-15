@@ -17,7 +17,6 @@ import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.Sound;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
@@ -95,6 +94,8 @@ public class Nemesis extends BasicGame {
 		screen.setOffset(xOffset, yOffset);
 		level.render(g, screen);
 		uiHandler.render(g);
+		g.drawString("Cash: " + player.getCash(), 500, 80);
+		g.drawString("Arrows: " + player.getArrows(), 700, 80);
 		if (menu != null) {
 			menu.render(screen);
 		}

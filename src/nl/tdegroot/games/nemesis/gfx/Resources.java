@@ -20,26 +20,28 @@ public class Resources {
 	public static Image entityArrow;
 	public static Image steve;
 
+	// Particles
 	public static Image slimeParticle;
 	public static Image bloodParticle;
 
 	// Items
 	public static Image bow;
-
+	public static Image fish;
 	public static Image itemArrow;
+
 	// UI
 	public static Image healthBar;
 	public static Image energyBar;
 	public static Image characterBar;
-	public static Image dialogWindow;
 
+	public static Image dialogWindow;
 	public static Image scoreBar;
 	// Fonts
 	public static TrueTypeFont agency_fb;
 	public static TrueTypeFont courier_new_bold;
 	public static final TrueTypeFont NORMAL_HIT = new TrueTypeFont(new Font("Courier New", 0, 16), true);
-	public static final TrueTypeFont CRIT_HIT = new TrueTypeFont(new Font("Courier New", Font.BOLD, 25), true);
 
+	public static final TrueTypeFont CRIT_HIT = new TrueTypeFont(new Font("Courier New", Font.BOLD, 25), true);
 	// Sounds
 	public static Sound select;
 	public static Sound mob_death;
@@ -49,7 +51,8 @@ public class Resources {
 	public static Sound mob_hit;
 	public static Sound player_hit;
 	public static Sound steve_interact;
-	
+	public static Sound eat;
+
 	public Resources() {
 		try {
 
@@ -61,12 +64,15 @@ public class Resources {
 
 			// Entities
 			entityArrow = new Image("resources/textures/entities/arrow.png");
+			steve = new Image("resources/textures/entities/npc/steve.png");
+
+			// Particles
 			slimeParticle = new Image("resources/textures/entities/particles/slimeParticle.png");
 			bloodParticle = new Image("resources/textures/entities/particles/bloodParticle.png");
-			steve = new Image("resources/textures/entities/npc/steve.png");
 
 			// Items
 			bow = new Image("resources/textures/items/bow.png");
+			fish = new Image("resources/textures/items/fish.png");
 			itemArrow = new Image("resources/textures/items/arrow.png");
 
 			// UI
@@ -89,6 +95,7 @@ public class Resources {
 			mob_hit = new Sound("resources/sounds/mob_hit.wav");
 			player_hit = new Sound("resources/sounds/au.wav");
 			steve_interact = new Sound("resources/sounds/steve.wav");
+			eat = new Sound("resources/sounds/eat.wav");
 			
 		} catch (SlickException e) {
 			Log.exception(e.getMessage());

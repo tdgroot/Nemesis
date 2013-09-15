@@ -1,9 +1,9 @@
 package nl.tdegroot.games.nemesis.entity;
 
+import nl.tdegroot.games.nemesis.item.Item;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import nl.tdegroot.games.nemesis.item.Item;
 
 public class Inventory {
 
@@ -28,4 +28,13 @@ public class Inventory {
 	public int size() {
 		return items.size();
 	}
+
+	public Item get(int index) {
+		return items.get(index);
+	}
+
+	public void remove(Item item) {
+		items.remove(item);
+	}
+
 }

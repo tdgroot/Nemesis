@@ -8,7 +8,6 @@ import nl.tdegroot.games.nemesis.gfx.Screen;
 import nl.tdegroot.games.nemesis.item.Arrow;
 import nl.tdegroot.games.nemesis.item.Item;
 import nl.tdegroot.games.nemesis.item.ItemStack;
-
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Color;
@@ -34,7 +33,8 @@ public class ShopMenu extends Menu {
 	}
 
 	public void initItems() {
-		if (npc.getItems().size() > slotsPerBank) banks = (int) Math.ceil((double) npc.getItems().size() / (double) slotsPerBank);
+		if (npc.getItems().size() > slotsPerBank)
+			banks = (int) Math.ceil((double) npc.getItems().size() / (double) slotsPerBank);
 		items = new Item[banks][slotsPerBank];
 		for (int b = 0; b < banks; b++) {
 			for (int s = 0; s < slotsPerBank; s++) {
@@ -55,8 +55,13 @@ public class ShopMenu extends Menu {
 			game.setMenu(null);
 		}
 
-		int checkSel = Math.abs(selected - 1);
+		int checkSel = selected - 1;
 		if (Keyboard.isKeyDown(Keyboard.KEY_UP) && kt <= 0) {
+			if (checkSel < 0) {
+				Resources.select.play();
+				kt = 200;
+				return;
+			}
 			if (items[currentBank][checkSel] != null) {
 				selected--;
 				Resources.select.play();
@@ -99,30 +104,38 @@ public class ShopMenu extends Menu {
 		if (currentBank < 0) currentBank += banks;
 		if (currentBank >= banks) currentBank -= banks;
 
+		Log.log("Selected: " + selected);
+
 		if (Keyboard.isKeyDown(Keyboard.KEY_X) && bt <= 0 && kt <= 0) {
 			Player player = game.getPlayer();
 			Item item = items[currentBank][selected];
 			if (item instanceof ItemStack) {
 				ItemStack stack = (ItemStack) item;
+				if (player.getCash() < stack.item.buyCost) {
+					Resources.interact_fail.play();
+					bt = 150;
+					return;
+				}
 				if (stack.item instanceof Arrow) {
-					if (player.getScore() >= stack.item.buyCost) {
-						if (!Resources.interact.playing()) Resources.interact.play();
-						stack.remove(1);
-						player.addArrows(1);
-						player.distractScore(stack.item.buyCost);
-						bt = 70;
-						Log.log("Arrows: " + player.getArrows());
-					} else {
-						if (!Resources.interact_fail.playing()) Resources.interact_fail.play();
-						bt = 150;
-					}
+					if (! Resources.interact.playing()) Resources.interact.play();
+					stack.remove(1);
+					player.addArrows(1);
+					player.chargeCash(stack.item.buyCost);
+					bt = 70;
+					Log.log("Arrows: " + player.getArrows());
 				} else {
-					if (stack.item.isEquipable()) {
+					if (stack.item.equipable()) {
+						if (! Resources.interact.playing()) Resources.interact.play();
 						stack.remove(1);
 						player.equip(stack.item);
-						bt = 70;
+						player.chargeCash(stack.item.buyCost);
+						bt = 100;
 					} else {
+						if (! Resources.interact.playing()) Resources.interact.play();
+						stack.remove(1);
 						player.giveItem(stack.item);
+						player.chargeCash(stack.item.buyCost);
+						bt = 100;
 					}
 				}
 			}

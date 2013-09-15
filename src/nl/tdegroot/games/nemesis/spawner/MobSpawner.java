@@ -31,6 +31,7 @@ public class MobSpawner {
 	protected float movementSpeed = 0.0f;
 	protected int mobScore = 0;
 	protected double mobDamage = 0.0;
+	protected int mobCash = 0;
 
 	public MobSpawner(Level level, Player target, int x, int y, int spawnerID) {
 		this.level = level;
@@ -117,5 +118,13 @@ public class MobSpawner {
 
 	public double getMobDamage() {
 		return mobDamage;
+	}
+
+	public void setMobCash(int mobCash) {
+		this.mobCash = mobCash;
+	}
+
+	public double getMobCash() {
+		return mobCash;
 	}
 }
