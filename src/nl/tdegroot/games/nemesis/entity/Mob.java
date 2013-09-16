@@ -50,7 +50,7 @@ public class Mob extends Entity implements Mover {
 	protected int collisionAddY = 0;
 	protected int collisionAddX = 0;
 
-	protected int cash;
+	protected double cash;
 
 	protected float movementSpeed = 0;
 	protected double damage;
@@ -290,11 +290,11 @@ public class Mob extends Entity implements Mover {
 		return critChance;
 	}
 
-	public void setCash(int cash) {
+	public void setCash(double cash) {
 		this.cash = cash;
 	}
 
-	public int getCash() {
+	public double getCash() {
 		return cash;
 	}
 }

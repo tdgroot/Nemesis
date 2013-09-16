@@ -1,7 +1,5 @@
 package nl.tdegroot.games.nemesis.entity;
 
-import nl.tdegroot.games.nemesis.Log;
-
 import org.newdawn.slick.Image;
 
 public class Roach extends Mob {

@@ -234,7 +234,7 @@ public class Level implements TileBasedMap {
 			}
 
 			if (mobCash != "") {
-				spawner.setMobCash(Integer.parseInt(mobCash));
+				spawner.setMobCash(Double.parseDouble(mobCash));
 			}
 
 		}

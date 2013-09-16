@@ -115,6 +115,7 @@ public class Launcher extends JFrame {
 		game.setMaximumLogicUpdateInterval(1000 / 60);
 		game.setMinimumLogicUpdateInterval(1000 / 60);
 		game.start();
+		dispose();
 	}
 
 	private void saveConfig() {

@@ -58,6 +58,8 @@ public class ObjectMap {
 							mapObject.addArrows(Integer.parseInt(arrows));
 						if (message != "")
 							mapObject.setMessage(message);
+						mapObject.setX(xx);
+						mapObject.setY(yy);
 					}
 
 					objects[xx + yy * width] = mapObject;

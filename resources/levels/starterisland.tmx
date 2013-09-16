@@ -134,9 +134,9 @@
     <property name="speed" value="22.55"/>
    </properties>
   </object>
-  <object name="roachspawner" type="Spawner" x="2496" y="768" width="64" height="64">
+  <object name="roachspawner" type="Spawner" x="2560" y="768" width="64" height="64">
    <properties>
-    <property name="cash" value="15"/>
+    <property name="cash" value="18.5"/>
     <property name="damage" value="9.5"/>
     <property name="health" value="95.55"/>
     <property name="maxMobs" value="15"/>

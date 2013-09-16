@@ -32,6 +32,8 @@ public class Nemesis extends BasicGame {
 	private Menu menu = null;
 	private GameContainer gameContainer;
 
+	public Graphics graphics;
+
 	public int mt = 0;
 
 	public Nemesis() {
@@ -76,11 +78,10 @@ public class Nemesis extends BasicGame {
 				player.update(delta);
 				level.update(delta);
 				uiHandler.update(delta);
-				if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE) && mt <= 0 && ! Dialog.isActive()) {
+				if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE) && mt <= 0 && !Dialog.isActive()) {
 					setMenu(new PauseMenu(null));
 				}
-				if (player.isDead())
-					setMenu(new DeadMenu(null, player));
+				if (player.isDead()) setMenu(new DeadMenu(null, player));
 			}
 		}
 	}
@@ -89,12 +90,13 @@ public class Nemesis extends BasicGame {
 	}
 
 	public void render(GameContainer gameContainer, Graphics g) throws SlickException {
+		graphics = g;
 		float xOffset = player.getX() - Display.getWidth() / 2;
 		float yOffset = player.getY() - Display.getHeight() / 2;
 		screen.setOffset(xOffset, yOffset);
 		level.render(g, screen);
 		uiHandler.render(g);
-		g.drawString("Cash: " + player.getCash(), 500, 80);
+		g.drawString("Cash: " + (int) Math.floor(player.getCash()), 500, 80);
 		g.drawString("Arrows: " + player.getArrows(), 700, 80);
 		if (menu != null) {
 			menu.render(screen);
@@ -108,13 +110,12 @@ public class Nemesis extends BasicGame {
 
 	public void setMenu(Menu menu) {
 		this.menu = menu;
-		if (menu != null)
-			menu.init(this);
+		if (menu != null) menu.init(this);
 		mt = 250;
 	}
 
 	public synchronized void stop() {
-		System.exit(0);
+		gameContainer.exit();
 	}
 
 	public Player getPlayer() {

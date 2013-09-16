@@ -15,6 +15,8 @@ import nl.tdegroot.games.nemesis.level.Level;
 import nl.tdegroot.games.nemesis.map.MapLayer;
 import nl.tdegroot.games.nemesis.map.object.MapObject;
 import nl.tdegroot.games.nemesis.ui.Dialog;
+import nl.tdegroot.games.nemesis.ui.menu.InteractMenu;
+
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Image;
@@ -97,7 +99,7 @@ public class Player extends Mob {
 
 		float deltaMul = 0.065f;
 
-		if (! Dialog.isActive()) {
+		if (!Dialog.isActive()) {
 			float speed = movementSpeed * delta * deltaMul;
 			if (sprint) speed *= sprintMultiplier;
 
@@ -118,7 +120,7 @@ public class Player extends Mob {
 
 			if (sprint && isWalking) energy -= 0.35;
 			if (energy < 0) energy = 0;
-			if (! (sprint && isWalking) && energy < baseEnergy) energy += energyRegen;
+			if (!(sprint && isWalking) && energy < baseEnergy) energy += energyRegen;
 		}
 
 		wasWalking = isWalking;
@@ -131,7 +133,6 @@ public class Player extends Mob {
 			isWalking = false;
 		}
 
-
 		if (isWalking) {
 			int rate = sprint ? animSpeedSprint : animSpeedDefault;
 			if (frame % (rate / delta) == 0) {
@@ -139,7 +140,7 @@ public class Player extends Mob {
 			}
 		}
 
-		if (! wasWalking) {
+		if (!wasWalking) {
 			animIndex = 0;
 		}
 
@@ -227,12 +228,13 @@ public class Player extends Mob {
 		}
 
 		if (object != null) {
-			object.interact(this);
 			Resources.interact.play();
 			it = 250;
+			game.setMenu(new InteractMenu(this, object, object.getX(), object.getY()));
 		} else if (npc != null) {
-			npc.interact(this, game);
+			Resources.interact.play();
 			it = 250;
+			game.setMenu(new InteractMenu(this, npc, npc.getX(), npc.getY()));
 		}
 	}
 
@@ -250,7 +252,7 @@ public class Player extends Mob {
 	}
 
 	public void render(Screen screen) {
-//		Graphics graphics = screen.getGraphics();
+		// Graphics graphics = screen.getGraphics();
 		// graphics.drawLine(Display.getWidth() / 2, Display.getHeight() / 2,
 		// Mouse.getX(), Display.getHeight() - Mouse.getY());
 		screen.renderPlayer(this);
@@ -273,7 +275,7 @@ public class Player extends Mob {
 		arrows += amount;
 	}
 
-	public void mobKilled(int s, int cash) {
+	public void mobKilled(int s, double cash) {
 		mobsKilled++;
 		score += s;
 		this.cash += cash;

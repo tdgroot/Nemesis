@@ -6,6 +6,7 @@ import nl.tdegroot.games.nemesis.entity.Player;
 import nl.tdegroot.games.nemesis.gfx.Resources;
 import nl.tdegroot.games.nemesis.gfx.Screen;
 import nl.tdegroot.games.nemesis.item.Item;
+import nl.tdegroot.games.nemesis.ui.Dialog;
 import nl.tdegroot.games.nemesis.ui.menu.ShopMenu;
 
 public class Steve extends ShopNPC {
@@ -21,6 +22,14 @@ public class Steve extends ShopNPC {
 		Log.log("STEVE INTERACTION");
 		Resources.steve_interact.play();
 		game.setMenu(new ShopMenu(null, this));
+	}
+	
+	public void talk() {
+		Dialog.activate("Hey! Want to buy some stuff? I got arrows and fish!");
+	}
+	
+	public void describe() {
+		Dialog.activate("A strange man trying to earn some money..");
 	}
 
 	public void render(Screen screen) {

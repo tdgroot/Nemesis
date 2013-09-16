@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nl.tdegroot.games.nemesis.Log;
+import nl.tdegroot.games.nemesis.Nemesis;
 import nl.tdegroot.games.nemesis.entity.Player;
 import nl.tdegroot.games.nemesis.item.Item;
 import nl.tdegroot.games.nemesis.ui.Dialog;
@@ -18,7 +19,7 @@ public class Chest extends MapObject {
 		items = new ArrayList<Item>();
 	}
 
-	public void interact(Player player) {
+	public void interact(Player player, Nemesis game) {
 		if (! empty()) {
 			Dialog.activate(message);
 			for (int i = 0; i < items.size(); i++) {
@@ -31,6 +32,10 @@ public class Chest extends MapObject {
 		}
 		items.clear();
 		arrows = 0;
+	}
+	
+	public void describe() {
+		Dialog.activate("An old looking chest");
 	}
 
 	public void addItem(Item item, int count) {

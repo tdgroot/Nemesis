@@ -7,7 +7,9 @@ import nl.tdegroot.games.nemesis.gfx.Screen;
 
 import org.newdawn.slick.Image;
 
-public class NPC extends Entity {
+import actions.Interactable;
+
+public class NPC extends Entity implements Interactable {
 
 	protected String name;
 	protected int id = 0;
@@ -25,6 +27,12 @@ public class NPC extends Entity {
 	public void interact(Player player, Nemesis game) {
 	}
 
+	public void describe() {
+	}
+
+	public void talk() {
+	}
+
 	public void render(Screen screen) {
 	}
 
@@ -34,6 +42,10 @@ public class NPC extends Entity {
 
 	public String getMessage() {
 		return message;
+	}
+
+	public String[] getInteractItems() {
+		return new String[] { "Interact", "Talk", "Describe" };
 	}
 
 }
