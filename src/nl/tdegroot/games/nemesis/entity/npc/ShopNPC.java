@@ -26,6 +26,11 @@ public class ShopNPC extends NPC {
 		return arrows;
 	}
 
+	public String[] getDisplayItems() {
+		return new String[] {"Shop", "Talk", "Describe"};
+	}
+
+
 	public List<Item> getItems() {
 		return items;
 	}

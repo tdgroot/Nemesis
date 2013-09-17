@@ -11,9 +11,10 @@ public class Item {
 
 	private static List<Item> itemList = new ArrayList<Item>();
 
-	public static Item bow = new Bow("Bow", Resources.bow);
+	public static Item bow = new Bow(15, 5);
 	public static Item fish = new Fish(10, 4);
 	public static Item arrow = new Arrow(5, 2);
+	public static Item fishingRod = new FishingRod(25, 10);
 
 	private final String name;
 	private final Image sprite;
@@ -49,6 +50,10 @@ public class Item {
 	}
 
 	public boolean eatable() {
+		return false;
+	}
+
+	public boolean stackable() {
 		return false;
 	}
 

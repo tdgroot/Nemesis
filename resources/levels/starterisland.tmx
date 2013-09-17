@@ -87,7 +87,7 @@
   <object x="2624" y="0" width="128" height="128"/>
   <object x="1856" y="0" width="768" height="64"/>
  </objectgroup>
- <objectgroup name="MapObjects" width="50" height="50" visible="0">
+ <objectgroup name="MapObjects" width="50" height="50">
   <object name="chest" type="MapObject" x="640" y="832" width="64" height="64">
    <properties>
     <property name="arrows" value="200"/>
@@ -160,9 +160,15 @@
   <object name="Steve" type="NPC" x="2176" y="320" width="64" height="64">
    <properties>
     <property name="arrows" value="1000"/>
-    <property name="items" value="{fish: 400}"/>
+    <property name="items" value="{fish: 400, fishing rod:5}"/>
     <property name="name" value="steve"/>
     <property name="type" value="shop"/>
+   </properties>
+  </object>
+  <object name="Fishing Spot" type="NPC" x="1408" y="192" width="64" height="64">
+   <properties>
+    <property name="name" value="Fishing Spot"/>
+    <property name="type" value="fish"/>
    </properties>
   </object>
  </objectgroup>

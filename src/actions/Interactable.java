@@ -12,5 +12,9 @@ public interface Interactable {
 	public void describe();
 	
 	public String[] getInteractItems();
+
+	public String[] getDisplayItems();
+
+	public String getName();
 	
 }

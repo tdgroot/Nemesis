@@ -48,4 +48,12 @@ public class NPC extends Entity implements Interactable {
 		return new String[] { "Interact", "Talk", "Describe" };
 	}
 
+	public String[] getDisplayItems() {
+		return new String[] { "Interact", "Talk", "Describe" };
+	}
+
+	public String getName() {
+		return name;
+	}
+
 }

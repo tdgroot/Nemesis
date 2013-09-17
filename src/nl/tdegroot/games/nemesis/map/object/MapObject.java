@@ -9,9 +9,7 @@ public class MapObject implements Interactable {
 
 	private float x, y;
 	protected String message;
-
-	public MapObject() {
-	}
+	protected String name;
 
 	public void addItem(Item item, int count) {
 	}
@@ -33,7 +31,15 @@ public class MapObject implements Interactable {
 	}
 
 	public String[] getInteractItems() {
-		return new String[] { "Interact", "Describe" };
+		return new String[]{"Interact", "Describe"};
+	}
+
+	public String[] getDisplayItems() {
+		return new String[]{"Interact", "Describe"};
+	}
+
+	public String getName() {
+		return name;
 	}
 
 	public void setX(int x) {
@@ -50,6 +56,10 @@ public class MapObject implements Interactable {
 
 	public float getY() {
 		return y;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

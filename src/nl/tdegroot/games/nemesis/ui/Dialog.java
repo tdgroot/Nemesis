@@ -37,7 +37,7 @@ public class Dialog {
 		float dialogOffset = (Display.getWidth() - dialogWindow.getWidth()) / 2;
 		dialogWindow.draw(dialogOffset, Display.getHeight() - dialogWindow.getHeight(), Display.getWidth() - dialogOffset * 2, dialogWindow.getHeight());
 
-		g.setFont(Resources.agency_fb);
+//		g.setFont(Resources.agency_fb);
 		for (int i = 0; i < history.size(); i++) {
 			g.drawString(history.get(i), dialogOffset + 70, (Display.getHeight() - dialogWindow.getHeight() + 23) + i * 22);
 		}

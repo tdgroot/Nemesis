@@ -16,6 +16,10 @@ public class ItemStack extends Item {
 		}
 	}
 
+	public void add(Item item) {
+		itemList.add(item);
+	}
+
 	public void remove(int amount) {
 		if (itemList.size() >= amount) {
 			for (int i = 0; i < amount; i++) {
@@ -27,5 +31,4 @@ public class ItemStack extends Item {
 			}
 		}
 	}
-
 }

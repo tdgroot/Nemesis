@@ -25,7 +25,7 @@ public class MainMenu extends Menu {
 
 	public void update(int delta) {
 		if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE) && game.mt <= 0) {
-			game.setMenu(null);
+			game.setMenu(parent);
 			return;
 		}
 		if (kt > 0) kt -= delta;
@@ -50,7 +50,8 @@ public class MainMenu extends Menu {
 		if (Keyboard.isKeyDown(Keyboard.KEY_X) && xt <= 0) {
 			if (selected == 0) {
 				Resources.interact.play();
-				game.setMenu(null);
+				game.resetGame();
+				game.setMenu(parent);
 			}
 
 			if (selected == 1) {

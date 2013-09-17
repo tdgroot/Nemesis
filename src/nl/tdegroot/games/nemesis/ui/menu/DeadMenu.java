@@ -28,6 +28,7 @@ public class DeadMenu extends Menu {
 	public void init(Nemesis game) {
 		super.init(game);
 		items = new String[] {"Restart", "Main Menu", "Quit Game"};
+		kt = 200;
 	}
 
 	public void update(int delta) {

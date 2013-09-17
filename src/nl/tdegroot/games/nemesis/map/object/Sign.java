@@ -22,7 +22,7 @@ public class Sign extends MapObject {
 		}
 	}
 	
-	public String[] getInteractItems(){
+	public String[] getDisplayItems(){
 		return new String[] {"Read", "Describe"};
 	}
 

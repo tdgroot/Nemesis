@@ -9,4 +9,8 @@ public class Fish extends FoodItem {
 		healPoints = 22.5;
 	}
 
+	public boolean stackable() {
+		return true;
+	}
+
 }

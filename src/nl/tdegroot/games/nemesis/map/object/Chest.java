@@ -38,6 +38,10 @@ public class Chest extends MapObject {
 		Dialog.activate("An old looking chest");
 	}
 
+	public String[] getDisplayItems() {
+		return new String[] {"Open", "Describe"};
+	}
+
 	public void addItem(Item item, int count) {
 		for (int i = 0; i < count; i++) {
 			items.add(item);

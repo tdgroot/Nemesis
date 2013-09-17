@@ -19,12 +19,15 @@ public class InteractMenu extends Menu {
 	private int width;
 	private int height;
 
+	private String[] displayItems;
+
 	public InteractMenu(Player player, Interactable interactable, float x, float y) {
 		super(null);
 		this.player = player;
 		this.interactable = interactable;
 		this.x = x;
 		this.y = y;
+		displayItems = interactable.getDisplayItems();
 		items = interactable.getInteractItems();
 		for (int i = 0; i < items.length; i++) {
 			int temp = ("> " + items[i] + " <").length() * 14;
@@ -32,7 +35,8 @@ public class InteractMenu extends Menu {
 				width = temp;
 			}
 		}
-		height = items.length * 15;
+		if (interactable.getName().length() * 16 > width) width = interactable.getName().length() * 16;
+		height = items.length * 16;
 		kt = 400;
 	}
 
@@ -65,7 +69,9 @@ public class InteractMenu extends Menu {
 		if (selected >= length) selected -= length;
 
 		if (Keyboard.isKeyDown(Keyboard.KEY_X) && kt <= 0) {
-			if (items[selected] == "Interact" || items[selected] == "Read") {
+
+			if (items[selected] == "Interact") {
+				game.setMenu(null);
 				interactable.interact(player, game);
 			}
 
@@ -76,6 +82,7 @@ public class InteractMenu extends Menu {
 			if (items[selected] == "Describe") {
 				interactable.describe();
 			}
+
 			kt = 400;
 		}
 
@@ -85,13 +92,18 @@ public class InteractMenu extends Menu {
 		Graphics graphics = screen.getGraphics();
 		float xx = (x * 64) + 50 - screen.xOffset;
 		float yy = (y * 64) - 15 - screen.yOffset;
-		graphics.fillRect(xx, yy, width, height);
+		float nameHeight = graphics.getFont().getHeight(interactable.getName());
+		graphics.setColor(new Color(0xa3a3a3));
+		graphics.fillRect(xx, yy, width, nameHeight);
+		graphics.setColor(Color.white);
+		graphics.fillRect(xx, nameHeight + yy, width, height);
 		graphics.setColor(Color.black);
-		for (int i = 0; i < items.length; i++) {
-			String msg = items[i];
+		graphics.drawString(interactable.getName(), xx, yy);
+		for (int i = 0; i < displayItems.length; i++) {
+			String msg = displayItems[i];
 			if (selected == i) msg = "> " + msg + " <";
 			int mw = graphics.getFont().getWidth(msg);
-			graphics.drawString(msg, (xx + width / 2) - mw / 2, yy + i * 14);
+			graphics.drawString(msg, (xx + width / 2) - mw / 2, yy + nameHeight + i * 14);
 		}
 		graphics.setColor(Color.white);
 	}

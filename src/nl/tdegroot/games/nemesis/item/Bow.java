@@ -1,11 +1,12 @@
 package nl.tdegroot.games.nemesis.item;
 
+import nl.tdegroot.games.nemesis.gfx.Resources;
 import org.newdawn.slick.Image;
 
 public class Bow extends Item {
 
-	public Bow(String name, Image image) {
-		super("Bow", image, 25, 15);
+	public Bow(int buyCost, int sellCost) {
+		super("Bow", Resources.bow, sellCost, buyCost);
 	}
 
 	public boolean equipable() {

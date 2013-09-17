@@ -1,6 +1,7 @@
 package nl.tdegroot.games.nemesis.map;
 
 import nl.tdegroot.games.nemesis.Log;
+import nl.tdegroot.games.nemesis.calc.GameUtil;
 import nl.tdegroot.games.nemesis.item.Item;
 import nl.tdegroot.games.nemesis.map.object.Chest;
 import nl.tdegroot.games.nemesis.map.object.Fence;
@@ -41,7 +42,7 @@ public class ObjectMap {
 
 					Log.log("Type: " + type);
 
-					switch (type) {
+					switch (type.toLowerCase()) {
 						case "chest":
 							mapObject = processChest(itemList);
 							break;
@@ -58,6 +59,7 @@ public class ObjectMap {
 							mapObject.addArrows(Integer.parseInt(arrows));
 						if (message != "")
 							mapObject.setMessage(message);
+						mapObject.setName(GameUtil.firstCharToUpper(type));
 						mapObject.setX(xx);
 						mapObject.setY(yy);
 					}

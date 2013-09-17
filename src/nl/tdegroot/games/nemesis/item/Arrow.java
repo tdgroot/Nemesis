@@ -8,4 +8,8 @@ public class Arrow extends Item {
 		super("Arrow", Resources.itemArrow, buyCost, sellCost);
 	}
 
+	public boolean stackable() {
+		return true;
+	}
+
 }

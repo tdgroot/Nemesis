@@ -1,6 +1,7 @@
 package nl.tdegroot.games.nemesis.map;
 
 import nl.tdegroot.games.nemesis.Log;
+import nl.tdegroot.games.nemesis.entity.npc.FishNPC;
 import nl.tdegroot.games.nemesis.entity.npc.NPC;
 import nl.tdegroot.games.nemesis.entity.npc.ShopNPC;
 import nl.tdegroot.games.nemesis.entity.npc.Steve;
@@ -50,9 +51,14 @@ public class NPCMap {
 						case "shop":
 							npc = processShop(name, itemList, Integer.parseInt(arrows), message, xx, yy, i);
 							break;
+						case "fish":
+							npc = new FishNPC(xx, yy, i);
+							break;
 					}
 
 					npcs[xx + yy * width] = npc;
+
+					if (npc != null) level.addEntity(npc);
 				}
 			}
 		}
@@ -99,7 +105,6 @@ public class NPCMap {
 				npc.addArrows(arrows);
 			if (message != "")
 				npc.setMessage(message);
-			level.addEntity(npc);
 			Log.log("Added npc!");
 		}
 

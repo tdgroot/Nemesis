@@ -19,6 +19,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
+import org.newdawn.slick.openal.SoundStore;
 
 public class Nemesis extends BasicGame {
 
@@ -31,6 +32,8 @@ public class Nemesis extends BasicGame {
 	private UIHandler uiHandler;
 	private Menu menu = null;
 	private GameContainer gameContainer;
+	
+	private float soundVolume = 1.0f, musicVolume = 1.0f;
 
 	public Graphics graphics;
 
@@ -51,8 +54,11 @@ public class Nemesis extends BasicGame {
 		uiHandler = new UIHandler(player);
 		player.init(level, this);
 		Dialog.init();
+		SoundStore.get().setSoundVolume(soundVolume);
+		SoundStore.get().setMusicVolume(musicVolume);
 		gameContainer.getInput().addMouseListener(input);
 		gameContainer.setAlwaysRender(true);
+		gameContainer.setDefaultFont(Resources.DEFAULT);
 		Dialog.activate("Welcome, to the world of Nemesis!");
 		Dialog.activate("To start, try reading some of the signs!");
 		setMenu(new MainMenu(null));
@@ -104,10 +110,6 @@ public class Nemesis extends BasicGame {
 		g.drawString("FPS: " + gameContainer.getFPS(), 135, 10);
 	}
 
-	public Menu getMenu() {
-		return menu;
-	}
-
 	public void setMenu(Menu menu) {
 		this.menu = menu;
 		if (menu != null) menu.init(this);
@@ -120,6 +122,11 @@ public class Nemesis extends BasicGame {
 
 	public Player getPlayer() {
 		return player;
+	}
+	
+	public void setVolume(float soundVolume, float musicVolume) {
+		this.soundVolume = soundVolume;
+		this.musicVolume = musicVolume;
 	}
 
 }

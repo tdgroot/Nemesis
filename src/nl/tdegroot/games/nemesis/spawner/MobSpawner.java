@@ -2,7 +2,7 @@ package nl.tdegroot.games.nemesis.spawner;
 
 import java.util.Random;
 
-import nl.tdegroot.games.nemesis.calc.GameMath;
+import nl.tdegroot.games.nemesis.calc.GameUtil;
 import nl.tdegroot.games.nemesis.entity.Mob;
 import nl.tdegroot.games.nemesis.entity.Player;
 import nl.tdegroot.games.nemesis.level.Level;
@@ -88,18 +88,18 @@ public class MobSpawner {
 
 	public int generateX() {
 		int randomX = 0;
-		randomX = GameMath.random(x - maxRange, x + (maxRange * 2));
+		randomX = GameUtil.random(x - maxRange, x + (maxRange * 2));
 		while (randomX < 0 || randomX > level.getWidthInTiles()) {
-			randomX = GameMath.random(x - maxRange, x + (maxRange * 2));
+			randomX = GameUtil.random(x - maxRange, x + (maxRange * 2));
 		}
 		return randomX;
 	}
 
 	public int generateY() {
 		int randomY = 0;
-		randomY = GameMath.random(y - maxRange, y + (maxRange * 2));
+		randomY = GameUtil.random(y - maxRange, y + (maxRange * 2));
 		while (randomY < 0 || randomY > level.getHeightInTiles()) {
-			randomY = GameMath.random(y - maxRange, y + (maxRange * 2));
+			randomY = GameUtil.random(y - maxRange, y + (maxRange * 2));
 		}
 		return randomY;
 	}

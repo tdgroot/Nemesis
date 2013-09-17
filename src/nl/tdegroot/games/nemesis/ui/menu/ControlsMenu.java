@@ -21,6 +21,7 @@ public class ControlsMenu extends Menu {
 			"",
 			"Left Mouse Button: Shoot",
 			"",
+			"H: Eat food (Heal)",
 			"X: Interact / Action key",
 			"C: Close Dialog",
 			"",

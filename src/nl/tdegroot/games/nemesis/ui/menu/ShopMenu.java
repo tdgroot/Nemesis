@@ -104,8 +104,6 @@ public class ShopMenu extends Menu {
 		if (currentBank < 0) currentBank += banks;
 		if (currentBank >= banks) currentBank -= banks;
 
-		Log.log("Selected: " + selected);
-
 		if (Keyboard.isKeyDown(Keyboard.KEY_X) && bt <= 0 && kt <= 0) {
 			Player player = game.getPlayer();
 			Item item = items[currentBank][selected];

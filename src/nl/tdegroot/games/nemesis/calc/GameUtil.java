@@ -4,7 +4,7 @@ import java.util.Random;
 
 import nl.tdegroot.games.nemesis.level.Level;
 
-public class GameMath {
+public class GameUtil {
 
 	private static boolean checkCollision(int x, int y, Level level) {
 		boolean solid = false;
@@ -22,8 +22,14 @@ public class GameMath {
 	}
 
 	public static int random(int a, int b) {
-		int dif = Math.abs(a-b);
+		int dif = Math.abs(a - b);
 		return Math.min(a, b) + (dif <= 0 ? 0 : new Random().nextInt(dif));
+	}
+
+	public static String firstCharToUpper(String userIdea) {
+		char[] stringArray = userIdea.toCharArray();
+		stringArray[0] = Character.toUpperCase(stringArray[0]);
+		return new String(stringArray);
 	}
 
 }

@@ -3,6 +3,7 @@ package nl.tdegroot.games.nemesis.entity;
 import nl.tdegroot.games.nemesis.InputHandler;
 import nl.tdegroot.games.nemesis.Log;
 import nl.tdegroot.games.nemesis.Nemesis;
+import nl.tdegroot.games.nemesis.entity.npc.FishNPC;
 import nl.tdegroot.games.nemesis.entity.npc.NPC;
 import nl.tdegroot.games.nemesis.entity.projectile.Arrow;
 import nl.tdegroot.games.nemesis.entity.projectile.Projectile;
@@ -11,12 +12,14 @@ import nl.tdegroot.games.nemesis.gfx.Screen;
 import nl.tdegroot.games.nemesis.item.Bow;
 import nl.tdegroot.games.nemesis.item.FoodItem;
 import nl.tdegroot.games.nemesis.item.Item;
+import nl.tdegroot.games.nemesis.item.ItemStack;
 import nl.tdegroot.games.nemesis.level.Level;
 import nl.tdegroot.games.nemesis.map.MapLayer;
 import nl.tdegroot.games.nemesis.map.object.MapObject;
 import nl.tdegroot.games.nemesis.ui.Dialog;
 import nl.tdegroot.games.nemesis.ui.menu.InteractMenu;
 
+import nl.tdegroot.games.nemesis.ui.menu.InventoryMenu;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Image;
@@ -24,7 +27,7 @@ import org.newdawn.slick.geom.Rectangle;
 
 public class Player extends Mob {
 
-	private Bow bow = new Bow("Bow", Resources.bow);
+	private Bow bow = (Bow) Item.bow;
 	private Inventory inventory;
 	private Nemesis game;
 
@@ -32,6 +35,8 @@ public class Player extends Mob {
 	private int animSpeedSprint;
 
 	private boolean sprint = false;
+	private boolean fishing = false;
+
 	private double sprintMultiplier;
 
 	private double energy;
@@ -42,8 +47,8 @@ public class Player extends Mob {
 	private int fireRate = 0;
 	private int mobsKilled = 0;
 	private int score = 0;
-	private int it = 0;
-	private int et = 0;
+
+	public int it, et, ft, kt;
 
 	public Player(Image image, float x, float y, int width, int height) {
 		super(image, x, y, width, height);
@@ -93,6 +98,10 @@ public class Player extends Mob {
 		if (fireRate > 0) fireRate--;
 		if (it > 0) it -= delta;
 		if (et > 0) et -= delta;
+		if (ft > 0) ft -= delta;
+		if (kt > 0) kt -= delta;
+
+		inventory.update(delta);
 
 		float xa = 0;
 		float ya = 0;
@@ -116,12 +125,13 @@ public class Player extends Mob {
 				ya += speed;
 			}
 
-			sprint = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) && energy > energyRegen;
-
-			if (sprint && isWalking) energy -= 0.35;
-			if (energy < 0) energy = 0;
-			if (!(sprint && isWalking) && energy < baseEnergy) energy += energyRegen;
 		}
+
+		sprint = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) && energy > energyRegen;
+
+		if (sprint && isWalking) energy -= 0.35;
+		if (energy < 0) energy = 0;
+		if (!(sprint && isWalking) && energy < baseEnergy) energy += energyRegen;
 
 		wasWalking = isWalking;
 
@@ -137,6 +147,20 @@ public class Player extends Mob {
 			int rate = sprint ? animSpeedSprint : animSpeedDefault;
 			if (frame % (rate / delta) == 0) {
 				animIndex = ((animIndex + 1) % animCount);
+			}
+			fishing = false;
+		} else {
+			if (fishing) {
+				if (random.nextInt(100) < 1 && ft <= 0) {
+					Dialog.activate("Something starts to pull on your fishing rod...");
+					if (random.nextInt(100) < 60) {
+						Dialog.activate("You caught a fish!");
+						inventory.add(0, Item.fish);
+					} else {
+						Dialog.activate("But it got away!");
+					}
+					ft = 3000;
+				}
 			}
 		}
 
@@ -175,11 +199,16 @@ public class Player extends Mob {
 			arrows--;
 			fireRate = Arrow.FIRE_RATE;
 			Resources.bow_shot.play();
+			fishing = false;
 		} else if (Keyboard.isKeyDown(Keyboard.KEY_X) && it <= 0) {
 			interact();
+		} else if (Keyboard.isKeyDown(Keyboard.KEY_I) && kt <= 0) {
+			game.setMenu(new InventoryMenu(null, inventory));
+			kt = 200;
 		} else if (Keyboard.isKeyDown(Keyboard.KEY_H) && et <= 0) {
 			if (eat()) {
 				Resources.eat.play();
+				fishing = false;
 			}
 		}
 	}
@@ -240,21 +269,26 @@ public class Player extends Mob {
 
 	public boolean eat() {
 		for (int i = 0; i < inventory.size(); i++) {
-			if (inventory.get(i).eatable()) {
-				FoodItem item = (FoodItem) inventory.get(i);
-				heal(item.healPoints);
-				inventory.remove(item);
-				et = 450;
-				return true;
+			if (inventory.get(i) instanceof ItemStack) {
+				ItemStack stack = (ItemStack) inventory.get(i);
+				if (stack.item.eatable()) {
+					FoodItem food = (FoodItem) stack.item;
+					heal(food.healPoints);
+					((ItemStack) inventory.get(i)).itemList.remove(food);
+					et = 450;
+					return true;
+				}
 			}
 		}
 		return false;
 	}
 
+	public void fish(FishNPC spot) {
+		fishing = true;
+		ft = 1500;
+	}
+
 	public void render(Screen screen) {
-		// Graphics graphics = screen.getGraphics();
-		// graphics.drawLine(Display.getWidth() / 2, Display.getHeight() / 2,
-		// Mouse.getX(), Display.getHeight() - Mouse.getY());
 		screen.renderPlayer(this);
 	}
 
@@ -265,6 +299,10 @@ public class Player extends Mob {
 			Bow bow = (Bow) item;
 			equip(bow);
 		}
+	}
+
+	public boolean hasItem(Item item) {
+		return inventory.hasItems(item, 1);
 	}
 
 	public void equip(Item item) {
@@ -315,5 +353,9 @@ public class Player extends Mob {
 
 	public boolean isDead() {
 		return health <= 0.0;
+	}
+
+	public Inventory getInventory() {
+		return inventory;
 	}
 }
