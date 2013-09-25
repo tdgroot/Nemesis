@@ -48,7 +48,7 @@ public class RoachSpawner extends MobSpawner {
 			mob.setDamage(mobDamage);
 		}
 
-		if (getMobCash() > 0){
+		if (getMobCash() > 0) {
 			mob.setCash(mobCash);
 		}
 

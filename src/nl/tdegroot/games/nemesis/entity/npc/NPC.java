@@ -1,13 +1,11 @@
 package nl.tdegroot.games.nemesis.entity.npc;
 
+import actions.Interactable;
 import nl.tdegroot.games.nemesis.Nemesis;
 import nl.tdegroot.games.nemesis.entity.Entity;
 import nl.tdegroot.games.nemesis.entity.Player;
 import nl.tdegroot.games.nemesis.gfx.Screen;
-
 import org.newdawn.slick.Image;
-
-import actions.Interactable;
 
 public class NPC extends Entity implements Interactable {
 
@@ -45,11 +43,11 @@ public class NPC extends Entity implements Interactable {
 	}
 
 	public String[] getInteractItems() {
-		return new String[] { "Interact", "Talk", "Describe" };
+		return new String[]{"Interact", "Talk", "Describe"};
 	}
 
 	public String[] getDisplayItems() {
-		return new String[] { "Interact", "Talk", "Describe" };
+		return new String[]{"Interact", "Talk", "Describe"};
 	}
 
 	public String getName() {

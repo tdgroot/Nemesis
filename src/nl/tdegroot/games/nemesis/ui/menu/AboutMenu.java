@@ -2,8 +2,6 @@ package nl.tdegroot.games.nemesis.ui.menu;
 
 import nl.tdegroot.games.nemesis.Nemesis;
 import nl.tdegroot.games.nemesis.gfx.Resources;
-import nl.tdegroot.games.nemesis.gfx.Screen;
-
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Color;
@@ -39,8 +37,7 @@ public class AboutMenu extends Menu {
 		}
 	}
 
-	public void render(Screen screen) {
-		Graphics graphics = screen.getGraphics();
+	public void render(Graphics graphics) {
 		graphics.setColor(new Color(0, 0, 0));
 		graphics.fillRect(0, 0, Display.getWidth(), Display.getHeight());
 		graphics.setColor(new Color(255, 255, 255));
@@ -49,4 +46,9 @@ public class AboutMenu extends Menu {
 			graphics.drawString(msg, (Display.getWidth() - graphics.getFont().getWidth(msg)) / 2, ((Display.getHeight() - about.length * 8) / 2) + i * 18);
 		}
 	}
+
+	public boolean renderBackground() {
+		return false;
+	}
+
 }

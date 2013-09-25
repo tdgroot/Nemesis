@@ -1,9 +1,8 @@
 package nl.tdegroot.games.nemesis.ui.menu;
 
+import nl.tdegroot.games.nemesis.Log;
 import nl.tdegroot.games.nemesis.Nemesis;
 import nl.tdegroot.games.nemesis.gfx.Resources;
-import nl.tdegroot.games.nemesis.gfx.Screen;
-
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Color;
@@ -11,13 +10,15 @@ import org.newdawn.slick.Graphics;
 
 public class PauseMenu extends Menu {
 
+	private int xt;
+
 	public PauseMenu(Menu parent) {
 		super(parent);
 	}
 
 	public void init(Nemesis game) {
 		super.init(game);
-		items = new String[] {"Resume", "Restart", "Main Menu", "Quit Game"};
+		items = new String[]{"Resume", "Restart", "Save Game", "Main Menu", "Quit Game"};
 	}
 
 	public void update(int delta) {
@@ -26,6 +27,7 @@ public class PauseMenu extends Menu {
 			return;
 		}
 		if (kt > 0) kt -= delta;
+		if (xt > 0) xt -= delta;
 
 		if ((Keyboard.isKeyDown(Keyboard.KEY_UP) || Keyboard.isKeyDown(Keyboard.KEY_W)) && kt <= 0) {
 			selected--;
@@ -43,7 +45,7 @@ public class PauseMenu extends Menu {
 		if (selected < 0) selected += length;
 		if (selected >= length) selected -= length;
 
-		if (Keyboard.isKeyDown(Keyboard.KEY_X)) {
+		if (Keyboard.isKeyDown(Keyboard.KEY_X) && xt <= 0) {
 			if (selected == 0) {
 				Resources.interact.play();
 				game.setMenu(null);
@@ -51,25 +53,31 @@ public class PauseMenu extends Menu {
 
 			if (selected == 1) {
 				Resources.interact.play();
-				game.resetGame();
+				game.setupGame();
 				game.setMenu(null);
 			}
 
 			if (selected == 2) {
 				Resources.interact.play();
-				game.setMenu(new MainMenu(null));
+				Log.log("Save Game");
+				game.save();
 			}
 
 			if (selected == 3) {
+				Resources.interact.play();
+				game.setMenu(new MainMenu(null, true));
+			}
+
+			if (selected == 4) {
 				game.stop();
 			}
 
 			kt = 350;
+			xt = 350;
 		}
 	}
 
-	public void render(Screen screen) {
-		Graphics graphics = screen.getGraphics();
+	public void render(Graphics graphics) {
 		graphics.setColor(new Color(0, 0, 0, 150));
 		graphics.fillRect(0, 0, Display.getWidth(), Display.getHeight());
 		graphics.setColor(Color.white);

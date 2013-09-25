@@ -105,7 +105,7 @@ public class Mob extends Entity implements Mover {
 		}
 
 		float limit = movementSpeed * delta * deltaMul;
-		if (xa > - limit && xa < limit && ya > - limit && ya < limit) dir = lastDir;
+		if (xa > -limit && xa < limit && ya > -limit && ya < limit) dir = lastDir;
 
 		if (x < 0) x = 0;
 		if (y < 0) y = 0;
@@ -137,7 +137,7 @@ public class Mob extends Entity implements Mover {
 			fontType = TextParticle.Type.BIG;
 		}
 		health -= dmg;
-		if (! Resources.player_hit.playing()) Resources.player_hit.play(1.0f, 0.3f);
+		if (!Resources.player_hit.playing()) Resources.player_hit.play(1.0f, 0.3f);
 		if (health < 0) health = 0;
 		Player player = level.getPlayer();
 		Particle bloodParticle = new BloodParticle(player.getX(), player.getY(), 75, 600);
@@ -179,21 +179,21 @@ public class Mob extends Entity implements Mover {
 			} else if (ya > xa) {
 				return 2;
 			}
-		} else if (! xPositive && ! yPositive) {
+		} else if (!xPositive && !yPositive) {
 			if (xa < ya) {
 				return 3;
 			} else if (ya > xa) {
 				return 0;
 			}
-		} else if (xPositive && ! yPositive) {
-			float yy = ya * - 1;
+		} else if (xPositive && !yPositive) {
+			float yy = ya * -1;
 			if (xa > yy) {
 				return 1;
 			} else if (yy > xa) {
 				return 0;
 			}
-		} else if (! xPositive && yPositive) {
-			float xx = xa * - 1;
+		} else if (!xPositive && yPositive) {
+			float xx = xa * -1;
 			if (xx > ya) {
 				return 3;
 			} else if (ya > xx) {

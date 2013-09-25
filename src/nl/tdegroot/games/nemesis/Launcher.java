@@ -6,6 +6,8 @@ import org.newdawn.slick.SlickException;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,8 +16,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ChangeEvent;
 
 public class Launcher extends JFrame {
 
@@ -67,7 +67,7 @@ public class Launcher extends JFrame {
 		contentPane.setLayout(null);
 		setLocationRelativeTo(null);
 
-		cbResolution.setModel(new DefaultComboBoxModel(new String[] { "1024 x 768", "1024 x 720", "1280 x 720", "1280 x 768", "1600 x 900", "1920 x 1080" }));
+		cbResolution.setModel(new DefaultComboBoxModel(new String[]{"1024 x 768", "1024 x 720", "1280 x 720", "1280 x 768", "1600 x 900", "1920 x 1080"}));
 		cbResolution.setSelectedIndex(2);
 		cbResolution.setBounds(172, 11, 106, 20);
 		contentPane.add(cbResolution);
@@ -147,14 +147,14 @@ public class Launcher extends JFrame {
 
 		lblMusicVolume.setBounds(256, 126, 40, 14);
 		contentPane.add(lblMusicVolume);
-		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[] { contentPane, cbResolution, ckbxVsync, ckbxFullscreen, btnStart, btnQuit }));
+		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{contentPane, cbResolution, ckbxVsync, ckbxFullscreen, btnStart, btnQuit}));
 		loadConfig();
 	}
 
 	private void launch() throws SlickException {
 		saveConfig();
 		Nemesis nemesis = new Nemesis();
-		Log.log("Sound Volume: " +  soundVolume +  ", Music Volume: " + musicVolume);
+		Log.log("Sound Volume: " + soundVolume + ", Music Volume: " + musicVolume);
 		nemesis.setVolume(soundVolume, musicVolume);
 		AppGameContainer game = new AppGameContainer(new Nemesis());
 		game.setDisplayMode(width, height, fs);

@@ -2,7 +2,6 @@ package nl.tdegroot.games.nemesis.gfx;
 
 import nl.tdegroot.games.nemesis.entity.Entity;
 import nl.tdegroot.games.nemesis.entity.Player;
-
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;

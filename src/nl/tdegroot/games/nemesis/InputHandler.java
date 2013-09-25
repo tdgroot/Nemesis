@@ -5,9 +5,9 @@ import org.newdawn.slick.MouseListener;
 
 public class InputHandler implements MouseListener {
 
-	private static int mouseX = - 1;
-	private static int mouseY = - 1;
-	private static int mouseB = - 1;
+	private static int mouseX = -1;
+	private static int mouseY = -1;
+	private static int mouseB = -1;
 
 	public InputHandler() {
 
@@ -36,7 +36,7 @@ public class InputHandler implements MouseListener {
 	}
 
 	public void mouseReleased(int button, int y, int x) {
-		mouseB = - 1;
+		mouseB = -1;
 	}
 
 	public void mouseMoved(int oldX, int oldY, int newX, int newY) {

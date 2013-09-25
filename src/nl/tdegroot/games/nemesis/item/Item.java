@@ -1,11 +1,9 @@
 package nl.tdegroot.games.nemesis.item;
 
+import org.newdawn.slick.Image;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import nl.tdegroot.games.nemesis.gfx.Resources;
-
-import org.newdawn.slick.Image;
 
 public class Item {
 

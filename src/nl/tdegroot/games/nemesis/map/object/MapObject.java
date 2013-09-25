@@ -1,9 +1,9 @@
 package nl.tdegroot.games.nemesis.map.object;
 
+import actions.Interactable;
 import nl.tdegroot.games.nemesis.Nemesis;
 import nl.tdegroot.games.nemesis.entity.Player;
 import nl.tdegroot.games.nemesis.item.Item;
-import actions.Interactable;
 
 public class MapObject implements Interactable {
 

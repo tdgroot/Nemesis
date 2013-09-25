@@ -4,7 +4,6 @@ import nl.tdegroot.games.nemesis.Log;
 import nl.tdegroot.games.nemesis.entity.Player;
 import nl.tdegroot.games.nemesis.entity.npc.ShopNPC;
 import nl.tdegroot.games.nemesis.gfx.Resources;
-import nl.tdegroot.games.nemesis.gfx.Screen;
 import nl.tdegroot.games.nemesis.item.Arrow;
 import nl.tdegroot.games.nemesis.item.Item;
 import nl.tdegroot.games.nemesis.item.ItemStack;
@@ -115,7 +114,7 @@ public class ShopMenu extends Menu {
 					return;
 				}
 				if (stack.item instanceof Arrow) {
-					if (! Resources.interact.playing()) Resources.interact.play();
+					if (!Resources.interact.playing()) Resources.interact.play();
 					stack.remove(1);
 					player.addArrows(1);
 					player.chargeCash(stack.item.buyCost);
@@ -123,13 +122,13 @@ public class ShopMenu extends Menu {
 					Log.log("Arrows: " + player.getArrows());
 				} else {
 					if (stack.item.equipable()) {
-						if (! Resources.interact.playing()) Resources.interact.play();
+						if (!Resources.interact.playing()) Resources.interact.play();
 						stack.remove(1);
 						player.equip(stack.item);
 						player.chargeCash(stack.item.buyCost);
 						bt = 100;
 					} else {
-						if (! Resources.interact.playing()) Resources.interact.play();
+						if (!Resources.interact.playing()) Resources.interact.play();
 						stack.remove(1);
 						player.giveItem(stack.item);
 						player.chargeCash(stack.item.buyCost);
@@ -141,8 +140,7 @@ public class ShopMenu extends Menu {
 
 	}
 
-	public void render(Screen screen) {
-		Graphics graphics = screen.getGraphics();
+	public void render(Graphics graphics) {
 		graphics.setColor(new Color(0, 0, 0, 175));
 		graphics.fillRect(0, 0, Display.getWidth(), Display.getHeight());
 		graphics.setColor(new Color(255, 255, 255));

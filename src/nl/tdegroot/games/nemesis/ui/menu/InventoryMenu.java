@@ -1,7 +1,6 @@
 package nl.tdegroot.games.nemesis.ui.menu;
 
 import nl.tdegroot.games.nemesis.entity.Inventory;
-import nl.tdegroot.games.nemesis.gfx.Screen;
 import nl.tdegroot.games.nemesis.item.Item;
 import nl.tdegroot.games.nemesis.item.ItemStack;
 import org.lwjgl.input.Keyboard;
@@ -70,8 +69,7 @@ public class InventoryMenu extends Menu {
 
 	}
 
-	public void render(Screen screen) {
-		Graphics graphics = screen.getGraphics();
+	public void render(Graphics graphics) {
 		int xOffset = ((Display.getWidth() / 2) - (width * slotSize) / 2);
 		int yOffset = ((Display.getHeight() / 2) - (height * slotSize) / 2);
 		int xa = x * slotSize;

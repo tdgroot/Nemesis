@@ -4,8 +4,6 @@ import nl.tdegroot.games.nemesis.Nemesis;
 import nl.tdegroot.games.nemesis.Score;
 import nl.tdegroot.games.nemesis.entity.Player;
 import nl.tdegroot.games.nemesis.gfx.Resources;
-import nl.tdegroot.games.nemesis.gfx.Screen;
-
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Color;
@@ -27,7 +25,7 @@ public class DeadMenu extends Menu {
 
 	public void init(Nemesis game) {
 		super.init(game);
-		items = new String[] {"Restart", "Main Menu", "Quit Game"};
+		items = new String[]{"Restart", "Main Menu", "Quit Game"};
 		kt = 200;
 	}
 
@@ -54,16 +52,16 @@ public class DeadMenu extends Menu {
 		if (selected >= length) selected -= length;
 
 		if (Keyboard.isKeyDown(Keyboard.KEY_X)) {
-			
+
 			if (selected == 0) {
 				Resources.interact.play();
-				game.resetGame();
+				game.setupGame();
 				game.setMenu(null);
 			}
 
 			if (selected == 1) {
 				Resources.interact.play();
-				game.setMenu(new MainMenu(null));
+				game.setMenu(new MainMenu(null, true));
 			}
 
 			if (selected == 2) game.stop();
@@ -72,8 +70,7 @@ public class DeadMenu extends Menu {
 		}
 	}
 
-	public void render(Screen screen) {
-		Graphics graphics = screen.getGraphics();
+	public void render(Graphics graphics) {
 		graphics.setColor(new Color(0, 0, 0, 175));
 		graphics.fillRect(0, 0, Display.getWidth(), Display.getWidth());
 		graphics.setColor(Color.white);

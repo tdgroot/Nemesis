@@ -21,9 +21,9 @@ public class Sign extends MapObject {
 			Dialog.activate("An empty sign");
 		}
 	}
-	
-	public String[] getDisplayItems(){
-		return new String[] {"Read", "Describe"};
+
+	public String[] getDisplayItems() {
+		return new String[]{"Read", "Describe"};
 	}
 
 }

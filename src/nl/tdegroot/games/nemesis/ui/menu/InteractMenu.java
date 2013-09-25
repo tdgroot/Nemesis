@@ -1,14 +1,11 @@
 package nl.tdegroot.games.nemesis.ui.menu;
 
+import actions.Interactable;
 import nl.tdegroot.games.nemesis.entity.Player;
 import nl.tdegroot.games.nemesis.gfx.Resources;
-import nl.tdegroot.games.nemesis.gfx.Screen;
-
 import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
-
-import actions.Interactable;
 
 public class InteractMenu extends Menu {
 
@@ -88,10 +85,9 @@ public class InteractMenu extends Menu {
 
 	}
 
-	public void render(Screen screen) {
-		Graphics graphics = screen.getGraphics();
-		float xx = (x * 64) + 50 - screen.xOffset;
-		float yy = (y * 64) - 15 - screen.yOffset;
+	public void render(Graphics graphics) {
+		float xx = (x * 64) + 50 - game.screen.xOffset;
+		float yy = (y * 64) - 15 - game.screen.yOffset;
 		float nameHeight = graphics.getFont().getHeight(interactable.getName());
 		graphics.setColor(new Color(0xa3a3a3));
 		graphics.fillRect(xx, yy, width, nameHeight);

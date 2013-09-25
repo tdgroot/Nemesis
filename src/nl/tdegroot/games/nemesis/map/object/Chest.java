@@ -1,13 +1,13 @@
 package nl.tdegroot.games.nemesis.map.object;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import nl.tdegroot.games.nemesis.Log;
 import nl.tdegroot.games.nemesis.Nemesis;
 import nl.tdegroot.games.nemesis.entity.Player;
 import nl.tdegroot.games.nemesis.item.Item;
 import nl.tdegroot.games.nemesis.ui.Dialog;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Chest extends MapObject {
 
@@ -20,7 +20,7 @@ public class Chest extends MapObject {
 	}
 
 	public void interact(Player player, Nemesis game) {
-		if (! empty()) {
+		if (!empty()) {
 			Dialog.activate(message);
 			for (int i = 0; i < items.size(); i++) {
 				Log.log("Gifting item: " + i + ", of: " + items.size());
@@ -33,13 +33,13 @@ public class Chest extends MapObject {
 		items.clear();
 		arrows = 0;
 	}
-	
+
 	public void describe() {
 		Dialog.activate("An old looking chest");
 	}
 
 	public String[] getDisplayItems() {
-		return new String[] {"Open", "Describe"};
+		return new String[]{"Open", "Describe"};
 	}
 
 	public void addItem(Item item, int count) {

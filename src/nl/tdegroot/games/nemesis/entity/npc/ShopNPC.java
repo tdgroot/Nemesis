@@ -1,11 +1,10 @@
 package nl.tdegroot.games.nemesis.entity.npc;
 
+import nl.tdegroot.games.nemesis.item.Item;
+import org.newdawn.slick.Image;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import nl.tdegroot.games.nemesis.item.Item;
-
-import org.newdawn.slick.Image;
 
 public class ShopNPC extends NPC {
 
@@ -27,7 +26,7 @@ public class ShopNPC extends NPC {
 	}
 
 	public String[] getDisplayItems() {
-		return new String[] {"Shop", "Talk", "Describe"};
+		return new String[]{"Shop", "Talk", "Describe"};
 	}
 
 

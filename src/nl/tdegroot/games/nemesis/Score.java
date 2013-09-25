@@ -8,11 +8,11 @@ import java.util.Properties;
 
 public class Score {
 
-	private static final String location = System.getenv("APPDATA") + "\\.nemesis";
+	public static final String location = System.getenv("APPDATA") + "\\.nemesis";
 
 	public static void save(int score) {
 		File file = new File(location);
-		if (! file.exists()) {
+		if (!file.exists()) {
 			file.mkdir();
 		}
 

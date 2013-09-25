@@ -2,7 +2,6 @@ package nl.tdegroot.games.nemesis.ui.menu;
 
 import nl.tdegroot.games.nemesis.Nemesis;
 import nl.tdegroot.games.nemesis.gfx.Resources;
-import nl.tdegroot.games.nemesis.gfx.Screen;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Color;
@@ -12,14 +11,16 @@ public class MainMenu extends Menu {
 
 	private int kt = 0;
 	private int xt = 0;
+	private boolean reset;
 
-	public MainMenu(Menu parent) {
+	public MainMenu(Menu parent, boolean reset) {
 		super(parent);
+		this.reset = reset;
 	}
 
 	public void init(Nemesis game) {
 		super.init(game);
-		items = new String[] {"Play", "Controls", "About", "Quit Game"};
+		items = new String[]{"Play", "Load Game", "Controls", "About", "Quit Game"};
 		xt = 400;
 	}
 
@@ -50,28 +51,33 @@ public class MainMenu extends Menu {
 		if (Keyboard.isKeyDown(Keyboard.KEY_X) && xt <= 0) {
 			if (selected == 0) {
 				Resources.interact.play();
-				game.resetGame();
+				if (reset) game.setupGame();
 				game.setMenu(parent);
 			}
 
 			if (selected == 1) {
 				Resources.interact.play();
-				game.setMenu(new ControlsMenu(this));
+				game.load();
+				game.setMenu(null);
 			}
 
 			if (selected == 2) {
 				Resources.interact.play();
+				game.setMenu(new ControlsMenu(this));
+			}
+
+			if (selected == 3) {
+				Resources.interact.play();
 				game.setMenu(new AboutMenu(this));
 			}
 
-			if (selected == 3) game.stop();
+			if (selected == 4) game.stop();
 
 			kt = 350;
 		}
 	}
 
-	public void render(Screen screen) {
-		Graphics graphics = screen.getGraphics();
+	public void render(Graphics graphics) {
 		graphics.setColor(new Color(0, 0, 0, 255));
 		graphics.fillRect(0, 0, Display.getWidth(), Display.getHeight());
 		graphics.setColor(Color.white);
@@ -82,6 +88,10 @@ public class MainMenu extends Menu {
 			}
 			graphics.drawString(msg, (Display.getWidth() - graphics.getFont().getWidth(msg)) / 2, ((Display.getHeight() - items.length * graphics.getFont().getHeight(msg)) / 2) + (i * 3) * 8);
 		}
+	}
+
+	public boolean renderBackground() {
+		return false;
 	}
 
 }

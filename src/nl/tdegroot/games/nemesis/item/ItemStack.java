@@ -31,4 +31,8 @@ public class ItemStack extends Item {
 			}
 		}
 	}
+
+	public int size() {
+		return itemList.size();
+	}
 }

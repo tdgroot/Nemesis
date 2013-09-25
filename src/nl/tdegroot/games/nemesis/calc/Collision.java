@@ -2,7 +2,6 @@ package nl.tdegroot.games.nemesis.calc;
 
 import nl.tdegroot.games.nemesis.entity.Mob;
 import nl.tdegroot.games.nemesis.level.Level;
-
 import org.newdawn.slick.tiled.TiledMap;
 
 

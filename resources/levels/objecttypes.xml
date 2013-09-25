@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objecttypes>
- <objecttype name="Collision" color="#ffffff"/>
- <objecttype name="Spawner" color="#a40002"/>
- <objecttype name="MapObject" color="#0000a4"/>
+    <objecttype name="Collision" color="#ffffff"/>
+    <objecttype name="Spawner" color="#a40002"/>
+    <objecttype name="MapObject" color="#0000a4"/>
 </objecttypes>

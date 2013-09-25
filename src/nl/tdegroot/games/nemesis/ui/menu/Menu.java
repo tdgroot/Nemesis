@@ -1,7 +1,7 @@
 package nl.tdegroot.games.nemesis.ui.menu;
 
 import nl.tdegroot.games.nemesis.Nemesis;
-import nl.tdegroot.games.nemesis.gfx.Screen;
+import org.newdawn.slick.Graphics;
 
 public class Menu {
 
@@ -22,9 +22,11 @@ public class Menu {
 	public void update(int delta) {
 	}
 
-	public void render(Screen screen) {
+	public void render(Graphics g) {
 	}
 
-
+	public boolean renderBackground() {
+		return true;
+	}
 
 }

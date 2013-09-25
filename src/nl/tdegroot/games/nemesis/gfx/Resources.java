@@ -1,13 +1,12 @@
 package nl.tdegroot.games.nemesis.gfx;
 
-import java.awt.Font;
-
 import nl.tdegroot.games.nemesis.Log;
-
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 import org.newdawn.slick.TrueTypeFont;
+
+import java.awt.*;
 
 public class Resources {
 

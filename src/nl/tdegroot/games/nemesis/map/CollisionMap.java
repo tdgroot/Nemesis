@@ -1,10 +1,11 @@
 package nl.tdegroot.games.nemesis.map;
 
 import nl.tdegroot.games.nemesis.Log;
-
 import org.newdawn.slick.tiled.TiledMap;
 
-public class CollisionMap {
+import java.io.Serializable;
+
+public class CollisionMap implements Serializable {
 
 	public boolean[] solid;
 	private boolean[] water;

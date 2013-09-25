@@ -18,14 +18,15 @@ import nl.tdegroot.games.nemesis.map.MapLayer;
 import nl.tdegroot.games.nemesis.map.object.MapObject;
 import nl.tdegroot.games.nemesis.ui.Dialog;
 import nl.tdegroot.games.nemesis.ui.menu.InteractMenu;
-
 import nl.tdegroot.games.nemesis.ui.menu.InventoryMenu;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
 
-public class Player extends Mob {
+import java.io.Serializable;
+
+public class Player extends Mob implements Serializable {
 
 	private Bow bow = (Bow) Item.bow;
 	private Inventory inventory;
@@ -34,7 +35,7 @@ public class Player extends Mob {
 	private int animSpeedDefault;
 	private int animSpeedSprint;
 
-	private boolean sprint = false;
+	private boolean sprinting = false;
 	private boolean fishing = false;
 
 	private double sprintMultiplier;
@@ -110,7 +111,7 @@ public class Player extends Mob {
 
 		if (!Dialog.isActive()) {
 			float speed = movementSpeed * delta * deltaMul;
-			if (sprint) speed *= sprintMultiplier;
+			if (sprinting) speed *= sprintMultiplier;
 
 			if (Keyboard.isKeyDown(Keyboard.KEY_A) || Keyboard.isKeyDown(Keyboard.KEY_LEFT)) {
 				xa -= speed;
@@ -127,11 +128,13 @@ public class Player extends Mob {
 
 		}
 
-		sprint = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) && energy > energyRegen;
+		sprinting = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) && energy > energyRegen;
 
-		if (sprint && isWalking) energy -= 0.35;
+		if (sprinting && isWalking) {
+			energy -= 0.35;
+		}
 		if (energy < 0) energy = 0;
-		if (!(sprint && isWalking) && energy < baseEnergy) energy += energyRegen;
+		if (!(sprinting && isWalking) && energy < baseEnergy) energy += energyRegen;
 
 		wasWalking = isWalking;
 
@@ -144,7 +147,7 @@ public class Player extends Mob {
 		}
 
 		if (isWalking) {
-			int rate = sprint ? animSpeedSprint : animSpeedDefault;
+			int rate = sprinting ? animSpeedSprint : animSpeedDefault;
 			if (frame % (rate / delta) == 0) {
 				animIndex = ((animIndex + 1) % animCount);
 			}
@@ -339,6 +342,14 @@ public class Player extends Mob {
 		return health;
 	}
 
+	public int getDir() {
+		return dir;
+	}
+
+	public int getAnimIndex() {
+		return animIndex;
+	}
+
 	public double getPercentHealth() {
 		return (baseHealth / 100 * health);
 	}
@@ -358,4 +369,47 @@ public class Player extends Mob {
 	public Inventory getInventory() {
 		return inventory;
 	}
+
+	public void setSave(Object object) {
+		Object[] objects = (Object[]) object;
+
+		x = Float.parseFloat("" + (double) objects[0]);
+		y = Float.parseFloat("" + (double) objects[1]);
+
+		Log.log("Loading: x: " + x + ", y: " + y);
+
+		baseHealth = (double) objects[2];
+		health = (double) objects[3];
+
+		baseEnergy = (double) objects[4];
+		energy = (double) objects[5];
+
+		inventory.setSave((String) objects[6]);
+
+		cash = (double) objects[7];
+		score = (int) objects[8];
+		mobsKilled = (int) objects[9];
+	}
+
+	public Object getSave() {
+		Object[] objects = new Object[50];
+
+		objects[0] = x;
+		objects[1] = y;
+
+		objects[2] = baseHealth;
+		objects[3] = health;
+
+		objects[4] = baseEnergy;
+		objects[5] = energy;
+
+		objects[6] = inventory.getSave();
+
+		objects[7] = cash;
+		objects[8] = score;
+		objects[9] = mobsKilled;
+
+		return objects;
+	}
+
 }

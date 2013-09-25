@@ -23,11 +23,11 @@ public class Steve extends ShopNPC {
 		Resources.steve_interact.play();
 		game.setMenu(new ShopMenu(null, this));
 	}
-	
+
 	public void talk() {
 		Dialog.activate("Hey! Want to buy some stuff? I got arrows and fish!");
 	}
-	
+
 	public void describe() {
 		Dialog.activate("A strange man trying to earn some money..");
 	}

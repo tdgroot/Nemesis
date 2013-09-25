@@ -1,8 +1,5 @@
 package nl.tdegroot.games.nemesis.level;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import nl.tdegroot.games.nemesis.Log;
 import nl.tdegroot.games.nemesis.entity.Entity;
 import nl.tdegroot.games.nemesis.entity.Mob;
@@ -20,14 +17,17 @@ import nl.tdegroot.games.nemesis.map.ObjectMap;
 import nl.tdegroot.games.nemesis.map.object.MapObject;
 import nl.tdegroot.games.nemesis.spawner.MobSpawner;
 import nl.tdegroot.games.nemesis.spawner.RoachSpawner;
-
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 import org.newdawn.slick.util.pathfinding.PathFindingContext;
 import org.newdawn.slick.util.pathfinding.TileBasedMap;
 
-public class Level implements TileBasedMap {
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Level implements TileBasedMap, Serializable {
 
 	private Player player;
 	private TiledMap map;
@@ -47,7 +47,9 @@ public class Level implements TileBasedMap {
 		map = new TiledMap(path);
 		new MapLayer(map);
 		tileSize = map.getTileWidth() & map.getTileHeight();
-		if (tileSize == 0) { throw new SlickException("Tilewidth and Tileheight are not equal!"); }
+		if (tileSize == 0) {
+			throw new SlickException("Tilewidth and Tileheight are not equal!");
+		}
 		collisionMap = new CollisionMap(map, tileSize, getPixelWidth(), getPixelHeight());
 		objectMap = new ObjectMap(map, tileSize);
 		npcMap = new NPCMap(map, this, tileSize);
@@ -146,8 +148,11 @@ public class Level implements TileBasedMap {
 	}
 
 	public void checkProjectiles() {
+//		Log.log("Gonna check projectiles");
 		for (Projectile p : projectiles) {
+			Log.log("Checking a projectile");
 			for (Mob mob : mobs) {
+				Log.log("Checking a mob.");
 				if (p.getAreaOfEffect().intersects(mob.getVulnerability()) && !p.isRemoved()) {
 					mob.hit(p);
 					if (mob.isRemoved()) {
@@ -202,9 +207,9 @@ public class Level implements TileBasedMap {
 		MobSpawner spawner = null;
 
 		switch (type) {
-		case "roach":
-			spawner = new RoachSpawner(this, player, x, y, i);
-			break;
+			case "roach":
+				spawner = new RoachSpawner(this, player, x, y, i);
+				break;
 		}
 
 		if (spawner != null) {
@@ -311,5 +316,18 @@ public class Level implements TileBasedMap {
 
 	public Player getPlayer() {
 		return player;
+	}
+
+	public void setSave(Object object) {
+//		Object[] objects = (Object[]) object;
+	}
+
+	public Object getSave() {
+		Object[] object = new Object[2];
+//		object[0] = entities.toArray();
+//		object[1] = mobs;
+//		object[2] = projectiles;
+//		object[3] = particles;
+		return object;
 	}
 }
