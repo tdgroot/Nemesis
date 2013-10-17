@@ -366,49 +366,34 @@ public class Player extends Mob implements Serializable {
 		return health <= 0.0;
 	}
 
-	public Inventory getInventory() {
-		return inventory;
-	}
-
 	public void setSave(Object object) {
 		Object[] objects = (Object[]) object;
-
 		x = Float.parseFloat("" + (double) objects[0]);
 		y = Float.parseFloat("" + (double) objects[1]);
-
-		Log.log("Loading: x: " + x + ", y: " + y);
-
 		baseHealth = (double) objects[2];
 		health = (double) objects[3];
-
 		baseEnergy = (double) objects[4];
 		energy = (double) objects[5];
-
 		inventory.setSave((String) objects[6]);
-
 		cash = (double) objects[7];
 		score = (int) objects[8];
 		mobsKilled = (int) objects[9];
+		dir = (int) objects[10];
 	}
 
 	public Object getSave() {
 		Object[] objects = new Object[50];
-
 		objects[0] = x;
 		objects[1] = y;
-
 		objects[2] = baseHealth;
 		objects[3] = health;
-
 		objects[4] = baseEnergy;
 		objects[5] = energy;
-
 		objects[6] = inventory.getSave();
-
 		objects[7] = cash;
 		objects[8] = score;
 		objects[9] = mobsKilled;
-
+		objects[10] = dir;
 		return objects;
 	}
 
