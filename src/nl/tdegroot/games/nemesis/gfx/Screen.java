@@ -3,6 +3,7 @@ package nl.tdegroot.games.nemesis.gfx;
 import nl.tdegroot.games.nemesis.entity.Entity;
 import nl.tdegroot.games.nemesis.entity.Mob;
 import nl.tdegroot.games.nemesis.entity.Player;
+import nl.tdegroot.games.nemesis.entity.npc.NPC;
 import nl.tdegroot.games.nemesis.entity.projectile.Projectile;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.*;
@@ -20,7 +21,7 @@ public class Screen {
 		this.graphics = g;
 	}
 
-	public void renderMap(TiledMap map, int tileSize, String l, int amount) {
+	public void render(TiledMap map, int tileSize, String l, int amount) {
 		String[] layerArray = new String[amount];
 		if (amount > 1) {
 			layerArray = l.split(":");
@@ -41,7 +42,7 @@ public class Screen {
 		}
 	}
 
-	public void renderPlayer(Player player) {
+	public void render(Player player) {
 		SpriteSheet sheet = player.getSheet();
 		sheet.startUse();
 		sheet.renderInUse((int) camera.getXOffset(), (int) camera.getYOffset(), player.animIndex, player.dir);
@@ -49,33 +50,34 @@ public class Screen {
 //		Log.log("Anim Index: " + player.getAnimIndex() + ", Direction: " + player.dir);
 	}
 
-	public void renderMob(Mob mob) {
+	public void render(Mob mob) {
 		SpriteSheet sheet = mob.getSheet();
 		sheet.startUse();
 		sheet.renderInUse((int) (mob.getX() - xOffset), (int) (mob.getY() - yOffset), mob.getAnimIndex(), mob.getDir());
 		sheet.endUse();
 	}
 
-	public void renderProjectile(Projectile projectile) {
+    public void render(NPC npc) {
+        SpriteSheet sheet = npc.getSheet();
+        sheet.startUse();
+        sheet.renderInUse((int) (npc.getX() - xOffset), (int) (npc.getY() - yOffset), npc.getAnimIndex(), 0);
+        sheet.endUse();
+    }
+
+	public void render(Projectile projectile) {
 		projectile.getSprite().setRotation((float) Math.toDegrees(-projectile.getAngle()) - 180.0f);
 		projectile.getSprite().drawCentered(projectile.getX() - xOffset, projectile.getY() - yOffset);
 	}
 
-	public void renderParticle(float x, float y, Image sprite) {
+	public void render(float x, float y, Image sprite) {
 		sprite.draw(x - xOffset, y - yOffset);
 	}
 
-	public void renderPath(Path destination) {
-		for (int i = 0; i < destination.getLength(); i++) {
-			graphics.fillRect(destination.getX(i), destination.getY(i), 64, 64);
-		}
-	}
-
-	public void renderEntity(Entity entity) {
+	public void render(Entity entity) {
 		entity.getSprite().draw(entity.getX() * 64 - xOffset, entity.getY() * 64 - yOffset);
 	}
 
-	public void renderText(String msg, float x, float y, boolean fixed, TrueTypeFont font, Color color) {
+	public void render(String msg, float x, float y, boolean fixed, TrueTypeFont font, Color color) {
 		graphics.setFont(font);
 		Color old = graphics.getColor();
 		graphics.setColor(color);

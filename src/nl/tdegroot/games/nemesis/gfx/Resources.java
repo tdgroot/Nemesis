@@ -17,12 +17,15 @@ public class Resources {
 
 	// Entities
 	public static Image entityArrow;
-	public static Image steve;
-	public static Image fishSpot;
+
+    // NPCS
+    public static Image steve;
+    public static Image fishSpot;
+    public static Image fishSheet;
 
 	// Particles
 	public static Image slimeParticle;
-	public static Image bloodParticle;
+    public static Image bloodParticle;
 
 	// Items
 	public static Image bow;
@@ -34,16 +37,16 @@ public class Resources {
 	public static Image healthBar;
 	public static Image energyBar;
 	public static Image characterBar;
-
 	public static Image dialogWindow;
 	public static Image scoreBar;
+
 	// Fonts
 	public static TrueTypeFont agency_fb;
 	public static TrueTypeFont courier_new_bold;
 	public static final TrueTypeFont DEFAULT = new TrueTypeFont(new Font("Courier New", 0, 16), true);
 	public static final TrueTypeFont NORMAL_HIT = new TrueTypeFont(new Font("Courier New", 0, 16), true);
-
 	public static final TrueTypeFont CRIT_HIT = new TrueTypeFont(new Font("Courier New", Font.BOLD, 25), true);
+
 	// Sounds
 	public static Sound select;
 	public static Sound mob_death;
@@ -66,8 +69,11 @@ public class Resources {
 
 			// Entities
 			entityArrow = new Image("resources/textures/entities/arrow.png");
+
+            // NPCS
 			steve = new Image("resources/textures/entities/npc/steve.png");
 			fishSpot = new Image("resources/textures/entities/npc/fishSpot.png");
+            fishSheet = new Image("resources/textures/entities/npc/fishingspot.png");
 
 			// Particles
 			slimeParticle = new Image("resources/textures/entities/particles/slimeParticle.png");

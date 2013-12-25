@@ -118,7 +118,7 @@ public class Particle extends Entity {
 	public void render(Screen screen) {
 		for (int i = 0; i < this.particles.size(); i++) {
 			Particle p = this.particles.get(i);
-			screen.renderParticle(p.x, p.y - (float) p.zz, sprite);
+			screen.render(p.x, p.y - (float) p.zz, sprite);
 		}
 	}
 

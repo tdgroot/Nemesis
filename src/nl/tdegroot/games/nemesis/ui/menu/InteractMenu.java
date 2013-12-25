@@ -18,12 +18,12 @@ public class InteractMenu extends Menu {
 
 	private String[] displayItems;
 
-	public InteractMenu(Player player, Interactable interactable, float x, float y) {
+	public InteractMenu(Player player, Interactable interactable) {
 		super(null);
 		this.player = player;
 		this.interactable = interactable;
-		this.x = x;
-		this.y = y;
+		x = interactable.getX();
+		y = interactable.getY();
 		displayItems = interactable.getDisplayItems();
 		items = interactable.getInteractItems();
 		for (int i = 0; i < items.length; i++) {
@@ -86,8 +86,8 @@ public class InteractMenu extends Menu {
 	}
 
 	public void render(Graphics graphics) {
-		float xx = (x * 64) + 50 - game.screen.xOffset;
-		float yy = (y * 64) - 15 - game.screen.yOffset;
+		float xx = (x + 50 - game.screen.xOffset);
+		float yy = (y - 15 - game.screen.yOffset);
 		float nameHeight = graphics.getFont().getHeight(interactable.getName());
 		graphics.setColor(new Color(0xa3a3a3));
 		graphics.fillRect(xx, yy, width, nameHeight);

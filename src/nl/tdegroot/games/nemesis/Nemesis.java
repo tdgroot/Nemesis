@@ -185,9 +185,6 @@ public class Nemesis extends BasicGame {
 			player.setSave(objectMapper.readValue((String) in.readObject(), Object[].class));
 			uiHandler = new UIHandler(player);
 
-//			level = new Level("resources/levels/starterisland.tmx", player);
-//			level.setSave(objectMapper.readValue((String) in.readObject(), Object[].class));
-
 			in.close();
 		} catch (Exception e) {
 			e.printStackTrace();

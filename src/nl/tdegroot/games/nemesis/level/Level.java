@@ -148,11 +148,8 @@ public class Level implements TileBasedMap, Serializable {
 	}
 
 	public void checkProjectiles() {
-//		Log.log("Gonna check projectiles");
 		for (Projectile p : projectiles) {
-			Log.log("Checking a projectile");
 			for (Mob mob : mobs) {
-				Log.log("Checking a mob.");
 				if (p.getAreaOfEffect().intersects(mob.getVulnerability()) && !p.isRemoved()) {
 					mob.hit(p);
 					if (mob.isRemoved()) {
@@ -175,7 +172,7 @@ public class Level implements TileBasedMap, Serializable {
 	}
 
 	public void render(Graphics g, Screen screen) {
-		screen.renderMap(map, tileSize, "tileLayer:objectLayer", 2);
+		screen.render(map, tileSize, "tileLayer:objectLayer", 2);
 
 		for (int i = 0; i < mobs.size(); i++) {
 			mobs.get(i).render(screen);
@@ -187,9 +184,9 @@ public class Level implements TileBasedMap, Serializable {
 
 		if (player.getLastDir() == 2) {
 			player.render(screen);
-			screen.renderMap(map, tileSize, "objectLayerSpecial", 1);
+			screen.render(map, tileSize, "objectLayerSpecial", 1);
 		} else {
-			screen.renderMap(map, tileSize, "objectLayerSpecial", 1);
+			screen.render(map, tileSize, "objectLayerSpecial", 1);
 			player.render(screen);
 		}
 
@@ -260,6 +257,7 @@ public class Level implements TileBasedMap, Serializable {
 	}
 
 	public void addEntity(Entity entity) {
+        entity.init(this);
 		entities.add(entity);
 	}
 

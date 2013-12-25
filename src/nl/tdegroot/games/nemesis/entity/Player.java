@@ -262,11 +262,11 @@ public class Player extends Mob implements Serializable {
 		if (object != null) {
 			Resources.interact.play();
 			it = 250;
-			game.setMenu(new InteractMenu(this, object, object.getX(), object.getY()));
+			game.setMenu(new InteractMenu(this, object));
 		} else if (npc != null) {
 			Resources.interact.play();
 			it = 250;
-			game.setMenu(new InteractMenu(this, npc, npc.getX(), npc.getY()));
+			game.setMenu(new InteractMenu(this, npc));
 		}
 	}
 
@@ -292,7 +292,7 @@ public class Player extends Mob implements Serializable {
 	}
 
 	public void render(Screen screen) {
-		screen.renderPlayer(this);
+		screen.render(this);
 	}
 
 	public void giveItem(Item item) {

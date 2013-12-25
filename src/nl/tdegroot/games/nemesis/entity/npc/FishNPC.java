@@ -10,11 +10,12 @@ import nl.tdegroot.games.nemesis.ui.Dialog;
 public class FishNPC extends NPC {
 
 	public FishNPC(float x, float y, int id) {
-		super(Resources.fishSpot, x, y, 64, 64, "Fishing Spot", id);
+		super(Resources.fishSheet, x, y, 64, 64, "Fishing Spot", id);
 	}
 
 	public void render(Screen screen) {
-		screen.renderEntity(this);
+        frame++;
+		screen.render(this);
 	}
 
 	public void interact(Player player, Nemesis game) {

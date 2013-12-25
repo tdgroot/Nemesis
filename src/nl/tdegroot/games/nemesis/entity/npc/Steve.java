@@ -33,7 +33,7 @@ public class Steve extends ShopNPC {
 	}
 
 	public void render(Screen screen) {
-		screen.renderEntity(this);
+		screen.render(this);
 	}
 
 	public void addArrows(int count) {

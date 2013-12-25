@@ -51,7 +51,7 @@ public class Entity {
 	}
 
 	public void render(Screen screen) {
-		screen.renderEntity(this);
+		screen.render(this);
 	}
 
 	public Level getLevel() {

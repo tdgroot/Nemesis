@@ -17,4 +17,8 @@ public interface Interactable {
 
 	public String getName();
 
+    public float getX();
+
+    public float getY();
+
 }

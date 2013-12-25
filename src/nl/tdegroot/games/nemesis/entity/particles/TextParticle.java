@@ -40,7 +40,7 @@ public class TextParticle extends Particle {
 	}
 
 	public void render(Screen screen) {
-		screen.renderText(msg, x, y, false, font, color);
+		screen.render(msg, x, y, false, font, color);
 	}
 
 }

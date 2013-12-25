@@ -205,7 +205,7 @@ public class Mob extends Entity implements Mover {
 	}
 
 	public void render(Screen screen) {
-		screen.renderMob(this);
+		screen.render(this);
 	}
 
 	public Rectangle getVulnerability() {

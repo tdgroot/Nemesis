@@ -42,7 +42,7 @@ public class Arrow extends Projectile {
 	}
 
 	public void render(Screen screen) {
-		screen.renderProjectile(this);
+		screen.render(this);
 	}
 
 }
