@@ -4,12 +4,18 @@ import actions.Interactable;
 import nl.tdegroot.games.nemesis.Nemesis;
 import nl.tdegroot.games.nemesis.entity.Player;
 import nl.tdegroot.games.nemesis.item.Item;
+import nl.tdegroot.games.nemesis.level.Level;
 
 public class MapObject implements Interactable {
 
 	private float x, y;
 	protected String message;
 	protected String name;
+
+    public void init(int tileSize) {
+        x *= tileSize;
+        y *= tileSize;
+    }
 
 	public void addItem(Item item, int count) {
 	}

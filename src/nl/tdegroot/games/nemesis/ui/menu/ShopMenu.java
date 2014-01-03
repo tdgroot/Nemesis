@@ -94,7 +94,7 @@ public class ShopMenu extends Menu {
         if (Keyboard.isKeyDown(Keyboard.KEY_LEFT) && kt <= 0) {
             if (selection) {
                 amount--;
-                if (amount < 0) amount = 0;
+                if (amount < 1) amount = 1;
             } else {
                 currentBank--;
                 selection = false;
@@ -150,7 +150,7 @@ public class ShopMenu extends Menu {
         kt = 500;
         if (item instanceof ItemStack) {
             ItemStack stack = (ItemStack) item;
-            if (player.getCash() < stack.item.buyCost || amount == 0) {
+            if (player.getCash() <= 0 || player.getCash() < stack.item.buyCost * amount || amount == 0) {
                 Resources.interact_fail.play();
                 return;
             }
@@ -182,27 +182,28 @@ public class ShopMenu extends Menu {
         graphics.setColor(new Color(0, 0, 0, 175));
         graphics.fillRect(0, 0, Display.getWidth(), Display.getHeight());
         graphics.setColor(new Color(0x242424));
-        graphics.fillRect(250, 150, 720, 400);
+        int menuWidth = 720, menuHeight = 400;
+        int offsetX = Display.getWidth() / 2 - menuWidth / 2, offsetY = Display.getHeight() / 2 -  menuHeight / 2;
+        graphics.fillRect(offsetX, offsetY, 720, 400);
         graphics.setColor(new Color(0xFFFFFF));
         for (int i = 0; i < slotsPerBank; i++) {
             Item item = items[currentBank][i];
             if (item == null) continue;
             if (item instanceof ItemStack) {
                 ItemStack stack = (ItemStack) item;
-                stack.getSprite().draw(256, 175 + i * slotSize);
-                graphics.drawString("" + stack.itemList.size(), 256, 160 + i * slotSize);
+                stack.getSprite().draw(offsetX + 6, offsetY + 25 + i * slotSize);
+                graphics.drawString("" + stack.itemList.size(), offsetX + 6, offsetY + 10 + i * slotSize);
             } else {
-                item.getSprite().draw(256, 175 + i * slotSize);
+                item.getSprite().draw(offsetX + 6, offsetY + 10 + i * slotSize);
             }
             if (i == selected) {
-                graphics.drawRect(256, 159 + i * slotSize, 128, slotSize);
+                graphics.drawRect(offsetX + 6, offsetY + 9 + i * slotSize, 128, slotSize);
             }
         }
-        renderInfoPane(graphics);
+        renderInfoPane(graphics, offsetX +  490, offsetY + 25);
     }
 
-    public void renderInfoPane(Graphics graphics) {
-        int offsetX = 720, offsetY = 175;
+    public void renderInfoPane(Graphics graphics, int offsetX, int offsetY) {
         graphics.setColor(new Color(0xAA343434));
         graphics.fillRect(offsetX, offsetY, 200, 350);
         graphics.setColor(new Color(0xFFFFFF));

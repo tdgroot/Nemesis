@@ -17,8 +17,8 @@ public class ObjectMap {
 	private int objectLayer = MapLayer.MAP_LAYER_MAP_OBJECTS;
 
 	public ObjectMap(TiledMap map, int tileSize) {
-		width = map.getWidth() * tileSize;
-		height = map.getHeight() * tileSize;
+		width = map.getWidth();
+		height = map.getHeight();
 
 		objects = new MapObject[width * height];
 
@@ -61,6 +61,7 @@ public class ObjectMap {
 						mapObject.setName(GameUtil.firstCharToUpper(type));
 						mapObject.setX(xx);
 						mapObject.setY(yy);
+                        mapObject.init(tileSize);
 					}
 
 					objects[xx + yy * width] = mapObject;

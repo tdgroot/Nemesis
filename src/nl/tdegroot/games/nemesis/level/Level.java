@@ -2,6 +2,7 @@ package nl.tdegroot.games.nemesis.level;
 
 import nl.tdegroot.games.nemesis.Log;
 import nl.tdegroot.games.nemesis.entity.Entity;
+import nl.tdegroot.games.nemesis.entity.GroundStack;
 import nl.tdegroot.games.nemesis.entity.Mob;
 import nl.tdegroot.games.nemesis.entity.Player;
 import nl.tdegroot.games.nemesis.entity.npc.NPC;
@@ -10,6 +11,7 @@ import nl.tdegroot.games.nemesis.entity.particles.SlimeParticle;
 import nl.tdegroot.games.nemesis.entity.projectile.Projectile;
 import nl.tdegroot.games.nemesis.gfx.Resources;
 import nl.tdegroot.games.nemesis.gfx.Screen;
+import nl.tdegroot.games.nemesis.item.ItemStack;
 import nl.tdegroot.games.nemesis.map.CollisionMap;
 import nl.tdegroot.games.nemesis.map.MapLayer;
 import nl.tdegroot.games.nemesis.map.NPCMap;
@@ -42,6 +44,8 @@ public class Level implements TileBasedMap, Serializable {
 	private List<Projectile> projectiles = new ArrayList<Projectile>();
 	private List<Particle> particles = new ArrayList<Particle>();
 
+    private GroundStack[] itemStacks;
+
 	public Level(String path, Player player) throws SlickException {
 		this.player = player;
 		map = new TiledMap(path);
@@ -54,8 +58,18 @@ public class Level implements TileBasedMap, Serializable {
 		objectMap = new ObjectMap(map, tileSize);
 		npcMap = new NPCMap(map, this, tileSize);
 		Log.log("Object layers: " + map.getObjectLayerCount());
+        initGroundStacks();
 		initMobSpawners();
 	}
+
+    private void initGroundStacks() {
+        itemStacks = new GroundStack[map.getWidth() * map.getHeight()];
+        for (int y = 0; y < map.getHeight(); y++) {
+            for (int x = 0; x < map.getWidth(); x++) {
+                itemStacks[x + y * map.getWidth()] = new GroundStack();
+            }
+        }
+    }
 
 	public void initMobSpawners() {
 		for (int i = 0; i <= map.getObjectCount(MapLayer.MAP_LAYER_SPAWNERS); i++) {
