@@ -2,6 +2,7 @@ package nl.tdegroot.games.nemesis.entity;
 
 import actions.Interactable;
 import nl.tdegroot.games.nemesis.Nemesis;
+import nl.tdegroot.games.nemesis.gfx.Screen;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,15 +22,25 @@ public class GroundStack extends Entity implements Interactable {
         items.remove(index);
     }
 
-    public void interact(Player player, Nemesis game) {
-        
+	public void update(int delta) {
+		for (int i = 0; i < items.size(); i++) {
+			items.get(i).update(delta);
+		}
+	}
+
+	public void render(Screen screen) {
+		for (int i = 0; i < items.size(); i++) {
+			items.get(i).render(screen);
+		}
+	}
+
+	public void interact(Player player, Nemesis game) {
     }
 
     public void talk() {
     }
 
     public void describe() {
-
     }
 
     public String[] getInteractItems() {

@@ -2,6 +2,7 @@ package nl.tdegroot.games.nemesis.level;
 
 import nl.tdegroot.games.nemesis.Log;
 import nl.tdegroot.games.nemesis.entity.Entity;
+import nl.tdegroot.games.nemesis.entity.GroundItem;
 import nl.tdegroot.games.nemesis.entity.GroundStack;
 import nl.tdegroot.games.nemesis.entity.Mob;
 import nl.tdegroot.games.nemesis.entity.Player;
@@ -11,14 +12,13 @@ import nl.tdegroot.games.nemesis.entity.particles.SlimeParticle;
 import nl.tdegroot.games.nemesis.entity.projectile.Projectile;
 import nl.tdegroot.games.nemesis.gfx.Resources;
 import nl.tdegroot.games.nemesis.gfx.Screen;
-import nl.tdegroot.games.nemesis.item.ItemStack;
 import nl.tdegroot.games.nemesis.map.CollisionMap;
 import nl.tdegroot.games.nemesis.map.MapLayer;
+import nl.tdegroot.games.nemesis.map.MobSpawnerMap;
 import nl.tdegroot.games.nemesis.map.NPCMap;
 import nl.tdegroot.games.nemesis.map.ObjectMap;
 import nl.tdegroot.games.nemesis.map.object.MapObject;
 import nl.tdegroot.games.nemesis.spawner.MobSpawner;
-import nl.tdegroot.games.nemesis.spawner.RoachSpawner;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
@@ -37,14 +37,15 @@ public class Level implements TileBasedMap, Serializable {
 	private CollisionMap collisionMap;
 	private ObjectMap objectMap;
 	private NPCMap npcMap;
+	private MobSpawnerMap mobSpawnerMap;
 
-	private List<MobSpawner> spawners = new ArrayList<MobSpawner>();
+	public List<MobSpawner> spawners = new ArrayList<MobSpawner>();
 	private List<Entity> entities = new ArrayList<Entity>();
 	private List<Mob> mobs = new ArrayList<Mob>();
 	private List<Projectile> projectiles = new ArrayList<Projectile>();
 	private List<Particle> particles = new ArrayList<Particle>();
 
-    private GroundStack[] itemStacks;
+	private GroundStack[] groundStacks;
 
 	public Level(String path, Player player) throws SlickException {
 		this.player = player;
@@ -58,49 +59,17 @@ public class Level implements TileBasedMap, Serializable {
 		objectMap = new ObjectMap(map, tileSize);
 		npcMap = new NPCMap(map, this, tileSize);
 		Log.log("Object layers: " + map.getObjectLayerCount());
-        initGroundStacks();
-		initMobSpawners();
+		initGroundStacks();
+		mobSpawnerMap = new MobSpawnerMap(this, map);
 	}
 
-    private void initGroundStacks() {
-        itemStacks = new GroundStack[map.getWidth() * map.getHeight()];
-        for (int y = 0; y < map.getHeight(); y++) {
-            for (int x = 0; x < map.getWidth(); x++) {
-                itemStacks[x + y * map.getWidth()] = new GroundStack();
-            }
-        }
-    }
-
-	public void initMobSpawners() {
-		for (int i = 0; i <= map.getObjectCount(MapLayer.MAP_LAYER_SPAWNERS); i++) {
-
-			int x = (map.getObjectX(MapLayer.MAP_LAYER_SPAWNERS, i) + map.getObjectWidth(MapLayer.MAP_LAYER_SPAWNERS, i)) / tileSize;
-			int y = (map.getObjectY(MapLayer.MAP_LAYER_SPAWNERS, i) + map.getObjectHeight(MapLayer.MAP_LAYER_SPAWNERS, i)) / tileSize;
-
-			for (int xx = (map.getObjectX(MapLayer.MAP_LAYER_SPAWNERS, i) / tileSize); xx < x; xx++) {
-				for (int yy = (map.getObjectY(MapLayer.MAP_LAYER_SPAWNERS, i) / tileSize); yy < y; yy++) {
-
-					// Spawner properties
-					String spawnerType = map.getObjectProperty(MapLayer.MAP_LAYER_SPAWNERS, i, "spawner", "");
-					String spawnTime = map.getObjectProperty(MapLayer.MAP_LAYER_SPAWNERS, i, "spawnTime", "");
-					String maxMobs = map.getObjectProperty(MapLayer.MAP_LAYER_SPAWNERS, i, "maxMobs", "");
-
-					// Mob properties
-					String mobScore = map.getObjectProperty(MapLayer.MAP_LAYER_SPAWNERS, i, "score", "");
-					String mobHealth = map.getObjectProperty(MapLayer.MAP_LAYER_SPAWNERS, i, "health", "");
-					String mobSpeed = map.getObjectProperty(MapLayer.MAP_LAYER_SPAWNERS, i, "speed", "");
-					String mobDamage = map.getObjectProperty(MapLayer.MAP_LAYER_SPAWNERS, i, "damage", "");
-					String mobCash = map.getObjectProperty(MapLayer.MAP_LAYER_SPAWNERS, i, "cash", "");
-
-					if (spawnerType != "") {
-						spawners.add(getSpawner(spawnerType, spawnTime, maxMobs, mobScore, mobHealth, mobSpeed, mobDamage, mobCash, xx, yy, i));
-						Log.log("Spawner created with ID: " + i + ", mobHealth: " + mobHealth + ", mobSpeed: " + mobSpeed + ", mobScore: " + mobScore);
-					}
-
-				}
+	private void initGroundStacks() {
+		groundStacks = new GroundStack[map.getWidth() * map.getHeight()];
+		for (int y = 0; y < map.getHeight(); y++) {
+			for (int x = 0; x < map.getWidth(); x++) {
+				groundStacks[x + y * map.getWidth()] = new GroundStack();
 			}
 		}
-		Log.log("Mob spawners initialized! Amount of Mobspawners: " + spawners.size());
 	}
 
 	public void update(int delta) {
@@ -126,6 +95,10 @@ public class Level implements TileBasedMap, Serializable {
 			particles.get(i).update(delta);
 		}
 
+		for (int i = 0; i < groundStacks.length; i++) {
+			groundStacks[i].update(delta);
+		}
+
 		checkProjectiles();
 	}
 
@@ -133,6 +106,7 @@ public class Level implements TileBasedMap, Serializable {
 		for (int i = 0; i < mobs.size(); i++) {
 			Mob mob = mobs.get(i);
 			if (mob.isRemoved()) {
+				mob.drop();
 				int spawnerID = mob.getSpawnerID();
 				mobs.remove(i);
 				Resources.mob_death.play();
@@ -164,7 +138,7 @@ public class Level implements TileBasedMap, Serializable {
 	public void checkProjectiles() {
 		for (Projectile p : projectiles) {
 			for (Mob mob : mobs) {
-				if (p.getAreaOfEffect().intersects(mob.getVulnerability()) && !p.isRemoved()) {
+				if (p.getAreaOfEffect().intersects(mob.getVulnerability()) && ! p.isRemoved()) {
 					mob.hit(p);
 					if (mob.isRemoved()) {
 						p.getPlayer().mobKilled(mob.getScore(), mob.getCash());
@@ -186,10 +160,14 @@ public class Level implements TileBasedMap, Serializable {
 	}
 
 	public void render(Graphics g, Screen screen) {
-		screen.render(map, tileSize, "tileLayer:objectLayer", 2);
+		screen.render(map, tileSize, "tileLayer1:tileLayer2:tileLayer3:objectLayer", 2);
 
 		for (int i = 0; i < mobs.size(); i++) {
 			mobs.get(i).render(screen);
+		}
+
+		for (int i = 0; i < groundStacks.length; i++) {
+			groundStacks[i].render(screen);
 		}
 
 		for (int i = 0; i < entities.size(); i++) {
@@ -214,48 +192,8 @@ public class Level implements TileBasedMap, Serializable {
 
 	}
 
-	public MobSpawner getSpawner(String type, String spawnTime, String maxMobs, String mobScore, String mobHealth, String mobSpeed, String mobDamage, String mobCash, int x, int y, int i) {
-		MobSpawner spawner = null;
-
-		switch (type) {
-			case "roach":
-				spawner = new RoachSpawner(this, player, x, y, i);
-				break;
-		}
-
-		if (spawner != null) {
-
-			if (spawnTime != "") {
-				spawner.setSpawnTime(Integer.parseInt(spawnTime));
-			}
-
-			if (maxMobs != "") {
-				spawner.setMaxMobs(Integer.parseInt(maxMobs));
-			}
-
-			if (mobScore != "") {
-				spawner.setMobScore(Integer.parseInt(mobScore));
-			}
-
-			if (mobHealth != "") {
-				spawner.setMobHealth(Double.parseDouble(mobHealth));
-			}
-
-			if (mobSpeed != "") {
-				spawner.setMovementSpeed(Float.parseFloat(mobSpeed));
-			}
-
-			if (mobDamage != "") {
-				spawner.setMobDamage(Double.parseDouble(mobDamage));
-			}
-
-			if (mobCash != "") {
-				spawner.setMobCash(Double.parseDouble(mobCash));
-			}
-
-		}
-
-		return spawner;
+	public void addGroundItem(GroundItem e) {
+		e.init(this);
 	}
 
 	public boolean isCollision(int x, int y) {
@@ -271,7 +209,7 @@ public class Level implements TileBasedMap, Serializable {
 	}
 
 	public void addEntity(Entity entity) {
-        entity.init(this);
+		entity.init(this);
 		entities.add(entity);
 	}
 

@@ -242,6 +242,10 @@ public class Mob extends Entity implements Mover {
 		if (health > baseHealth) health = baseHealth;
 	}
 
+	public void drop() {
+
+	}
+
 	public float getMovementSpeed() {
 		return movementSpeed;
 	}
@@ -297,4 +301,5 @@ public class Mob extends Entity implements Mover {
 	public double getCash() {
 		return cash;
 	}
+
 }

@@ -1,5 +1,6 @@
 package nl.tdegroot.games.nemesis;
 
+import nl.tdegroot.games.nemesis.data.MobData;
 import nl.tdegroot.games.nemesis.entity.Player;
 import nl.tdegroot.games.nemesis.gfx.Camera;
 import nl.tdegroot.games.nemesis.gfx.Resources;
@@ -22,7 +23,12 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.openal.SoundStore;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
@@ -50,6 +56,11 @@ public class Nemesis extends BasicGame {
 
 	public void init(GameContainer gameContainer) throws SlickException {
 		this.gameContainer = gameContainer;
+		try {
+			MobData.load();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		new Resources();
 		setMenu(new MainMenu(null, true));
 	}
@@ -59,7 +70,7 @@ public class Nemesis extends BasicGame {
 		try {
 			init(gameContainer);
 			player = new Player(Resources.player, 48, 47, 53, 64);
-			level = new Level("resources/levels/starterisland.tmx", player);
+			level = new Level("resources/levels/gw+ta.tmx", player);
 			camera = new Camera(player, new Vector2f(Display.getWidth(), Display.getHeight()), new Rectangle(0, 0, level.getPixelWidth(), level.getPixelHeight()));
 			screen = new Screen(camera, gameContainer.getGraphics());
 			input = new InputHandler();

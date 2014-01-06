@@ -17,6 +17,7 @@ public class Chest extends MapObject {
 	public Chest() {
 		super();
 		items = new ArrayList<Item>();
+		message = "You open the chest...";
 	}
 
 	public void interact(Player player, Nemesis game) {

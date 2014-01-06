@@ -19,9 +19,9 @@ public class Item {
 	public final int buyCost;
 	public final int sellCost;
 
-	public Item(String name, Image image, int buyCost, int sellCost) {
+	public Item(String name, Image sprite, int buyCost, int sellCost) {
 		this.name = name;
-		this.sprite = image;
+		this.sprite = sprite;
 		this.buyCost = buyCost;
 		this.sellCost = sellCost;
 		itemList.add(this);
