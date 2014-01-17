@@ -1,0 +1,4 @@
+roach {
+bow:5
+arrow:8
+}

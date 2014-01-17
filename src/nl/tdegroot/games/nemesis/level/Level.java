@@ -160,7 +160,7 @@ public class Level implements TileBasedMap, Serializable {
 	}
 
 	public void render(Graphics g, Screen screen) {
-		screen.render(map, tileSize, "tileLayer1:tileLayer2:tileLayer3:objectLayer", 2);
+		screen.render(map, tileSize, "tileLayer1:tileLayer2:tileLayer3:objectLayer", 4);
 
 		for (int i = 0; i < mobs.size(); i++) {
 			mobs.get(i).render(screen);
